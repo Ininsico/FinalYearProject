@@ -3,23 +3,23 @@
 @layer base {
   :root {
     --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-    --color-bg:        #dad7cd; /* Dust Grey - subtle soft stone background */
-    --color-surface:   #faf9f6; /* Warm White/Eggshell for cards to stand out on grey */
-    --color-border:    #a3b18a; /* Dry Sage - earthy calming green-gray border */
-    --color-text:      #344e41; /* Pine Teal - mountain needles/rivers dark text */
-    --color-muted:     #3a5a40; /* Hunter Green - rugged rich woodland green */
-    --color-faint:     #eae7dd; /* Lightened warm stone track tint */
-    --color-accent:    #344e41; /* Pine Teal - deep accent */
-    
-    /* Global contrast theme mappings to sync components seamlessly */
-    --color-cyan:      #588157; /* Fern - sunlit woodlands green */
-    --color-purple:    #344e41; /* Pine Teal - dark pine */
-    --color-emerald:   #3a5a40; /* Hunter Green */
-    --color-amber:     #a3b18a; /* Dry Sage */
-    --color-red:       #c2593f; /* Warm terracotta clay red */
+    --color-bg: #050807;
+    --color-surface: #0c1210;
+    --color-border: #1a2e24;
+    --color-text: #e4efe8;
+    --color-muted: #5a7f6a;
+    --color-faint: #09100d;
+    --color-accent: #22ff66;
+    --color-cyan: #22ff88;
+    --color-purple: #00dd55;
+    --color-emerald: #33ff33;
+    --color-amber: #66ff33;
+    --color-red: #ff3355;
   }
 
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     box-sizing: border-box;
   }
 
@@ -35,8 +35,8 @@
   }
 
   ::selection {
-    background: rgba(8, 145, 178, 0.2);
-    color: var(--color-accent);
+    background: rgba(34, 255, 102, 0.25);
+    color: var(--color-text);
   }
 
   ::-webkit-scrollbar {
@@ -45,26 +45,24 @@
   }
 
   ::-webkit-scrollbar-track {
-    background: var(--color-faint);
+    background: var(--color-bg);
   }
 
   ::-webkit-scrollbar-thumb {
     background: var(--color-border);
     border-radius: 3px;
   }
-  
+
   ::-webkit-scrollbar-thumb:hover {
     background: var(--color-muted);
   }
 }
 
-/* Custom visual utilities for high-fidelity smart glasses presentation in light mode */
-
 .grid-bg {
-  background-image: 
-    linear-gradient(to right, rgba(52, 78, 65, 0.04) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(52, 78, 65, 0.04) 1px, transparent 1px);
-  background-size: 32px 32px;
+  background-image:
+    linear-gradient(to right, rgba(34, 255, 102, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(34, 255, 102, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
 }
 
 .radar-sweep {
@@ -79,24 +77,18 @@
   left: -50%;
   width: 200%;
   height: 200%;
-  background: conic-gradient(
-    from 180deg at 50% 50%,
-    rgba(88, 129, 87, 0.1) 0deg,
-    rgba(88, 129, 87, 0.02) 120deg,
-    transparent 240deg,
-    transparent 360deg
-  );
+  background: conic-gradient(from 180deg at 50% 50%,
+      rgba(34, 255, 102, 0.08) 0deg,
+      rgba(34, 255, 102, 0.01) 120deg,
+      transparent 240deg,
+      transparent 360deg);
   animation: sweep 8s linear infinite;
   pointer-events: none;
 }
 
 @keyframes sweep {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 .hud-scanner {
@@ -104,30 +96,53 @@
 }
 
 @keyframes scan {
-  0%, 100% {
-    top: 5%;
-  }
-  50% {
-    top: 95%;
-  }
+  0%, 100% { top: 5%; }
+  50% { top: 95%; }
 }
 
-.glow-cyan {
-  box-shadow: 0 0 30px -5px rgba(88, 129, 87, 0.15);
+.glow-green {
+  box-shadow: 0 0 30px -5px rgba(34, 255, 102, 0.15);
 }
 
-.glow-purple {
-  box-shadow: 0 0 35px -5px rgba(52, 78, 65, 0.15);
+.glow-emerald {
+  box-shadow: 0 0 35px -5px rgba(0, 221, 85, 0.15);
 }
 
 .glass-panel {
-  background: rgba(250, 249, 246, 0.85); /* Matches warm bg aspect */
-  backdrop-filter: blur(16px);
-  border: 1px solid rgba(163, 177, 138, 0.25); /* Dry sage subtle border */
+  background: rgba(26, 42, 36, 0.7);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(34, 255, 102, 0.12);
 }
 
-.text-gradient-cyan-purple {
-  background: linear-gradient(135deg, var(--color-cyan) 0%, var(--color-purple) 100%);
+.glass-panel-accent {
+  background: rgba(26, 42, 36, 0.7);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(34, 255, 102, 0.12);
+  position: relative;
+}
+
+.glass-panel-accent::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(34, 255, 102, 0.3), transparent 50%, rgba(34, 255, 136, 0.15));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.section-divider {
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(34, 255, 102, 0.15), transparent);
+}
+
+.text-gradient-green {
+  background: linear-gradient(135deg, #22ff66 0%, #22ff88 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }

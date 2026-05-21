@@ -1,42 +1,59 @@
+import { useState, useEffect } from 'react'
 import erebusLogo from '../../assets/erebus_logo.png'
 
-interface HeaderProps {
-  isConsoleOpen: boolean
-  setIsConsoleOpen: (open: boolean) => void
-}
+const navLinks = [
+  { label: 'Features', href: '#features' },
+  { label: 'Architecture', href: '#architecture' },
+  { label: 'Metrics', href: '#metrics' },
+  { label: 'Timeline', href: '#timeline' },
+]
 
-export function Header({
-  isConsoleOpen,
-  setIsConsoleOpen,
-}: HeaderProps) {
+export function Header() {
+  const [scrolled, setScrolled] = useState(false)
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 60)
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
   return (
-    <header className="sticky top-0 z-50 glass-panel border-b border-border py-4 px-8 flex items-center justify-between">
-      {/* Sleek, professional transparent logo header branding */}
-      <div className="flex items-center gap-3 select-none">
-        <div className="w-8 h-8 relative flex items-center justify-center">
-          <img src={erebusLogo} alt="Erebus Logo" className="w-full h-full object-contain" />
-        </div>
-        <div>
-          <h1 className="text-sm font-black tracking-[0.2em] uppercase text-accent m-0">
-            Erebus <span className="text-cyan font-semibold">AVR</span>
-          </h1>
-          <p className="text-[9px] font-mono tracking-wider text-muted uppercase m-0 mt-0.5">FinalYearProject</p>
-        </div>
-      </div>
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        scrolled
+          ? 'bg-[rgba(5,8,7,0.85)] backdrop-blur-2xl border-b border-border'
+          : 'bg-transparent'
+      }`}
+    >
+      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+        <a href="#hero" className="flex items-center gap-3 select-none">
+          <div className="w-8 h-8 relative">
+            <img src={erebusLogo} alt="Erebus" className="w-full h-full object-contain" />
+          </div>
+          <div>
+            <h1 className="text-sm font-black tracking-[0.2em] uppercase text-text m-0 leading-none">
+              Erebus <span className="text-accent">AVR</span>
+            </h1>
+          </div>
+        </a>
 
-      {/* Dev Console Route Switcher */}
-      <div>
-        <button
-          type="button"
-          onClick={() => setIsConsoleOpen(!isConsoleOpen)}
-          className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold tracking-wider uppercase border transition-all duration-300 cursor-pointer ${
-            isConsoleOpen 
-              ? 'bg-cyan border-cyan text-bg font-bold shadow-[0_4px_15px_rgba(8,145,178,0.15)]' 
-              : 'bg-faint border-border hover:border-cyan/40 hover:bg-cyan/5 text-text'
-          }`}
-        >
-          <span>{isConsoleOpen ? 'Exit Control Panel' : 'Launch Control Console'}</span>
-        </button>
+        <nav className="hidden md:flex items-center gap-8">
+          {navLinks.map(link => (
+            <a
+              key={link.label}
+              href={link.href}
+              className="text-xs tracking-widest uppercase text-muted hover:text-accent transition-colors font-semibold"
+            >
+              {link.label}
+            </a>
+          ))}
+          <a
+            href="#cta"
+            className="bg-accent text-bg px-5 py-2.5 rounded-xl text-xs font-bold tracking-wider uppercase hover:brightness-110 transition shadow-[0_0_20px_rgba(34,255,102,0.15)]"
+          >
+            Get Started
+          </a>
+        </nav>
       </div>
     </header>
   )

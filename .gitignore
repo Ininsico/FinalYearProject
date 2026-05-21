@@ -1,28 +1,29 @@
-# Dependency directories
+# DEPENDENCIES
 node_modules/
 jspm_packages/
 web_modules/
+.pnpm-store/
 
-# Build and distribution directories
+# BUILD OUTPUT
 dist/
 dist-ssr/
 build/
 out/
 bin/
 obj/
+target/
+*.tsbuildinfo
 
-# Environment and sensitive files
+# ENVIRONMENT & SECRETS
 .env
 .env.local
-.env.development.local
-.env.test.local
-.env.production.local
-*.env
+.env.*.local
 *.pem
 *.key
+*.cert
 
-# Logs and databases
-logs
+# LOGS & DATABASES
+logs/
 *.log
 npm-debug.log*
 yarn-debug.log*
@@ -32,30 +33,31 @@ lerna-debug.log*
 *.sqlite
 *.db
 
-# OS & System files
+# OS FILES
 .DS_Store
 .DS_Store?
 ._*
 Thumbs.db
 ehthumbs.db
 Desktop.ini
+$RECYCLE.BIN/
 
-# Editor / IDE configuration
-.vscode/
+# IDE
+.vscode/*
 !.vscode/extensions.json
+!.vscode/settings.json
 .idea/
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
-*.swo
 *.swn
 .project
 .classpath
 .settings/
 
-# Python specific (for ArtificalIntelligence and Research)
+# PYTHON (ArtificalIntelligence / Research)
 __pycache__/
 *.py[cod]
 *$py.class
@@ -67,8 +69,45 @@ env/
 .coverage
 htmlcov/
 .mypy_cache/
+.ruff_cache/
 
-# Embedded C/C++ build artifacts (for OperatingSystem)
+# RUST
+**/target/
+
+# GO
+/go/bin/
+/go/pkg/
+
+# FLUTTER / DART (MobileApp)
+.dart_tool/
+.packages
+.pub-preload-cache/
+.pub/
+build/
+.flutter-plugins
+.flutter-plugins-dependencies
+*.iml
+.metadata
+**/android/.gradle/
+**/android/local.properties
+**/android/key.properties
+**/ios/Pods/
+**/ios/.symlinks/
+**/ios/Flutter/Flutter.framework
+**/ios/Flutter/Flutter.podspec
+**/ios/Runner.xcworkspace/
+**/macos/Pods/
+**/macos/.symlinks/
+**/linux/flutter/
+**/windows/flutter/
+
+# TEST COVERAGE
+coverage/
+.nyc_output/
+vitest-results/
+junit.xml
+
+# EMBEDDED / C/C++ (OperatingSystem)
 *.o
 *.a
 *.so
@@ -78,5 +117,7 @@ htmlcov/
 *.out
 *.app
 *.elf
-*.bin
 *.hex
+*.obj
+*.pdb
+*.ilk
