@@ -11,7 +11,7 @@ export default function CTA() {
           Ready to Start Learning?
         </h2>
         <p className="text-planet-200 text-lg mb-10 max-w-2xl mx-auto">
-          Join thousands of Pakistani students who are already learning on TheThirdPlanet.
+          Join thousands of Pakistani students who are already learning on Dimitri.
           No fees. No barriers. Just quality education.
         </p>
 

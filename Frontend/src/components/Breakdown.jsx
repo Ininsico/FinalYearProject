@@ -78,7 +78,7 @@ const cssItems = [
   },
   {
     title: 'Completely Free Access',
-    desc: 'Every single CSS resource on TheThirdPlanet is 100% free. No subscriptions, no hidden fees, no barriers.',
+    desc: 'Every single CSS resource on Dimitri is 100% free. No subscriptions, no hidden fees, no barriers.',
     detail: 'Quality education is a right, not a privilege — and we mean it.',
     tag: 'Free',
     stat: 'Free',

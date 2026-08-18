@@ -2,7 +2,7 @@ const testimonials = [
   {
     name: 'Ayesha Khan',
     location: 'Lahore, Punjab',
-    text: 'TheThirdPlanet completely changed how I study for my exams. The Urdu explanations make complex topics so easy to understand. I scored 92% in my Matric!',
+    text: 'Dimitri completely changed how I study for my exams. The Urdu explanations make complex topics so easy to understand. I scored 92% in my Matric!',
     initials: 'AK',
   },
   {
@@ -29,7 +29,7 @@ export default function Testimonials() {
           </h2>
           <p className="text-planet-600 text-lg">
             Hear from students across Pakistan who are transforming their education
-            with TheThirdPlanet.
+            with Dimitri.
           </p>
         </div>
 

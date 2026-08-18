@@ -13,9 +13,9 @@ export default function Footer() {
           <div className="col-span-2">
             <div className="flex items-center gap-2 mb-4">
               <div className="w-8 h-8 bg-planet-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">T3P</span>
+                <span className="text-white font-bold text-sm">D</span>
               </div>
-              <span className="text-xl font-bold text-white">TheThirdPlanet</span>
+              <span className="text-xl font-bold text-white">Dimitri</span>
             </div>
             <p className="text-sm leading-relaxed max-w-xs">
               Pakistan's most accessible educational platform. Quality learning in Urdu & English
@@ -46,7 +46,7 @@ export default function Footer() {
 
         <div className="mt-12 pt-8 border-t border-planet-800 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-sm text-planet-500">
-            &copy; 2026 TheThirdPlanet. All rights reserved.
+            &copy; 2026 Dimitri. All rights reserved.
           </p>
           <div className="flex items-center gap-4">
             {['Facebook', 'YouTube', 'Twitter', 'Instagram'].map((social) => (

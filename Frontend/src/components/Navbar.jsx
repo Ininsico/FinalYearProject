@@ -42,12 +42,12 @@ export default function Navbar() {
             <div className={`w-8 h-8 rounded-lg flex items-center justify-center transition-colors ${
               scrolled ? 'bg-planet-900' : 'bg-white/20 backdrop-blur'
             }`}>
-              <span className="text-white font-bold text-sm">T3P</span>
+              <span className="text-white font-bold text-sm">D</span>
             </div>
             <span className={`text-xl font-bold transition-colors ${
               scrolled ? 'text-planet-900' : 'text-white'
             }`}>
-              TheThirdPlanet
+              Dimitri
             </span>
           </a>
 
