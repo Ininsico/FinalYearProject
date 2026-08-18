@@ -39,11 +39,9 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <a href="#" className="flex items-center gap-2">
-            <div className={`w-8 h-8 rounded-lg flex items-center justify-center transition-colors ${
-              scrolled ? 'bg-planet-900' : 'bg-white/20 backdrop-blur'
-            }`}>
-              <span className="text-white font-bold text-sm">D</span>
-            </div>
+            <img src="/logo.png" alt="Dimitri" className={`w-8 h-8 rounded-lg object-contain transition-colors ${
+              scrolled ? '' : 'bg-white/20 backdrop-blur p-0.5'
+            }`} />
             <span className={`text-xl font-bold transition-colors ${
               scrolled ? 'text-planet-900' : 'text-white'
             }`}>
