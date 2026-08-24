@@ -3,6 +3,19 @@ const { execSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 
+// Load local .env (deploy creds) if present. Never committed — gitignored.
+try {
+  const envPath = path.join(__dirname, '.env');
+  if (fs.existsSync(envPath)) {
+    for (const line of fs.readFileSync(envPath, 'utf8').split('\n')) {
+      const m = line.match(/^\s*([\w.]+)\s*=\s*(.*)\s*$/);
+      if (m && !(m[1] in process.env)) {
+        process.env[m[1]] = m[2].replace(/^["']|["']$/g, '');
+      }
+    }
+  }
+} catch {}
+
 const HOST = process.env.FABLET_SSH_HOST || '169.58.119.44';
 const USER = process.env.FABLET_SSH_USER || 'root';
 const PASS = process.env.FABLET_SSH_PASS;
