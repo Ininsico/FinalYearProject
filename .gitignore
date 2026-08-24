@@ -107,6 +107,25 @@ coverage/
 vitest-results/
 junit.xml
 
+# DEPLOY PLATFORMS / BUILD CACHES
+.vercel/
+.netlify/
+.netlify/
+.turbo/
+.output/
+.nx/
+.wrangler/
+
+# ENVIRONMENT (secrets — never commit)
+.env
+.env.*
+!.env.example
+*.local
+
+# LOCAL DEPLOY ARTIFACTS
+dist.tar
+server.log
+
 # EMBEDDED / C/C++ (OperatingSystem)
 *.o
 *.a

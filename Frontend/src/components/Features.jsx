@@ -49,7 +49,7 @@ export default function Features() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto mb-16">
           <h2 className="text-3xl sm:text-4xl font-bold text-planet-900 mb-4">
-            Why Choose Dimitri?
+            Why Choose Fablet?
           </h2>
           <p className="text-planet-600 text-lg">
             We're building Pakistan's most accessible and effective learning platform
