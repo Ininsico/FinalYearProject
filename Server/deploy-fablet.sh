@@ -13,7 +13,7 @@ API_SERVICE="${API_SERVICE:-fablet-api}"
 
 echo "[deploy] installing frontend deps"
 cd "$REPO_DIR/Frontend"
-npm ci --no-audit --no-fund
+npm ci --include=dev --no-audit --no-fund
 
 echo "[deploy] building frontend"
 npm run build
