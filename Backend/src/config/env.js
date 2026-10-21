@@ -42,10 +42,11 @@ export const env = {
     process.env.RESET_FRONTEND_URL ||
     `${process.env.FRONTEND_ORIGIN || 'http://localhost:5173'}/auth/reset`,
 
-  // Email (Brevo)
-  brevoApiKey: process.env.BREVO_API_KEY || '',
-  brevoSenderEmail: process.env.BREVO_SENDER_EMAIL || '',
-  brevoSenderName: process.env.BREVO_SENDER_NAME || 'Fablet',
+  // Email via the self-hosted mail gateway (mailapi -> docker-mailserver)
+  mailApiUrl: process.env.MAILAPI_URL || 'http://127.0.0.1:5021',
+  mailApiKey: process.env.MAILAPI_KEY || '',
+  mailFrom: process.env.MAIL_FROM || 'fablet@artdevelopers.site',
+  mailFromName: process.env.MAIL_FROM_NAME || 'Fablet',
 
   // Other integrations (available for future endpoints)
   cloudinary: {

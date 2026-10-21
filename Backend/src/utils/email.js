@@ -1,37 +1,35 @@
 import { env } from '../config/env.js'
 
 /**
- * Send a transactional email via Brevo's HTTP API.
+ * Send a transactional email through the self-hosted mail gateway
+ * (mailapi.artdevelopers.site -> docker-mailserver). No third-party provider.
  * Uses the global fetch (Node 18+), so no extra dependency is required.
  */
-export async function sendEmail({ to, subject, html }) {
-  if (!env.brevoApiKey || !env.brevoSenderEmail) {
-    throw new Error('Brevo is not configured (BREVO_API_KEY / BREVO_SENDER_EMAIL)')
+export async function sendEmail({ to, subject, html, text }) {
+  if (!env.mailApiUrl || !env.mailApiKey) {
+    throw new Error('Mail gateway is not configured (MAILAPI_URL / MAILAPI_KEY)')
   }
 
-  const res = await fetch('https://api.brevo.com/v3/smtp/email', {
+  const res = await fetch(`${env.mailApiUrl.replace(/\/$/, '')}/send`, {
     method: 'POST',
     headers: {
-      accept: 'application/json',
-      'api-key': env.brevoApiKey,
-      'content-type': 'application/json',
+      'Content-Type': 'application/json',
+      'X-API-Key': env.mailApiKey,
     },
     body: JSON.stringify({
-      sender: {
-        name: env.brevoSenderName,
-        email: env.brevoSenderEmail,
-      },
-      to: [{ email: to }],
+      to,
       subject,
-      htmlContent: html,
+      html,
+      text: text || undefined,
+      from: env.mailFrom,
     }),
   })
 
-  if (!res.ok) {
-    const detail = await res.text().catch(() => '')
-    throw new Error(`Brevo send failed (${res.status}): ${detail.slice(0, 200)}`)
+  const data = await res.json().catch(() => ({}))
+  if (!res.ok || data.success === false) {
+    throw new Error(`Mail send failed (${res.status}): ${data.error || 'unknown error'}`)
   }
-  return res.json()
+  return data
 }
 
 export function buildResetEmail(resetUrl) {
