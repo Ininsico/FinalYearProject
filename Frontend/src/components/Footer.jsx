@@ -1,87 +1,47 @@
-import { Globe, Send, Rss, AtSign, ArrowRight, Mail } from 'lucide-react'
+import { useNavigate } from "react-router-dom"
 
-const columns = [
-  {
-    title: 'Platform',
-    links: ['AI Swarm', 'No-Code Builder', 'Media Engines', 'Enterprise Tools', 'Pricing'],
-  },
-  {
-    title: 'Company',
-    links: ['About', 'Careers', 'Blog', 'Press', 'Contact'],
-  },
-  {
-    title: 'Resources',
-    links: ['Docs', 'API Reference', 'Status', 'Community', 'Changelog'],
-  },
-  {
-    title: 'Legal',
-    links: ['Privacy', 'Terms', 'Security', 'Cookies'],
-  },
-]
-
-const socials = [
-  { icon: Globe, label: 'Website' },
-  { icon: Send, label: 'Updates' },
-  { icon: Rss, label: 'Blog' },
-  { icon: AtSign, label: 'Social' },
+const COLUMNS = [
+  { title: "Platform", links: ["How it works", "Domains", "Pricing", "Status"] },
+  { title: "Company", links: ["About", "Team", "Contact"] },
+  { title: "Legal", links: ["Privacy", "Terms", "Security"] },
 ]
 
 export default function Footer() {
+  const navigate = useNavigate()
   return (
-    <footer className="relative bg-[#070b1c] text-slate-300 overflow-hidden">
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-blue-500/60 to-transparent" />
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-          {/* Brand + newsletter */}
-          <div className="lg:col-span-4">
-            <div className="flex items-center gap-3 mb-5">
-              <img src="/fablet-logo.png" alt="Fablet" className="w-9 h-9 rounded-lg object-contain" />
-              <span className="text-xl font-bold text-white">Fablet</span>
+    <footer className="border-t border-ink-100 bg-ink-950 px-6 py-16 text-ink-300">
+      <div className="mx-auto max-w-6xl">
+        <div className="grid gap-12 lg:grid-cols-12">
+          <div className="lg:col-span-5">
+            <div className="flex items-center gap-2.5">
+              <img src="/fablet-logo.png" alt="" className="h-8 w-8 object-contain" />
+              <span className="text-lg font-bold text-white">Fablet</span>
             </div>
-            <p className="text-sm leading-relaxed text-slate-400 max-w-xs mb-6">
-              The self-orchestrating AI swarm that builds anything you can imagine —
-              from education and media to enterprise tools, end to end.
+            <p className="mt-5 max-w-sm text-sm leading-relaxed text-ink-400">
+              A self-orchestrating network of AI agents that turns a brief into a
+              working product, across education, media, news, and enterprise.
             </p>
-
-            <form
-              className="flex items-center gap-2 max-w-sm"
-              onSubmit={(e) => e.preventDefault()}
+            <a
+              href="mailto:fablet@artdevelopers.site"
+              className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-ink-200 hover:text-white"
             >
-              <div className="relative flex-1">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
-                <input
-                  type="email"
-                  placeholder="you@company.com"
-                  className="w-full rounded-lg bg-white/5 border border-white/10 pl-9 pr-3 py-2.5 text-sm text-white placeholder:text-slate-500 outline-none focus:border-blue-400/60 transition-colors"
-                />
-              </div>
-              <button
-                type="submit"
-                className="p-2.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white transition-colors"
-                aria-label="Subscribe"
-              >
-                <ArrowRight className="w-4 h-4" />
-              </button>
-            </form>
+              fablet@artdevelopers.site
+            </a>
           </div>
 
-          {/* Link columns */}
-          <div className="lg:col-span-8 grid grid-cols-2 sm:grid-cols-4 gap-8">
-            {columns.map((col) => (
+          <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:col-span-7">
+            {COLUMNS.map((col) => (
               <div key={col.title}>
-                <h3 className="text-white font-semibold text-sm mb-4 tracking-wide">
-                  {col.title}
-                </h3>
-                <ul className="space-y-3">
+                <h3 className="text-sm font-semibold tracking-wide text-white">{col.title}</h3>
+                <ul className="mt-4 space-y-3">
                   {col.links.map((link) => (
                     <li key={link}>
-                      <a
-                        href="#"
-                        className="text-sm text-slate-400 hover:text-white transition-colors"
+                      <button
+                        onClick={() => navigate(link === "About" ? "/about" : link === "Contact" ? "/contact" : "/")}
+                        className="text-sm text-ink-400 transition-colors hover:text-white"
                       >
                         {link}
-                      </a>
+                      </button>
                     </li>
                   ))}
                 </ul>
@@ -90,22 +50,8 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-14 pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-6">
-          <p className="text-sm text-slate-500">
-            &copy; 2026 Fablet. All rights reserved.
-          </p>
-          <div className="flex items-center gap-3">
-            {socials.map(({ icon: Icon, label }) => (
-              <a
-                key={label}
-                href="#"
-                aria-label={label}
-                className="w-9 h-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-slate-400 hover:text-white hover:border-blue-400/50 transition-colors"
-              >
-                <Icon className="w-4 h-4" />
-              </a>
-            ))}
-          </div>
+        <div className="mt-14 border-t border-white/10 pt-8 text-sm text-ink-500">
+          {"\u00A9"} {new Date().getFullYear()} Fablet. All rights reserved.
         </div>
       </div>
     </footer>

@@ -5,7 +5,7 @@ import { env } from '../config/env.js'
  * (mailapi.artdevelopers.site -> docker-mailserver). No third-party provider.
  * Uses the global fetch (Node 18+), so no extra dependency is required.
  */
-export async function sendEmail({ to, subject, html, text }) {
+export async function sendEmail({ to, subject, html, text, replyTo }) {
   if (!env.mailApiUrl || !env.mailApiKey) {
     throw new Error('Mail gateway is not configured (MAILAPI_URL / MAILAPI_KEY)')
   }
@@ -21,6 +21,7 @@ export async function sendEmail({ to, subject, html, text }) {
       subject,
       html,
       text: text || undefined,
+      replyTo: replyTo || undefined,
       from: env.mailFrom,
     }),
   })

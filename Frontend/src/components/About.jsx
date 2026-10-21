@@ -173,22 +173,22 @@ const SECTIONS = [
 
 export default function About() {
   return (
-    <div className="bg-planet-50">
+    <div className="bg-paper">
       {/* Hero — full width */}
-      <section className="relative overflow-hidden border-b border-planet-100 pt-36 pb-20">
+      <section className="relative overflow-hidden border-b border-ink-100 pt-36 pb-20">
         <div className="w-full px-6 sm:px-12 lg:px-24">
           <Reveal>
-            <span className="mb-6 inline-block rounded-md bg-planet-900 px-4 py-1.5 text-xs font-bold tracking-wider text-white">
+            <span className="mb-6 inline-block rounded-md bg-ink-950 px-4 py-1.5 text-xs font-bold tracking-wider text-white">
               THE ARCHITECTURE
             </span>
           </Reveal>
           <Reveal delay={0.08}>
-            <h1 className="text-5xl font-extrabold leading-tight text-planet-900 sm:text-7xl">
+            <h1 className="text-5xl font-extrabold leading-tight text-ink-950 sm:text-7xl">
               Fablet
             </h1>
           </Reveal>
           <Reveal delay={0.14}>
-            <p className="mt-6 max-w-4xl text-xl leading-relaxed text-planet-600">
+            <p className="mt-6 max-w-4xl text-xl leading-relaxed text-ink-600">
               A conceptual architecture for autonomous AI swarm orchestration in
               content creation — a self-orchestrating network of agentic AIs that turns a
               single brief into a working product. No engineers. No code. No limits. Just
@@ -203,11 +203,11 @@ export default function About() {
         <div className="w-full px-6 sm:px-12 lg:px-24">
           {SECTIONS.map((s, i) => (
             <Reveal key={s.title} delay={Math.min(i * 0.02, 0.2)}>
-              <div className="grid gap-4 border-t border-planet-100 py-12 lg:grid-cols-[320px_minmax(0,1fr)] lg:gap-16">
-                <h2 className="text-2xl font-bold text-planet-900 lg:sticky lg:top-24 lg:self-start">
+              <div className="grid gap-4 border-t border-ink-100 py-12 lg:grid-cols-[320px_minmax(0,1fr)] lg:gap-16">
+                <h2 className="text-2xl font-bold text-ink-950 lg:sticky lg:top-24 lg:self-start">
                   {s.title}
                 </h2>
-                <p className="text-lg leading-relaxed text-planet-600">
+                <p className="text-lg leading-relaxed text-ink-600">
                   {s.body}
                 </p>
               </div>

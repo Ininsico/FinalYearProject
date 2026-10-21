@@ -10,6 +10,8 @@ import adminRouter from './routes/admin.js'
 import { requireAuth } from './middleware/auth.js'
 import { requireAdmin } from './middleware/admin.js'
 import User from './models/User.js'
+import { z } from 'zod'
+import { sendEmail } from './utils/email.js'
 
 const app = express()
 
@@ -60,6 +62,41 @@ app.get('/api/admin/dashboard', requireAdmin, async (req, res) => {
   const users = await User.countDocuments({ role: 'user' })
   const admins = await User.countDocuments({ role: 'admin' })
   res.json({ stats: { users, admins } })
+})
+
+// Public contact form: emails the enquiry to the Fablet inbox.
+const contactLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 10,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: 'Too many messages, try again later' },
+})
+const contactSchema = z.object({
+  name: z.string().trim().min(1).max(80),
+  email: z.string().trim().email(),
+  message: z.string().trim().min(1).max(5000),
+})
+app.post('/api/contact', contactLimiter, async (req, res) => {
+  const parsed = contactSchema.safeParse(req.body)
+  if (!parsed.success) {
+    return res.status(400).json({ error: parsed.error.issues[0].message })
+  }
+  const { name, email, message } = parsed.data
+  try {
+    await sendEmail({
+      to: env.contactInbox,
+      replyTo: email,
+      subject: `New Fablet enquiry from ${name}`,
+      text: `${message}\n\nFrom: ${name} <${email}>`,
+      html: `<p>${message.replace(/</g, '&amp;').replace(/>/g, '&amp;').replace(/\n/g, '<br/>')}</p>
+             <p style="color:#666">From: ${name} &lt;${email}&gt;</p>`,
+    })
+    return res.json({ ok: true })
+  } catch (err) {
+    console.error('[contact] send failed:', err?.message || err)
+    return res.status(502).json({ error: 'Could not send your message right now' })
+  }
 })
 
 // Catch-all error handler — never leak internals.

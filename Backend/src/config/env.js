@@ -47,6 +47,7 @@ export const env = {
   mailApiKey: process.env.MAILAPI_KEY || '',
   mailFrom: process.env.MAIL_FROM || 'fablet@artdevelopers.site',
   mailFromName: process.env.MAIL_FROM_NAME || 'Fablet',
+  contactInbox: process.env.CONTACT_INBOX || 'fablet@artdevelopers.site',
 
   // Other integrations (available for future endpoints)
   cloudinary: {

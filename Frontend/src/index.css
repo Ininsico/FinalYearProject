@@ -1,68 +1,56 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap");
 @import "tailwindcss";
 
 @theme {
-  --color-planet-50: #fafafa;
-  --color-planet-100: #f5f5f5;
-  --color-planet-200: #e5e5e5;
-  --color-planet-300: #d4d4d4;
-  --color-planet-400: #a3a3a3;
-  --color-planet-500: #737373;
-  --color-planet-600: #525252;
-  --color-planet-700: #404040;
-  --color-planet-800: #262626;
-  --color-planet-900: #171717;
-  --color-planet-950: #0a0a0a;
-  --font-jakarta: 'Plus Jakarta Sans', sans-serif;
+  --font-sans: "Schibsted Grotesk", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: "Schibsted Grotesk", ui-sans-serif, system-ui, sans-serif;
+
+  --color-paper: #f7f6f3;
+  --color-paper-200: #ecebe5;
+
+  --color-ink-50: #f4f4f7;
+  --color-ink-100: #e8e8ee;
+  --color-ink-200: #d4d4de;
+  --color-ink-300: #b1b1c1;
+  --color-ink-400: #8a8a9c;
+  --color-ink-500: #65657a;
+  --color-ink-600: #4a4a5c;
+  --color-ink-700: #34343f;
+  --color-ink-800: #22222b;
+  --color-ink-900: #141420;
+  --color-ink-950: #0b0b12;
+
+  --color-brand-50: #f4f0ff;
+  --color-brand-100: #e9e1ff;
+  --color-brand-200: #d5c6ff;
+  --color-brand-300: #b79bff;
+  --color-brand-400: #9a6bff;
+  --color-brand-500: #7e3bff;
+  --color-brand-600: #6a1ff0;
+  --color-brand-700: #5714c7;
 }
 
+html { scroll-behavior: smooth; }
 body {
   margin: 0;
-  font-family: var(--font-jakarta);
+  background: var(--color-paper);
+  color: var(--color-ink-900);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
-@keyframes bgPan {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: none; }
 }
+.animate-fade-up { animation: fadeUp 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
 
-.animate-bg-pan {
-  background-size: 220% 220%;
-  animation: bgPan 20s ease infinite;
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  html { scroll-behavior: auto; }
 }
-
-@keyframes blobFloat {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(40px, -30px) scale(1.08); }
-  66% { transform: translate(-30px, 25px) scale(0.95); }
-}
-
-.animate-blob {
-  animation: blobFloat 18s ease-in-out infinite;
-}
-
-@keyframes fadeUpIn {
-  from { opacity: 0; transform: translateY(40px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes marquee {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
-}
-
-.animate-marquee {
-  animation: marquee 35s linear infinite;
-}
-
-.animate-marquee:hover {
-  animation-play-state: paused;
-}
-
-.mask-fade-x {
-  -webkit-mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
-  mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
-}
-
-
