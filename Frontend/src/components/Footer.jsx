@@ -1,46 +1,79 @@
 import { useNavigate } from "react-router-dom"
+import Marquee from "./Marquee"
 
 const COLUMNS = [
-  { title: "Platform", links: ["How it works", "Domains", "Pricing", "Status"] },
-  { title: "Company", links: ["About", "Team", "Contact"] },
-  { title: "Legal", links: ["Privacy", "Terms", "Security"] },
+  {
+    title: "Platform",
+    links: [
+      ["How it works", "/platform"],
+      ["Domains", "/domains"],
+      ["Pricing", "/pricing"],
+      ["Documentation", "/docs"],
+    ],
+  },
+  {
+    title: "Company",
+    links: [
+      ["About", "/about"],
+      ["Team", "/team"],
+      ["Careers", "/careers"],
+      ["Contact", "/contact"],
+    ],
+  },
+  {
+    title: "Resources",
+    links: [
+      ["Research", "/research"],
+      ["Blog", "/blog"],
+      ["Security", "/security"],
+      ["Status", "/changelog"],
+    ],
+  },
+  {
+    title: "Legal",
+    links: [
+      ["Privacy", "/privacy"],
+      ["Terms", "/terms"],
+      ["Security", "/security"],
+    ],
+  },
 ]
 
 export default function Footer() {
   const navigate = useNavigate()
   return (
-    <footer className="border-t border-ink-100 bg-ink-950 px-6 py-16 text-ink-300">
-      <div className="mx-auto max-w-6xl">
-        <div className="grid gap-12 lg:grid-cols-12">
-          <div className="lg:col-span-5">
-            <div className="flex items-center gap-2.5">
-              <img src="/fablet-logo.png" alt="" className="h-8 w-8 object-contain" />
-              <span className="text-lg font-bold text-white">Fablet</span>
-            </div>
-            <p className="mt-5 max-w-sm text-sm leading-relaxed text-ink-400">
+    <footer className="border-t border-line bg-paper-2">
+      <Marquee
+        items={["Brief", "Plan", "Execute", "Operate", "Refine"]}
+        speed={45}
+        className="border-b border-line py-5"
+        itemClassName="mx-8 display text-step-1 text-ink-400"
+      />
+
+      <div className="mx-auto max-w-[1240px] px-6 py-16 sm:px-8">
+        <div className="grid gap-12 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,2.4fr)]">
+          <div>
+            <p className="max-w-[34ch] text-step-1 leading-[1.4] text-ink-700">
               A self-orchestrating network of AI agents that turns a brief into a
-              working product, across education, media, news, and enterprise.
+              working product.
             </p>
-            <a
-              href="mailto:fablet@artdevelopers.site"
-              className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-ink-200 hover:text-white"
-            >
+            <a href="mailto:fablet@artdevelopers.site" className="link-underline mt-5 inline-block text-step--1">
               fablet@artdevelopers.site
             </a>
           </div>
 
-          <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:col-span-7">
+          <div className="grid gap-8 sm:grid-cols-4">
             {COLUMNS.map((col) => (
               <div key={col.title}>
-                <h3 className="text-sm font-semibold tracking-wide text-white">{col.title}</h3>
+                <h3 className="eyebrow">{col.title}</h3>
                 <ul className="mt-4 space-y-3">
-                  {col.links.map((link) => (
-                    <li key={link}>
+                  {col.links.map(([label, to]) => (
+                    <li key={`${col.title}-${label}`}>
                       <button
-                        onClick={() => navigate(link === "About" ? "/about" : link === "Contact" ? "/contact" : "/")}
-                        className="text-sm text-ink-400 transition-colors hover:text-white"
+                        onClick={() => navigate(to)}
+                        className="text-step--1 text-ink-600 transition-colors duration-200 hover:text-ink-950"
                       >
-                        {link}
+                        {label}
                       </button>
                     </li>
                   ))}
@@ -50,8 +83,16 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-14 border-t border-white/10 pt-8 text-sm text-ink-500">
-          {"\u00A9"} {new Date().getFullYear()} Fablet. All rights reserved.
+        <div className="mt-16 border-t border-line pt-8">
+          <p className="display text-step-6 leading-none text-ink-950">Fablet</p>
+          <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <p className="text-step--1 text-ink-500">
+              &copy; {new Date().getFullYear()} Fablet. All rights reserved.
+            </p>
+            <p className="font-mono text-[0.68rem] uppercase tracking-[0.18em] text-ink-500">
+              Built in Abbottabad
+            </p>
+          </div>
         </div>
       </div>
     </footer>

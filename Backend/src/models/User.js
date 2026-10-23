@@ -33,8 +33,25 @@ const userSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      enum: ['user', 'admin'],
-      default: 'user',
+      enum: ['student', 'institution', 'admin'],
+      default: 'student',
+    },
+    // Institution (B2B) membership. Null for students and platform admins.
+    institutionId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Institution',
+      default: null,
+    },
+    institutionRole: {
+      type: String,
+      enum: ['owner', 'admin', 'member', null],
+      default: null,
+    },
+    // The individual plan for a student account (institutions are billed by
+    // Institution.planId instead).
+    planId: {
+      type: String,
+      default: 'student-basic',
     },
     // Email verification / account activation. Signups start unverified and
     // cannot log in until they click the activation link.
@@ -55,6 +72,10 @@ userSchema.methods.toPublicJSON = function () {
     id: this._id.toString(),
     name: this.name,
     email: this.email,
+    role: this.role,
+    institutionId: this.institutionId ? this.institutionId.toString() : null,
+    institutionRole: this.institutionRole ?? null,
+    planId: this.planId ?? null,
   }
 }
 

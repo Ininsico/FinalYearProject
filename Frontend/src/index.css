@@ -1,56 +1,152 @@
-@import url("https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap");
+@import "@fontsource-variable/instrument-sans";
+@import "@fontsource-variable/jetbrains-mono";
+@import "@fontsource/instrument-serif";
+@import "@fontsource/instrument-serif/400-italic.css";
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Schibsted Grotesk", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-display: "Schibsted Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Instrument Serif", Georgia, "Times New Roman", serif;
+  --font-sans: "Instrument Sans Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono Variable", ui-monospace, monospace;
 
-  --color-paper: #f7f6f3;
-  --color-paper-200: #ecebe5;
+  /* Warm paper canvas */
+  --color-paper: oklch(0.976 0.007 85);
+  --color-paper-2: oklch(0.955 0.010 85);
+  --color-paper-3: oklch(0.930 0.012 85);
 
-  --color-ink-50: #f4f4f7;
-  --color-ink-100: #e8e8ee;
-  --color-ink-200: #d4d4de;
-  --color-ink-300: #b1b1c1;
-  --color-ink-400: #8a8a9c;
-  --color-ink-500: #65657a;
-  --color-ink-600: #4a4a5c;
-  --color-ink-700: #34343f;
-  --color-ink-800: #22222b;
-  --color-ink-900: #141420;
-  --color-ink-950: #0b0b12;
+  /* Warm ink */
+  --color-ink-950: oklch(0.20 0.012 60);
+  --color-ink-900: oklch(0.26 0.012 60);
+  --color-ink-800: oklch(0.33 0.012 60);
+  --color-ink-700: oklch(0.40 0.011 60);
+  --color-ink-600: oklch(0.47 0.011 60);
+  --color-ink-500: oklch(0.55 0.010 60);
+  --color-ink-400: oklch(0.63 0.009 60);
 
-  --color-brand-50: #f4f0ff;
-  --color-brand-100: #e9e1ff;
-  --color-brand-200: #d5c6ff;
-  --color-brand-300: #b79bff;
-  --color-brand-400: #9a6bff;
-  --color-brand-500: #7e3bff;
-  --color-brand-600: #6a1ff0;
-  --color-brand-700: #5714c7;
+  /* Hairlines */
+  --color-line: oklch(0.885 0.010 85);
+  --color-line-2: oklch(0.825 0.013 85);
+
+  /* Deep violet accent */
+  --color-accent: oklch(0.44 0.15 313);
+  --color-accent-ink: oklch(0.38 0.145 313);
+  --color-accent-soft: oklch(0.945 0.022 313);
+
+  /* Fluid type scale */
+  --text-step--1: clamp(0.78rem, 0.76rem + 0.1vw, 0.83rem);
+  --text-step-0: clamp(1.04rem, 1.0rem + 0.22vw, 1.12rem);
+  --text-step-1: clamp(1.25rem, 1.16rem + 0.45vw, 1.5rem);
+  --text-step-2: clamp(1.6rem, 1.42rem + 0.9vw, 2.15rem);
+  --text-step-3: clamp(2.1rem, 1.78rem + 1.6vw, 3.1rem);
+  --text-step-4: clamp(2.7rem, 2.1rem + 3vw, 4.6rem);
+  --text-step-5: clamp(3.4rem, 2.4rem + 5vw, 7rem);
+  --text-step-6: clamp(4.2rem, 2.6rem + 8vw, 10.5rem);
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
 }
 
-html { scroll-behavior: smooth; }
+:root {
+  --z-sticky: 20;
+  --z-overlay: 30;
+  --z-modal: 40;
+  --header-h: 72px;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
+  overflow-x: clip;
   background: var(--color-paper);
   color: var(--color-ink-900);
   font-family: var(--font-sans);
+  font-size: var(--text-step-0);
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  font-feature-settings: "ss01" 1, "cv01" 1;
 }
 
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(16px); }
-  to { opacity: 1; transform: none; }
+::selection {
+  background: var(--color-accent-soft);
+  color: var(--color-accent-ink);
 }
-.animate-fade-up { animation: fadeUp 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+
+:focus-visible {
+  outline: 2px solid var(--color-accent-ink);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.tabular { font-variant-numeric: tabular-nums; }
+
+section[id], [id] { scroll-margin-top: 6.5rem; }
+
+/* Display serif: Instrument Serif ships a single optical weight. */
+.display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  line-height: 0.98;
+  text-wrap: balance;
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex h-12 items-center justify-center gap-2 rounded-[3px] px-6 text-step--1 font-medium;
+    transition: background-color 0.2s var(--ease-out), color 0.2s var(--ease-out),
+      border-color 0.2s var(--ease-out), transform 0.12s var(--ease-out), opacity 0.2s var(--ease-out);
+  }
+  .btn:active { transform: translateY(1px); }
+  .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+  .btn:disabled:active { transform: none; }
+
+  .btn-primary { @apply bg-ink-950 text-paper; }
+  .btn-primary:hover { @apply bg-accent-ink; }
+
+  .btn-accent { @apply bg-accent text-paper; }
+  .btn-accent:hover { @apply bg-accent-ink; }
+
+  .btn-ghost { @apply border border-line-2 bg-transparent text-ink-800; }
+  .btn-ghost:hover { @apply border-ink-700 text-ink-950; }
+
+  .btn-quiet { @apply px-1 text-ink-600; }
+  .btn-quiet:hover { @apply text-ink-950; }
+
+  .link-underline {
+    @apply underline decoration-line-2 underline-offset-[5px];
+    transition: text-decoration-color 0.2s var(--ease-out), color 0.2s var(--ease-out);
+  }
+  .link-underline:hover { @apply decoration-accent-ink; }
+
+  .eyebrow {
+    @apply font-mono text-[0.68rem] uppercase tracking-[0.2em] text-ink-500;
+  }
+
+  .field {
+    @apply w-full rounded-[3px] border border-line-2 bg-paper px-4 py-3 text-step-0 text-ink-950;
+    transition: border-color 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out);
+  }
+  .field::placeholder { color: var(--color-ink-400); }
+  .field:hover { @apply border-ink-400; }
+  .field:focus { outline: none; @apply border-accent-ink; box-shadow: 0 0 0 3px var(--color-accent-soft); }
+
+  .rule { @apply border-t border-line; }
+}
+
+/* Reveal primitives — GSAP animates these; no-JS / reduced-motion keeps them visible. */
+[data-reveal] { will-change: transform, opacity; }
 
 @media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
   *, *::before, *::after {
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
   }
-  html { scroll-behavior: auto; }
+  [data-reveal] { opacity: 1 !important; transform: none !important; }
 }

@@ -7,8 +7,13 @@ import { env } from './config/env.js'
 import { connectDB } from './db.js'
 import authRouter from './routes/auth.js'
 import adminRouter from './routes/admin.js'
+import subscriptionsRouter from './routes/subscriptions.js'
+import institutionsRouter from './routes/institutions.js'
+import premiumRouter from './routes/premium.js'
 import { requireAuth } from './middleware/auth.js'
 import { requireAdmin } from './middleware/admin.js'
+import { startPaymentWatcher } from './lib/paymentWatcher.js'
+import { ensureInstantLogins, demoIdentities } from './lib/instantLogins.js'
 import User from './models/User.js'
 import { z } from 'zod'
 import { sendEmail } from './utils/email.js'
@@ -49,7 +54,13 @@ app.get('/api/auth/me', requireAuth, async (req, res) => {
   res.json({ user: user.toPublicJSON() })
 })
 
+// Demo identities for the sign-in chooser. Empty unless INSTANT_LOGIN is on.
+app.get('/api/auth/demo-identities', (req, res) => {
+  res.json({ enabled: env.instantLogin.enabled, identities: demoIdentities() })
+})
+
 app.use('/api/auth', authRouter)
+
 const adminLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 20,
@@ -59,10 +70,16 @@ const adminLimiter = rateLimit({
 })
 app.use('/api/admin', adminLimiter, adminRouter)
 app.get('/api/admin/dashboard', requireAdmin, async (req, res) => {
-  const users = await User.countDocuments({ role: 'user' })
+  const students = await User.countDocuments({ role: 'student' })
+  const institutions = await User.countDocuments({ role: 'institution' })
   const admins = await User.countDocuments({ role: 'admin' })
-  res.json({ stats: { users, admins } })
+  res.json({ stats: { students, institutions, admins } })
 })
+
+// Billing, institutions and premium (entitlement-gated) surfaces.
+app.use('/api/subscriptions', subscriptionsRouter)
+app.use('/api/institutions', institutionsRouter)
+app.use('/api/premium', premiumRouter)
 
 // Public contact form: emails the enquiry to the Fablet inbox.
 const contactLimiter = rateLimit({
@@ -89,7 +106,7 @@ app.post('/api/contact', contactLimiter, async (req, res) => {
       replyTo: email,
       subject: `New Fablet enquiry from ${name}`,
       text: `${message}\n\nFrom: ${name} <${email}>`,
-      html: `<p>${message.replace(/</g, '&amp;').replace(/>/g, '&amp;').replace(/\n/g, '<br/>')}</p>
+      html: `<p>${message.replace(/</g, '&amp;').replace(/>/g, '&gt;').replace(/\n/g, '<br/>')}</p>
              <p style="color:#666">From: ${name} &lt;${email}&gt;</p>`,
     })
     return res.json({ ok: true })
@@ -109,9 +126,20 @@ app.use((err, req, res, next) => {
 })
 
 connectDB()
-  .then(() => {
+  .then(async () => {
+    try {
+      const seeded = await ensureInstantLogins()
+      if (seeded) {
+        console.log(`[demo] instant logins ready (${seeded.accounts} identities, ${seeded.institution})`)
+      }
+    } catch (err) {
+      console.error('[demo] instant login seeding failed:', err?.message || err)
+    }
+
+    startPaymentWatcher()
+
     app.listen(env.port, () => {
-      console.log(`[server] Auth API listening on http://localhost:${env.port}`)
+      console.log(`[server] Fablet API listening on http://localhost:${env.port}`)
     })
   })
   .catch((err) => {

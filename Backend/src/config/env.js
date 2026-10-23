@@ -57,4 +57,32 @@ export const env = {
     url: process.env.CLOUDINARY_URL || '',
   },
   groqApiKey: process.env.GROQ_API_KEY || '',
+
+  // Crypto payments — READ-ONLY Binance access for deposit matching.
+  binance: {
+    apiKey: process.env.BINANCE_API_KEY || '',
+    apiSecret: process.env.BINANCE_API_SECRET || '',
+    baseUrl: process.env.BINANCE_BASE_URL || 'https://api.binance.com',
+    coin: process.env.BINANCE_DEPOSIT_COIN || 'USDT',
+    network: process.env.BINANCE_DEPOSIT_NETWORK || 'TRX',
+    get configured() {
+      return Boolean(this.apiKey && this.apiSecret)
+    },
+  },
+
+  payments: {
+    tolerancePercent: Number(process.env.PAYMENTS_TOLERANCE_PERCENT) || 2,
+    pollSeconds: Number(process.env.PAYMENTS_POLL_SECONDS) || 45,
+  },
+
+  subscriptions: {
+    trialDays: Number(process.env.SUBSCRIPTION_TRIAL_DAYS) || 14,
+    periodDays: Number(process.env.SUBSCRIPTION_PERIOD_DAYS) || 30,
+  },
+
+  // Instant demo logins, one identity per role. Off unless explicitly enabled.
+  instantLogin: {
+    enabled: process.env.INSTANT_LOGIN === 'true',
+    password: process.env.INSTANT_DEMO_PASSWORD || 'InstantDemo123',
+  },
 }

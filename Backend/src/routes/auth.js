@@ -14,6 +14,7 @@ import {
 } from '../utils/tokens.js'
 import { sendEmail, buildResetEmail, buildVerificationEmail } from '../utils/email.js'
 import { env } from '../config/env.js'
+import { clearAuthCookies, issueSession } from '../lib/session.js'
 
 const router = Router()
 
@@ -33,46 +34,6 @@ const loginSchema = z.object({
   email: z.string().trim().email(),
   password: z.string().min(1),
 })
-
-function cookieMaxAge(token) {
-  const exp = jwt.decode(token)?.exp
-  if (!exp) return undefined
-  return Math.max(0, (exp - Math.floor(Date.now() / 1000)) * 1000)
-}
-
-function setAuthCookies(res, accessToken, refreshToken) {
-  const sameSite = env.cookieSameSite
-  res.cookie('access_token', accessToken, {
-    httpOnly: true,
-    secure: env.cookieSecure,
-    sameSite,
-    maxAge: cookieMaxAge(accessToken),
-  })
-  res.cookie('refresh_token', refreshToken, {
-    httpOnly: true,
-    secure: env.cookieSecure,
-    sameSite,
-    maxAge: cookieMaxAge(refreshToken),
-    path: '/api/auth/refresh',
-  })
-}
-
-function clearAuthCookies(res) {
-  res.clearCookie('access_token')
-  res.clearCookie('refresh_token', { path: '/api/auth/refresh' })
-}
-
-async function issueSession(res, user) {
-  const accessToken = signAccessToken(user._id.toString())
-  const refreshToken = signRefreshToken(user._id.toString())
-  user.refreshTokens.push(hashToken(refreshToken))
-  if (user.refreshTokens.length > 5) {
-    user.refreshTokens = user.refreshTokens.slice(-5)
-  }
-  await user.save()
-  setAuthCookies(res, accessToken, refreshToken)
-  return user.toPublicJSON()
-}
 
 router.post('/signup', async (req, res) => {
   const parsed = signupSchema.safeParse(req.body)
@@ -170,7 +131,7 @@ router.post('/refresh', async (req, res) => {
   }
   // Rotation: invalidate the used token, issue a fresh pair.
   user.refreshTokens = user.refreshTokens.filter((t) => t !== hash)
-  const accessToken = signAccessToken(user._id.toString())
+  const accessToken = signAccessToken(user._id.toString(), user.role)
   const refreshToken = signRefreshToken(user._id.toString())
   user.refreshTokens.push(hashToken(refreshToken))
   if (user.refreshTokens.length > 5) {
