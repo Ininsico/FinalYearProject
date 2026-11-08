@@ -2,7 +2,8 @@ import { env } from '../config/env.js'
 import User, { hashPassword } from '../models/User.js'
 import Institution from '../models/Institution.js'
 import { getSubscription } from './subscriptions.js'
-import { DEFAULT_INSTITUTION_PLAN, planEntitlements } from '../config/plans.js'
+import { DEFAULT_INSTITUTION_PLAN } from '../config/plans.js'
+import { planEntitlementsOf } from './planStore.js'
 
 /**
  * The demo identities behind the instant-login buttons — one per role, so the
@@ -83,7 +84,7 @@ export async function ensureInstantLogins() {
         contactEmail: user.email,
         ownerId: user._id,
         planId: DEFAULT_INSTITUTION_PLAN,
-        seats: planEntitlements(DEFAULT_INSTITUTION_PLAN).seats,
+        seats: planEntitlementsOf(DEFAULT_INSTITUTION_PLAN).seats,
         status: 'trialing',
       })
 

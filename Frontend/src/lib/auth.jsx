@@ -2,12 +2,48 @@ import { createContext, useCallback, useContext, useEffect, useState } from "rea
 
 const AuthContext = createContext(null)
 
+/** Auth calls that must never trigger the silent-refresh retry. */
+const NO_RETRY = [
+  "/api/auth/login",
+  "/api/auth/signup",
+  "/api/auth/refresh",
+  "/api/auth/forgot-password",
+  "/api/auth/reset-password",
+  "/api/auth/resend-verification",
+]
+
+let refreshInFlight = null
+
+/** Rotate the session once, deduplicated across concurrent callers. */
+function refreshSession() {
+  if (!refreshInFlight) {
+    refreshInFlight = fetch("/api/auth/refresh", { method: "POST", credentials: "include" })
+      .then((res) => res.ok)
+      .catch(() => false)
+      .finally(() => {
+        refreshInFlight = null
+      })
+  }
+  return refreshInFlight
+}
+
 export async function api(path, options = {}) {
+  const { __retried, ...init } = options
   const res = await fetch(path, {
     credentials: "include",
     headers: { "Content-Type": "application/json" },
-    ...options,
+    ...init,
   })
+
+  // Expired 15-minute access token: rotate the session, then replay the call.
+  // This never fires for credential submissions (login/signup/reset), so a
+  // wrong password cannot be retried or masked.
+  if (res.status === 401 && !__retried && !NO_RETRY.some((p) => path.includes(p))) {
+    if (await refreshSession()) {
+      return api(path, { ...init, __retried: true })
+    }
+  }
+
   const data = await res.json().catch(() => ({}))
   if (!res.ok) {
     const err = new Error(data.error || "Request failed")
@@ -34,6 +70,23 @@ export function AuthProvider({ children }) {
   }, [])
 
   useEffect(() => { refresh() }, [refresh])
+
+  // Keep the session warm: rotate ahead of the 15-minute access-token expiry
+  // while the tab is visible, and again whenever it regains focus.
+  useEffect(() => {
+    if (!user) return
+    const tick = () => {
+      if (!document.hidden) refreshSession()
+    }
+    const id = setInterval(tick, 10 * 60 * 1000)
+    window.addEventListener("focus", tick)
+    document.addEventListener("visibilitychange", tick)
+    return () => {
+      clearInterval(id)
+      window.removeEventListener("focus", tick)
+      document.removeEventListener("visibilitychange", tick)
+    }
+  }, [user])
 
   const signIn = useCallback(async (email, password) => {
     const data = await api("/api/auth/login", {

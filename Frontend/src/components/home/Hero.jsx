@@ -73,11 +73,11 @@ export default function Hero() {
             as="h1"
             immediate
             delay={0.08}
-            className="mt-8 max-w-[15ch] text-step-6 text-ink-950 display"
+            className="mt-8 max-w-[15ch] text-step-5 text-ink-950 display"
           >
-            Tell it what to make.
+            From a sentence{" "}
             <br />
-            <em className="text-accent-ink">The swarm builds it.</em>
+            <em className="text-accent-ink">to a running product.</em>
           </SplitHeading>
 
           <div className="mt-12 grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-end">

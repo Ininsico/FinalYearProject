@@ -9,7 +9,6 @@ export default function AppShell({ nav, footerNote = null }) {
   const { user, signOut } = useAuth()
   const navigate = useNavigate()
   const [open, setOpen] = useState(false)
-  const initial = (user?.name || "?").trim().slice(0, 1).toUpperCase()
 
   const sidebar = (
     <div className="flex h-full flex-col">
@@ -38,12 +37,16 @@ export default function AppShell({ nav, footerNote = null }) {
 
       <div className="border-t border-line p-4">
         <div className="flex items-center gap-3">
-          <span
-            aria-hidden="true"
-            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-accent-soft text-step--1 font-medium text-accent-ink"
-          >
-            {initial}
-          </span>
+          <img
+            src={user?.avatarUrl || "/defaultprofile.png"}
+            alt=""
+            className="h-9 w-9 shrink-0 rounded-full border border-line-2 object-cover"
+            onError={(e) => {
+              if (!e.currentTarget.src.endsWith("/defaultprofile.png")) {
+                e.currentTarget.src = "/defaultprofile.png"
+              }
+            }}
+          />
           <div className="min-w-0">
             <p className="truncate text-step--1 text-ink-900">{user?.name}</p>
             <p className="truncate text-[0.74rem] text-ink-500">{user?.email}</p>
@@ -87,7 +90,7 @@ export default function AppShell({ nav, footerNote = null }) {
       )}
 
       <div className="lg:pl-[264px]">
-        <div className="mx-auto max-w-[1100px] px-6 py-10 sm:px-8 sm:py-14">
+        <div className="px-6 py-10 sm:px-8 sm:py-14">
           <Outlet />
         </div>
       </div>

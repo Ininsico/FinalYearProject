@@ -15,7 +15,7 @@ export default function StudentPremium() {
           <p className="eyebrow">Premium</p>
           <h1 className="display mt-3 text-step-3 text-ink-950">Agentic orchestration and the video agent</h1>
           <p className="mt-4 max-w-[56ch] leading-relaxed text-ink-600">
-            A basic student account includes the workspace and course productions. Premium adds the
+            A basic student account includes the courses catalogue and your workspace. Premium adds the
             agentic orchestration engine and the AI video-generation agent.
           </p>
         </div>

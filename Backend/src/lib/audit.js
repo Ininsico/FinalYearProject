@@ -22,8 +22,10 @@ export async function recordAudit({ actor, action, targetType = null, targetId =
   }
 }
 
-export function listAudit({ action, limit = 100 } = {}) {
+export function listAudit({ action, targetId, targetType, limit = 100 } = {}) {
   const filter = {}
   if (action) filter.action = action
+  if (targetId) filter.targetId = String(targetId)
+  if (targetType) filter.targetType = targetType
   return AuditEvent.find(filter).sort({ at: -1 }).limit(Math.min(Number(limit) || 100, 500))
 }

@@ -8,6 +8,8 @@ const qs = (params) => {
 
 export const fetchAdminStats = () => api("/api/admin/stats")
 export const fetchPlans = () => api("/api/admin/plans")
+export const updatePlan = (planId, patch) =>
+  api(`/api/admin/plans/${encodeURIComponent(planId)}`, { method: "PATCH", body: JSON.stringify(patch) })
 
 export const fetchUsers = (params) => api(`/api/admin/users${qs(params)}`)
 export const updateUser = (id, patch) =>
@@ -18,7 +20,19 @@ export const fetchInstitutions = () => api("/api/admin/institutions")
 export const updateInstitution = (id, patch) =>
   api(`/api/admin/institutions/${id}`, { method: "PATCH", body: JSON.stringify(patch) })
 
-export const fetchSubscriptions = () => api("/api/admin/subscriptions")
+export const fetchSubscriptions = (params) => api(`/api/admin/subscriptions${qs(params)}`)
+export const fetchSubscriptionAnalytics = () => api("/api/admin/subscriptions/analytics")
+export const fetchSubscription = (accountId) =>
+  api(`/api/admin/subscriptions/${encodeURIComponent(accountId)}`)
+export const updateSubscription = (accountId, patch) =>
+  api(`/api/admin/subscriptions/${encodeURIComponent(accountId)}`, {
+    method: "PATCH",
+    body: JSON.stringify(patch),
+  })
+export const cancelSubscription = (accountId) =>
+  api(`/api/admin/subscriptions/${encodeURIComponent(accountId)}/cancel`, { method: "POST" })
+export const resumeSubscription = (accountId) =>
+  api(`/api/admin/subscriptions/${encodeURIComponent(accountId)}/resume`, { method: "POST" })
 export const adminActivateSubscription = (accountId, planId) =>
   api(`/api/admin/subscriptions/${encodeURIComponent(accountId)}/activate`, {
     method: "POST",

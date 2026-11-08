@@ -80,6 +80,13 @@ export const env = {
     periodDays: Number(process.env.SUBSCRIPTION_PERIOD_DAYS) || 30,
   },
 
+  // AI service guardrails — each user gets a daily call budget; the Flask
+  // service additionally enforces pacing and daily token budgets.
+  ai: {
+    dailyLimitUser: Number(process.env.AI_DAILY_LIMIT_USER) || 60,
+    dailyLimitInstitution: Number(process.env.AI_DAILY_LIMIT_INSTITUTION) || 200,
+  },
+
   // Instant demo logins, one identity per role. Off unless explicitly enabled.
   instantLogin: {
     enabled: process.env.INSTANT_LOGIN === 'true',

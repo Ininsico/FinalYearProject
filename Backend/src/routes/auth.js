@@ -1,10 +1,11 @@
 import { Router } from 'express'
 import { z } from 'zod'
 import jwt from 'jsonwebtoken'
+import multer from 'multer'
 import User, { hashPassword } from '../models/User.js'
+import { requireAuth } from '../middleware/auth.js'
+import { uploadAvatar, removeAvatar, cloudinaryConfigured } from '../lib/cloudinary.js'
 import {
-  signAccessToken,
-  signRefreshToken,
   verifyRefreshToken,
   verifyResetToken,
   signResetToken,
@@ -14,7 +15,7 @@ import {
 } from '../utils/tokens.js'
 import { sendEmail, buildResetEmail, buildVerificationEmail } from '../utils/email.js'
 import { env } from '../config/env.js'
-import { clearAuthCookies, issueSession } from '../lib/session.js'
+import { clearAuthCookies, issueSession, refreshSession } from '../lib/session.js'
 
 const router = Router()
 
@@ -108,38 +109,11 @@ router.post('/login', async (req, res) => {
 })
 
 router.post('/refresh', async (req, res) => {
-  const token = req.cookies?.refresh_token
-  if (!token) {
-    return res.status(401).json({ error: 'No refresh token' })
-  }
-  let payload
-  try {
-    payload = verifyRefreshToken(token)
-  } catch {
-    return res.status(401).json({ error: 'Invalid refresh token' })
-  }
-  const user = await User.findById(payload.sub).select('+refreshTokens')
+  const user = await refreshSession(req, res)
   if (!user) {
-    return res.status(401).json({ error: 'Invalid refresh token' })
+    return res.status(401).json({ error: 'No active session' })
   }
-  const hash = hashToken(token)
-  if (!user.refreshTokens.includes(hash)) {
-    // Token was logged out or reused after rotation.
-    user.refreshTokens = []
-    await user.save()
-    return res.status(401).json({ error: 'Refresh token revoked' })
-  }
-  // Rotation: invalidate the used token, issue a fresh pair.
-  user.refreshTokens = user.refreshTokens.filter((t) => t !== hash)
-  const accessToken = signAccessToken(user._id.toString(), user.role)
-  const refreshToken = signRefreshToken(user._id.toString())
-  user.refreshTokens.push(hashToken(refreshToken))
-  if (user.refreshTokens.length > 5) {
-    user.refreshTokens = user.refreshTokens.slice(-5)
-  }
-  await user.save()
-  setAuthCookies(res, accessToken, refreshToken)
-  return res.json({ ok: true })
+  return res.json({ ok: true, user: user.toPublicJSON() })
 })
 
 router.post('/logout', async (req, res) => {
@@ -292,6 +266,104 @@ router.post('/resend-verification', async (req, res) => {
     ok: true,
     message: 'If the email exists and is unverified, a new activation link was sent.',
   })
+})
+
+// --- Self-service profile ---
+
+const profileSchema = z.object({
+  name: z.string().trim().min(1).max(80),
+})
+
+router.patch('/profile', requireAuth, async (req, res) => {
+  const parsed = profileSchema.safeParse(req.body ?? {})
+  if (!parsed.success) return res.status(400).json({ error: parsed.error.issues[0].message })
+
+  const user = await User.findById(req.userId)
+  if (!user) return res.status(401).json({ error: 'Not authenticated' })
+
+  user.name = parsed.data.name
+  await user.save()
+  return res.json({ user: user.toPublicJSON() })
+})
+
+const avatarUpload = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 5 * 1024 * 1024 },
+  fileFilter: (req, file, cb) => {
+    const allowed = ['image/png', 'image/jpeg', 'image/webp']
+    if (allowed.includes(file.mimetype)) return cb(null, true)
+    cb(new Error('Only PNG, JPEG or WebP images are allowed'))
+  },
+})
+
+function acceptAvatar(req, res, next) {
+  avatarUpload.single('avatar')(req, res, (err) => {
+    if (err) return res.status(400).json({ error: err.message })
+    next()
+  })
+}
+
+router.post('/avatar', requireAuth, acceptAvatar, async (req, res) => {
+  const user = await User.findById(req.userId)
+  if (!user) return res.status(401).json({ error: 'Not authenticated' })
+  if (!req.file) return res.status(400).json({ error: 'Attach an image in the "avatar" field' })
+  if (!cloudinaryConfigured()) {
+    return res.status(503).json({ error: 'Image storage is not configured' })
+  }
+
+  try {
+    const result = await uploadAvatar(req.file.buffer, user._id.toString())
+    user.avatarUrl = result.secure_url
+    user.avatarPublicId = result.public_id
+    await user.save()
+    return res.json({ user: user.toPublicJSON() })
+  } catch (err) {
+    console.error('[avatar] upload failed:', err?.message || err)
+    return res.status(502).json({ error: 'Could not upload the image' })
+  }
+})
+
+router.delete('/avatar', requireAuth, async (req, res) => {
+  const user = await User.findById(req.userId)
+  if (!user) return res.status(401).json({ error: 'Not authenticated' })
+
+  if (user.avatarPublicId) {
+    try {
+      await removeAvatar(user.avatarPublicId)
+    } catch (err) {
+      console.error('[avatar] delete failed:', err?.message || err)
+    }
+  }
+  user.avatarUrl = null
+  user.avatarPublicId = null
+  await user.save()
+  return res.json({ user: user.toPublicJSON() })
+})
+
+const passwordSchema = z
+  .object({
+    currentPassword: z.string().min(1),
+    newPassword: z.string().min(8).max(200),
+    confirm: z.string().min(8).max(200),
+  })
+  .refine((d) => d.newPassword === d.confirm, {
+    message: 'Passwords do not match',
+    path: ['confirm'],
+  })
+
+router.post('/change-password', requireAuth, async (req, res) => {
+  const parsed = passwordSchema.safeParse(req.body ?? {})
+  if (!parsed.success) return res.status(400).json({ error: parsed.error.issues[0].message })
+
+  const user = await User.findById(req.userId).select('+passwordHash')
+  if (!user) return res.status(401).json({ error: 'Not authenticated' })
+
+  const ok = await user.verifyPassword(parsed.data.currentPassword)
+  if (!ok) return res.status(400).json({ error: 'Current password is incorrect' })
+
+  user.passwordHash = await hashPassword(parsed.data.newPassword)
+  await user.save()
+  return res.json({ ok: true })
 })
 
 export default router

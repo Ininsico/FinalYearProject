@@ -5,15 +5,18 @@ import cookieParser from 'cookie-parser'
 import rateLimit from 'express-rate-limit'
 import { env } from './config/env.js'
 import { connectDB } from './db.js'
+import { initPlanStore } from './lib/planStore.js'
 import authRouter from './routes/auth.js'
 import adminRouter from './routes/admin.js'
 import subscriptionsRouter from './routes/subscriptions.js'
 import institutionsRouter from './routes/institutions.js'
 import premiumRouter from './routes/premium.js'
-import { requireAuth } from './middleware/auth.js'
+import dictionaryRouter from './routes/dictionary.js'
+import { resolveSession } from './lib/session.js'
 import { requireAdmin } from './middleware/admin.js'
 import { startPaymentWatcher } from './lib/paymentWatcher.js'
 import { ensureInstantLogins, demoIdentities } from './lib/instantLogins.js'
+import { ensureDictionarySeed } from './lib/dictionarySeed.js'
 import User from './models/User.js'
 import { z } from 'zod'
 import { sendEmail } from './utils/email.js'
@@ -35,21 +38,26 @@ app.use(
 app.use(cookieParser())
 app.use(express.json({ limit: '10kb' }))
 
-// Brute-force protection on the auth surface.
+// Brute-force protection on the auth surface. Reads (session restore, demo
+// identities) are skipped — only credential submissions count — so normal
+// browsing can never lock the app out. Development gets a far higher ceiling.
 const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  max: 30,
+  max: env.isProd ? 30 : 1000,
   standardHeaders: true,
   legacyHeaders: false,
+  skip: (req) => req.method === 'GET',
   message: { error: 'Too many attempts, try again later' },
 })
 app.use('/api/auth', authLimiter)
 
 app.get('/health', (req, res) => res.json({ ok: true }))
 
-// Current user (protected) for session restore on the frontend.
-app.get('/api/auth/me', requireAuth, async (req, res) => {
-  const user = await User.findById(req.userId)
+// Current user for session restore. A valid access token wins; otherwise the
+// refresh cookie silently rotates the session, so an expired access token
+// never reads as "logged out".
+app.get('/api/auth/me', async (req, res) => {
+  const user = await resolveSession(req, res)
   if (!user) return res.status(401).json({ error: 'Not authenticated' })
   res.json({ user: user.toPublicJSON() })
 })
@@ -61,11 +69,14 @@ app.get('/api/auth/demo-identities', (req, res) => {
 
 app.use('/api/auth', authRouter)
 
+// Admin API: reads are never throttled (the console queries on every page);
+// mutations keep a generous ceiling.
 const adminLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  max: 20,
+  max: env.isProd ? 60 : 1000,
   standardHeaders: true,
   legacyHeaders: false,
+  skip: (req) => req.method === 'GET',
   message: { error: 'Too many attempts, try again later' },
 })
 app.use('/api/admin', adminLimiter, adminRouter)
@@ -80,6 +91,7 @@ app.get('/api/admin/dashboard', requireAdmin, async (req, res) => {
 app.use('/api/subscriptions', subscriptionsRouter)
 app.use('/api/institutions', institutionsRouter)
 app.use('/api/premium', premiumRouter)
+app.use('/api/dictionary', dictionaryRouter)
 
 // Public contact form: emails the enquiry to the Fablet inbox.
 const contactLimiter = rateLimit({
@@ -128,12 +140,27 @@ app.use((err, req, res, next) => {
 connectDB()
   .then(async () => {
     try {
+      await initPlanStore()
+    } catch (err) {
+      console.error('[plans] plan store init failed:', err?.message || err)
+    }
+
+    try {
       const seeded = await ensureInstantLogins()
       if (seeded) {
         console.log(`[demo] instant logins ready (${seeded.accounts} identities, ${seeded.institution})`)
       }
     } catch (err) {
       console.error('[demo] instant login seeding failed:', err?.message || err)
+    }
+
+    try {
+      const seededModules = await ensureDictionarySeed()
+      if (seededModules) {
+        console.log(`[dictionary] seeded ${seededModules} starter course modules`)
+      }
+    } catch (err) {
+      console.error('[dictionary] seeding failed:', err?.message || err)
     }
 
     startPaymentWatcher()

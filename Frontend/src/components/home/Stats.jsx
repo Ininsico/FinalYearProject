@@ -31,7 +31,7 @@ export default function Stats() {
   )
 
   return (
-    <section ref={root} data-bg="#f1ecf9" className="border-t border-line py-20 sm:py-28">
+    <section ref={root} data-bg="#eef0ff" className="border-t border-line py-20 sm:py-28">
       <Container>
         <Reveal>
           <p className="eyebrow">By the numbers</p>

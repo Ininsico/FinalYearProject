@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useState } from "react"
+import { Link } from "react-router-dom"
 import { CircleNotch, Warning, Lightning } from "@phosphor-icons/react"
 import { fetchPayments, settlePayment } from "../../lib/admin"
+import SubscriptionsNav from "../../components/admin/SubscriptionsNav"
 
 const tone = (s) =>
   s === "confirmed" || s === "overpaid"
@@ -33,13 +35,15 @@ export default function AdminPayments() {
   return (
     <>
       <div>
-        <p className="eyebrow">Payments</p>
+        <p className="eyebrow">Subscriptions</p>
         <h1 className="display mt-3 text-step-3 text-ink-950">Crypto payment intents</h1>
         <p className="mt-4 max-w-[56ch] leading-relaxed text-ink-600">
           Deposits are matched read-only against Binance history. "Settle" marks an intent paid
           without waiting for a chain deposit — for demos and support.
         </p>
       </div>
+
+      <SubscriptionsNav />
 
       {error && (
         <p role="alert" className="mt-5 flex items-start gap-2 text-step--1 text-red-700">
@@ -65,7 +69,14 @@ export default function AdminPayments() {
               return (
                 <tr key={p.id} className="border-b border-line last:border-0">
                   <td className="px-4 py-3 font-mono text-[0.72rem] text-ink-700">{p.reference}{p.demo && <span className="ml-2 text-[0.62rem] uppercase text-ink-400">demo</span>}</td>
-                  <td className="px-4 py-3 font-mono text-[0.72rem] text-ink-600">{p.accountId}</td>
+                  <td className="px-4 py-3 font-mono text-[0.72rem] text-ink-600">
+                    <Link
+                      to={`/admin/subscriptions/${encodeURIComponent(p.accountId)}`}
+                      className="underline decoration-line-2 underline-offset-4 hover:decoration-accent-ink"
+                    >
+                      {p.accountId}
+                    </Link>
+                  </td>
                   <td className="px-4 py-3 text-step--1 text-ink-900">{p.planId}</td>
                   <td className="px-4 py-3 text-step--1 tabular text-ink-700">{p.expectedAmount} {p.asset}</td>
                   <td className="px-4 py-3 text-step--1 tabular text-ink-700">{p.matchedTotal} {p.asset}</td>

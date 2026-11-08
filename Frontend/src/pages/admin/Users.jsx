@@ -1,9 +1,95 @@
-import { useCallback, useEffect, useState } from "react"
-import { CircleNotch, Warning, MagnifyingGlass, Trash } from "@phosphor-icons/react"
+import { useCallback, useEffect, useRef, useState } from "react"
+import { CircleNotch, Warning, MagnifyingGlass, Trash, X } from "@phosphor-icons/react"
 import { fetchUsers, updateUser, deleteUser } from "../../lib/admin"
-import { useAuth } from "../../lib/auth"
+import { useAuth, api } from "../../lib/auth"
 
 const ROLES = ["student", "institution", "admin"]
+
+/** Round avatar that doubles as the upload control, with a remove action. */
+function AvatarPicker({ user, onUpdated }) {
+  const [busy, setBusy] = useState(false)
+  const [error, setError] = useState("")
+  const inputRef = useRef(null)
+
+  async function onFile(e) {
+    const file = e.target.files?.[0]
+    e.target.value = ""
+    if (!file) return
+    const formData = new FormData()
+    formData.append("avatar", file)
+    setBusy(true)
+    setError("")
+    try {
+      await api(`/api/admin/users/${user.id}/avatar`, { method: "POST", body: formData, headers: {} })
+      onUpdated()
+    } catch (err) {
+      setError(err.message)
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  async function remove() {
+    if (!window.confirm(`Remove the profile picture of ${user.email}?`)) return
+    setBusy(true)
+    setError("")
+    try {
+      await api(`/api/admin/users/${user.id}/avatar`, { method: "DELETE" })
+      onUpdated()
+    } catch (err) {
+      setError(err.message)
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  return (
+    <div className="flex items-center gap-2">
+      <button
+        type="button"
+        onClick={() => inputRef.current?.click()}
+        disabled={busy}
+        title={user.avatarUrl ? "Replace profile picture" : "Set profile picture"}
+        className="relative h-10 w-10 shrink-0 overflow-hidden rounded-full border border-line-2 bg-accent-soft"
+      >
+        <img
+          src={user.avatarUrl || "/defaultprofile.png"}
+          alt=""
+          className="h-full w-full object-cover"
+          onError={(e) => {
+            if (!e.currentTarget.src.endsWith("/defaultprofile.png")) {
+              e.currentTarget.src = "/defaultprofile.png"
+            }
+          }}
+        />
+        {busy && (
+          <span className="absolute inset-0 flex items-center justify-center bg-ink-950/45">
+            <CircleNotch size={14} weight="bold" className="animate-spin text-paper" />
+          </span>
+        )}
+      </button>
+      <input
+        ref={inputRef}
+        type="file"
+        accept="image/png,image/jpeg,image/webp"
+        onChange={onFile}
+        className="hidden"
+        aria-label={`Upload a profile picture for ${user.email}`}
+      />
+      {user.avatarUrl && (
+        <button
+          onClick={remove}
+          disabled={busy}
+          title="Remove picture"
+          className="text-ink-400 transition-colors hover:text-red-700"
+        >
+          <X size={13} weight="bold" />
+        </button>
+      )}
+      {error && <span className="max-w-[140px] text-[0.7rem] text-red-700">{error}</span>}
+    </div>
+  )
+}
 
 export default function AdminUsers() {
   const { user: me } = useAuth()
@@ -90,22 +176,25 @@ export default function AdminUsers() {
         <table className="w-full border-collapse text-left">
           <thead>
             <tr className="border-b border-line bg-paper-2">
-              {["Name", "Email", "Role", "Verified", ""].map((h, i) => (
+              {["Avatar", "Name", "Email", "Role", "Verified", ""].map((h, i) => (
                 <th key={i} scope="col" className="px-4 py-3 font-mono text-[0.66rem] uppercase tracking-[0.14em] text-ink-500">{h}</th>
               ))}
             </tr>
           </thead>
           <tbody>
             {!data && (
-              <tr><td colSpan={5} className="px-4 py-10 text-center text-step--1 text-ink-500">
+              <tr><td colSpan={6} className="px-4 py-10 text-center text-step--1 text-ink-500">
                 <CircleNotch size={16} weight="bold" className="inline animate-spin" aria-hidden="true" /> Loading
               </td></tr>
             )}
             {data?.users?.length === 0 && (
-              <tr><td colSpan={5} className="px-4 py-10 text-center text-step--1 text-ink-500">No accounts match.</td></tr>
+              <tr><td colSpan={6} className="px-4 py-10 text-center text-step--1 text-ink-500">No accounts match.</td></tr>
             )}
             {data?.users?.map((u) => (
               <tr key={u.id} className="border-b border-line last:border-0">
+                <td className="px-4 py-3">
+                  <AvatarPicker user={u} onUpdated={load} />
+                </td>
                 <td className="px-4 py-3 text-step--1 text-ink-900">{u.name}</td>
                 <td className="px-4 py-3 text-step--1 text-ink-600">{u.email}</td>
                 <td className="px-4 py-3">

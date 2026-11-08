@@ -1,11 +1,12 @@
 import {
-  SquaresFour, UsersThree, Rocket, Robot, CreditCard, GearSix,
+  SquaresFour, UsersThree, Rocket, Robot, CreditCard, GearSix, BookOpen,
 } from "@phosphor-icons/react"
 import AppShell from "../shell/AppShell"
 
 const NAV = [
   { to: "/institution", label: "Overview", icon: SquaresFour, end: true },
   { to: "/institution/members", label: "Members & seats", icon: UsersThree },
+  { to: "/institution/modules", label: "Course modules", icon: BookOpen },
   { to: "/institution/agents", label: "Agents", icon: Robot },
   { to: "/institution/productions", label: "Productions", icon: Rocket },
   { to: "/institution/billing", label: "Billing", icon: CreditCard },

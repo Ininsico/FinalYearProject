@@ -17,6 +17,19 @@ export default function Reveal({
       const el = ref.current
       if (!el) return
       const mm = gsap.matchMedia()
+      mm.add("(prefers-reduced-motion: reduce)", () => {
+        gsap.fromTo(
+          el,
+          { autoAlpha: 0 },
+          {
+            autoAlpha: 1,
+            duration: 0.5,
+            delay,
+            ease: "power1.out",
+            scrollTrigger: { trigger: el, start, once: true },
+          }
+        )
+      })
       mm.add("(prefers-reduced-motion: no-preference)", () => {
         gsap.fromTo(
           el,

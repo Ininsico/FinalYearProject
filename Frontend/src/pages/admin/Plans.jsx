@@ -1,50 +1,94 @@
 import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
+import { CircleNotch, Warning, CaretRight } from "@phosphor-icons/react"
 import { fetchPlans } from "../../lib/admin"
+import SubscriptionsNav from "../../components/admin/SubscriptionsNav"
+
+const fmtPrice = (n) => (Number(n) === 0 ? "Free" : `${n} USDT`)
 
 export default function AdminPlans() {
-  const [plans, setPlans] = useState(null)
+  const navigate = useNavigate()
+  const [data, setData] = useState(null)
   const [error, setError] = useState("")
 
-  useEffect(() => { fetchPlans().then((d) => setPlans(d.plans)).catch((e) => setError(e.message)) }, [])
+  useEffect(() => {
+    fetchPlans().then(setData).catch((e) => setError(e.message))
+  }, [])
 
-  if (error) return <p role="alert" className="text-step--1 text-red-700">{error}</p>
+  const open = (planId) => navigate(`/admin/subscriptions/plans/${encodeURIComponent(planId)}`)
 
   return (
     <>
       <div>
-        <p className="eyebrow">Plans</p>
-        <h1 className="display mt-3 text-step-3 text-ink-950">Catalogue</h1>
-        <p className="mt-4 max-w-[56ch] leading-relaxed text-ink-600">
-          Prices and entitlements come from the server's plan module, which is also what the
-          payment matcher compares deposits against.
-        </p>
+        <p className="eyebrow">Subscriptions</p>
+        <h1 className="display mt-3 text-step-3 text-ink-950">Plans & features</h1>
       </div>
+      <p className="mt-4 max-w-[72ch] leading-relaxed text-ink-600">
+        The live catalogue. Open a plan to edit its price, seats and the premium features it
+        unlocks — changes apply immediately to checkout, payment matching and entitlements.
+      </p>
 
-      <div className="mt-10 grid gap-4 sm:grid-cols-2">
-        {plans?.map((plan) => (
-          <article key={plan.id} className="border border-line p-6">
-            <div className="flex items-baseline justify-between">
-              <h2 className="display text-step-2 text-ink-950">{plan.name}</h2>
-              <span className="eyebrow">{plan.audience}</span>
-            </div>
-            <p className="display mt-4 text-step-3 tabular text-ink-950">
-              {plan.amountUsdt === 0 ? "Free" : `${plan.amountUsdt} USDT`}
-            </p>
-            <p className="mt-1 text-step--1 text-ink-500">{plan.period}</p>
-            <dl className="mt-5 grid grid-cols-2 gap-px overflow-hidden border border-line bg-line">
-              <div className="bg-paper p-3">
-                <dt className="eyebrow">Seats</dt>
-                <dd className="mt-1 text-step--1 tabular text-ink-900">{plan.entitlements.seats}</dd>
-              </div>
-              <div className="bg-paper p-3">
-                <dt className="eyebrow">Features</dt>
-                <dd className="mt-1 text-step--1 text-ink-900">
-                  {plan.entitlements.features.length ? plan.entitlements.features.join(", ") : "—"}
-                </dd>
-              </div>
-            </dl>
-          </article>
-        ))}
+      <SubscriptionsNav />
+
+      {error && (
+        <p role="alert" className="mt-6 flex items-start gap-2 text-step--1 text-red-700">
+          <Warning size={16} weight="bold" className="mt-0.5 shrink-0" aria-hidden="true" />
+          {error}
+        </p>
+      )}
+
+      <div className="mt-6 overflow-hidden border border-line">
+        <table className="w-full border-collapse text-left">
+          <thead>
+            <tr className="border-b border-line bg-paper-2">
+              {["Plan", "Audience", "Price", "Seats", "Unlocks", ""].map((h, i) => (
+                <th key={i} scope="col" className="px-4 py-3 font-mono text-[0.66rem] uppercase tracking-[0.14em] text-ink-500">
+                  {h}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {!data && (
+              <tr>
+                <td colSpan={6} className="px-4 py-10 text-center text-step--1 text-ink-500">
+                  <CircleNotch size={16} weight="bold" className="inline animate-spin" aria-hidden="true" /> Loading
+                </td>
+              </tr>
+            )}
+            {data?.plans?.map((plan) => (
+              <tr
+                key={plan.id}
+                onClick={() => open(plan.id)}
+                onKeyDown={(e) => { if (e.key === "Enter") open(plan.id) }}
+                tabIndex={0}
+                className="cursor-pointer border-b border-line transition-colors last:border-0 hover:bg-paper-2 focus-visible:bg-paper-2"
+              >
+                <td className="px-4 py-3">
+                  <span className="block text-step--1 text-ink-950">{plan.name}</span>
+                  <span className="block max-w-[60ch] text-[0.74rem] text-ink-500">{plan.summary}</span>
+                </td>
+                <td className="px-4 py-3 text-step--1 text-ink-600">{plan.audience}</td>
+                <td className="px-4 py-3 text-step--1 tabular text-ink-900">{fmtPrice(plan.amountUsdt)}</td>
+                <td className="px-4 py-3 text-step--1 tabular text-ink-600">{plan.entitlements.seats}</td>
+                <td className="px-4 py-3">
+                  {plan.entitlements.features.length ? (
+                    <span className="flex flex-wrap gap-1.5">
+                      {plan.entitlements.features.map((f) => (
+                        <span key={f} className="border border-accent/40 bg-accent-soft px-2 py-0.5 font-mono text-[0.62rem] uppercase tracking-[0.1em] text-accent-ink">
+                          {f}
+                        </span>
+                      ))}
+                    </span>
+                  ) : (
+                    <span className="text-step--1 text-ink-400">—</span>
+                  )}
+                </td>
+                <td className="px-4 py-3 text-right text-ink-400"><CaretRight size={15} weight="bold" /></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </>
   )

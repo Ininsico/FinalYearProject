@@ -54,10 +54,20 @@ const userSchema = new mongoose.Schema(
       default: 'student-basic',
     },
     // Email verification / account activation. Signups start unverified and
-    // cannot log in until they click the activation link.
+    // cannot login until they click the activation link.
     isVerified: {
       type: Boolean,
       default: false,
+    },
+    // Profile picture (Cloudinary). The publicId lets us replace and remove
+    // the underlying asset instead of orphaning it.
+    avatarUrl: {
+      type: String,
+      default: null,
+    },
+    avatarPublicId: {
+      type: String,
+      default: null,
     },
   },
   { timestamps: true }
@@ -76,6 +86,7 @@ userSchema.methods.toPublicJSON = function () {
     institutionId: this.institutionId ? this.institutionId.toString() : null,
     institutionRole: this.institutionRole ?? null,
     planId: this.planId ?? null,
+    avatarUrl: this.avatarUrl ?? null,
   }
 }
 

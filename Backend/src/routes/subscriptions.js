@@ -4,7 +4,7 @@ import { requireAuth } from '../middleware/auth.js'
 import { resolveAccount } from '../middleware/account.js'
 import { attachEntitlements } from '../middleware/entitlements.js'
 import { env } from '../config/env.js'
-import { findPlan, plansWithEntitlements, defaultPlanFor } from '../config/plans.js'
+import { planById, plansForAudience } from '../lib/planStore.js'
 import { depositAddress } from '../lib/binance.js'
 import {
   createIntent,
@@ -25,7 +25,7 @@ router.get('/plans', (req, res) => {
     ? String(req.query.audience)
     : null
   res.json({
-    plans: plansWithEntitlements().filter((plan) => !audience || plan.audience === audience),
+    plans: plansForAudience(audience),
   })
 })
 
@@ -42,7 +42,7 @@ router.get('/', async (req, res) => {
   res.json({
     account: { type: req.account.type, id: req.account.id },
     ...entitlements,
-    plans: plansWithEntitlements().filter((plan) => plan.audience === req.account.type),
+    plans: plansForAudience(req.account.type),
     providers: [
       {
         id: 'crypto',
@@ -79,7 +79,7 @@ router.post('/checkout', async (req, res, next) => {
     const parsed = checkoutSchema.safeParse(req.body ?? {})
     if (!parsed.success) return res.status(400).json({ error: 'Choose a valid plan' })
 
-    const plan = findPlan(parsed.data.planId)
+    const plan = planById(parsed.data.planId)
     if (!plan) return res.status(400).json({ error: 'Choose a valid plan' })
     if (plan.audience !== req.account.type) {
       return res.status(400).json({ error: `That plan is for ${plan.audience} accounts` })

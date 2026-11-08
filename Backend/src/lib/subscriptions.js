@@ -1,25 +1,21 @@
 import Subscription from '../models/Subscription.js'
 import { env } from '../config/env.js'
-import {
-  defaultPlanFor,
-  findPlan,
-  planEntitlements,
-  FEATURES,
-} from '../config/plans.js'
+import { defaultPlanFor, FEATURES } from '../config/plans.js'
+import { planById, planEntitlementsOf } from './planStore.js'
 
 const addDays = (date, days) => new Date(date.getTime() + days * 86400000).toISOString()
 
 export const accountKey = (accountType, id) => `${accountType}:${id}`
 
 function normalize(row) {
-  const plan = findPlan(row.planId) ?? findPlan(defaultPlanFor(row.accountType))
-  const entitlements = planEntitlements(plan.id)
+  const plan = planById(row.planId) ?? planById(defaultPlanFor(row.accountType))
+  const entitlements = plan?.entitlements ?? { seats: 1, features: [] }
   return {
     accountId: row.accountId,
     accountType: row.accountType,
-    planId: plan.id,
-    planName: plan.name,
-    amountUsdt: plan.amountUsdt,
+    planId: plan?.id ?? row.planId,
+    planName: plan?.name ?? row.planId,
+    amountUsdt: plan?.amountUsdt ?? 0,
     status: row.status,
     provider: row.provider,
     seats: row.seats,
@@ -42,7 +38,7 @@ export async function getSubscription(accountType, id) {
   if (existing) return normalize(existing)
 
   const planId = defaultPlanFor(accountType)
-  const plan = findPlan(planId)
+  const plan = planById(planId)
   const now = new Date()
   const trialDays = env.subscriptions.trialDays
 
@@ -58,7 +54,7 @@ export async function getSubscription(accountType, id) {
         planId,
         status: isTrial ? 'trialing' : 'active',
         provider: null,
-        seats: planEntitlements(planId).seats,
+        seats: planEntitlementsOf(planId).seats,
         currentPeriodStart: now.toISOString(),
         currentPeriodEnd: isTrial ? addDays(now, trialDays) : null,
         trialEndsAt: isTrial ? addDays(now, trialDays) : null,
@@ -67,8 +63,8 @@ export async function getSubscription(accountType, id) {
             at: now.toISOString(),
             action: isTrial ? 'trial.started' : 'account.created',
             detail: isTrial
-              ? `${trialDays}-day trial of ${plan.name}`
-              : `Free ${plan.name} account`,
+              ? `${trialDays}-day trial of ${plan?.name ?? planId}`
+              : `Free ${plan?.name ?? planId} account`,
           },
         ],
       },
@@ -104,13 +100,13 @@ export async function activateSubscription({
 
   if (reference && subscription.lastPaymentReference === reference) return normalize(subscription)
 
-  const plan = findPlan(planId) ?? findPlan(subscription.planId)
+  const plan = planById(planId) ?? planById(subscription.planId)
   const now = new Date()
 
-  subscription.planId = plan.id
+  subscription.planId = plan?.id ?? subscription.planId
   subscription.status = 'active'
   subscription.provider = provider ?? subscription.provider ?? null
-  subscription.seats = planEntitlements(plan.id).seats
+  subscription.seats = planEntitlementsOf(subscription.planId).seats
   subscription.currentPeriodStart = now.toISOString()
   subscription.currentPeriodEnd = addDays(now, periodDays)
   subscription.trialEndsAt = null
@@ -121,7 +117,7 @@ export async function activateSubscription({
     {
       at: now.toISOString(),
       action: 'subscription.activated',
-      detail: `${plan.name} via ${provider ?? 'payment'} · ${periodDays} days`,
+      detail: `${plan?.name ?? subscription.planId} via ${provider ?? 'payment'} · ${periodDays} days`,
       reference: reference ?? null,
     },
     ...(subscription.history ?? []),

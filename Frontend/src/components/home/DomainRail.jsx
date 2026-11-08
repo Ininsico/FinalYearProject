@@ -33,7 +33,7 @@ export default function DomainRail() {
   )
 
   return (
-    <section ref={root} data-bg="#f1ecf9" className="border-t border-line lg:h-screen lg:overflow-hidden">
+    <section ref={root} data-bg="#eef0ff" className="border-t border-line lg:h-screen lg:overflow-hidden">
       <div className="lg:flex lg:h-full lg:flex-col lg:justify-center lg:pt-28 lg:pb-16">
         <Container className="pt-20 sm:pt-28 lg:pt-0">
           <p className="eyebrow">Domains</p>

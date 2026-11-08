@@ -1,12 +1,15 @@
-@import "@fontsource-variable/instrument-sans";
+@import "@fontsource/poppins/400.css";
+@import "@fontsource/poppins/500.css";
+@import "@fontsource/poppins/600.css";
+@import "@fontsource/poppins/700.css";
+@import "@fontsource/poppins/400-italic.css";
+@import "@fontsource/poppins/500-italic.css";
 @import "@fontsource-variable/jetbrains-mono";
-@import "@fontsource/instrument-serif";
-@import "@fontsource/instrument-serif/400-italic.css";
 @import "tailwindcss";
 
 @theme {
-  --font-display: "Instrument Serif", Georgia, "Times New Roman", serif;
-  --font-sans: "Instrument Sans Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Poppins", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Poppins", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono Variable", ui-monospace, monospace;
 
   /* Warm paper canvas */
@@ -27,10 +30,12 @@
   --color-line: oklch(0.885 0.010 85);
   --color-line-2: oklch(0.825 0.013 85);
 
-  /* Deep violet accent */
-  --color-accent: oklch(0.44 0.15 313);
-  --color-accent-ink: oklch(0.38 0.145 313);
-  --color-accent-soft: oklch(0.945 0.022 313);
+  /* Periwinkle accent — #6367FF laid over the warm paper canvas.
+     oklch(0.598 0.22 276) is exactly #6367FF; ink is the text-safe shade
+     and soft is the wash used for chips, selections and highlights. */
+  --color-accent: oklch(0.598 0.22 276);
+  --color-accent-ink: oklch(0.47 0.2 276);
+  --color-accent-soft: oklch(0.952 0.035 276);
 
   /* Fluid type scale */
   --text-step--1: clamp(0.78rem, 0.76rem + 0.1vw, 0.83rem);
@@ -68,7 +73,6 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  font-feature-settings: "ss01" 1, "cv01" 1;
 }
 
 ::selection {
@@ -86,12 +90,12 @@ body {
 
 section[id], [id] { scroll-margin-top: 6.5rem; }
 
-/* Display serif: Instrument Serif ships a single optical weight. */
+/* Display face: Poppins, tuned for headlines. */
 .display {
   font-family: var(--font-display);
-  font-weight: 400;
-  letter-spacing: -0.015em;
-  line-height: 0.98;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
   text-wrap: balance;
 }
 
@@ -136,6 +140,28 @@ section[id], [id] { scroll-margin-top: 6.5rem; }
   .field:focus { outline: none; @apply border-accent-ink; box-shadow: 0 0 0 3px var(--color-accent-soft); }
 
   .rule { @apply border-t border-line; }
+
+  /* Rendered markdown for AI-generated course text. */
+  .md { @apply leading-relaxed text-ink-700; }
+  .md > * + * { margin-top: 0.9em; }
+  .md strong { @apply font-semibold text-ink-950; }
+  .md em { font-style: italic; }
+  .md h4 { @apply font-medium text-ink-950; font-size: 1.06em; letter-spacing: -0.01em; }
+  .md h5 { @apply font-medium uppercase tracking-[0.08em] text-ink-600; font-size: 0.82em; }
+  .md code {
+    @apply rounded-[2px] border border-line bg-paper-2 px-1.5 py-0.5 font-mono text-ink-900;
+    font-size: 0.86em;
+  }
+  .md pre {
+    @apply overflow-x-auto rounded-[3px] border border-line bg-paper-2 p-4;
+  }
+  .md pre code { @apply border-0 bg-transparent p-0 text-[0.82rem] leading-relaxed; }
+  .md ul { list-style: disc; @apply pl-5; }
+  .md ol { list-style: decimal; @apply pl-5; }
+  .md li + li { margin-top: 0.4em; }
+  .md li > ul, .md li > ol { margin-top: 0.4em; }
+  .md li::marker { color: var(--color-accent-ink); }
+  .md hr { @apply border-t border-line; }
 }
 
 /* Reveal primitives — GSAP animates these; no-JS / reduced-motion keeps them visible. */

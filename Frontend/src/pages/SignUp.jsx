@@ -1,10 +1,20 @@
 import { useState } from "react"
 import { Link } from "react-router-dom"
 import { CircleNotch, Warning } from "@phosphor-icons/react"
-import AuthShell from "../components/AuthShell"
+import AuthSplit from "../components/AuthSplit"
 import { useAuth } from "../lib/auth"
+import { STEPS } from "../lib/content"
 
 const EMPTY = { name: "", email: "", password: "", confirm: "" }
+
+const PANEL = {
+  formSide: "left",
+  eyebrow: "How a production runs",
+  quote: "Stop assembling tools. Start directing a swarm.",
+  source: "Fablet — on the work",
+  points: STEPS.map((s) => `${s.n} — ${s.title}`),
+  watermark: "orchestrate",
+}
 
 export default function SignUp() {
   const { signUp } = useAuth()
@@ -46,34 +56,29 @@ export default function SignUp() {
 
   if (done) {
     return (
-      <AuthShell
-        title="Check your email"
-        subtitle={`We sent an activation link to ${form.email}. Open it to activate your account.`}
-      >
-        <p className="text-step--1 leading-relaxed text-ink-600">
+      <AuthSplit {...PANEL}>
+        <h1 className="text-step-3 font-semibold text-ink-950">Check your email</h1>
+        <p className="mt-3 text-step--1 leading-relaxed text-ink-600">
+          We sent an activation link to {form.email}. Open it to activate your account.
+        </p>
+        <p className="mt-6 text-step--1 leading-relaxed text-ink-600">
           The link expires in 15 minutes. Once activated, you can sign in.
         </p>
-        <Link to="/signin" className="btn btn-primary mt-7 w-full">
+        <Link to="/signin" className="btn btn-primary mt-8 w-full">
           Go to sign in
         </Link>
-      </AuthShell>
+      </AuthSplit>
     )
   }
 
   return (
-    <AuthShell
-      title="Create your account"
-      subtitle="Brief the swarm once, then build anything."
-      footer={
-        <>
-          Already have an account?{" "}
-          <Link to="/signin" className="link-underline font-medium">
-            Sign in
-          </Link>
-        </>
-      }
-    >
-      <form onSubmit={onSubmit} noValidate className="space-y-6">
+    <AuthSplit {...PANEL}>
+      <h1 className="text-step-3 font-semibold text-ink-950">Create your account</h1>
+      <p className="mt-3 text-step--1 leading-relaxed text-ink-600">
+        Brief the swarm once, then build anything.
+      </p>
+
+      <form onSubmit={onSubmit} noValidate className="mt-8 space-y-6">
         <div>
           <label htmlFor="name" className="mb-2 block text-step--1 font-medium text-ink-700">
             Name
@@ -130,6 +135,13 @@ export default function SignUp() {
           )}
         </button>
       </form>
-    </AuthShell>
+
+      <div className="mt-8 border-t border-line pt-6 text-step--1 text-ink-600">
+        Already have an account?{" "}
+        <Link to="/signin" className="link-underline font-medium">
+          Sign in
+        </Link>
+      </div>
+    </AuthSplit>
   )
 }

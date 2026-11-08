@@ -84,7 +84,16 @@ export default function Footer() {
         </div>
 
         <div className="mt-16 border-t border-line pt-8">
-          <p className="display text-step-6 leading-none text-ink-950">Fablet</p>
+          <div className="flex items-center gap-6">
+            <img
+              src="/fablet-logo.png"
+              alt=""
+              aria-hidden="true"
+              draggable="false"
+              className="h-20 w-auto sm:h-28"
+            />
+            <p className="display text-step-6 leading-none text-ink-950">Fablet</p>
+          </div>
           <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <p className="text-step--1 text-ink-500">
               &copy; {new Date().getFullYear()} Fablet. All rights reserved.
