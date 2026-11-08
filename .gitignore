@@ -140,3 +140,7 @@ server.log
 *.obj
 *.pdb
 *.ilk
+
+# DEPLOY SCRATCH
+Server/tmp-deploy/
+Server/dist.tar
