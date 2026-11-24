@@ -67,15 +67,8 @@ export default function Hero() {
   const navigate = useNavigate()
   return (
     <section className="relative overflow-hidden bg-paper">
-      <Container className="pb-10 pt-28 sm:pt-32">
-        <div className="flex items-center justify-between">
-          <Micro className="text-ink-500">The AI teaching academy</Micro>
-          <Micro className="hidden text-ink-500 sm:flex" dot={false}>
-            Seven courses live
-          </Micro>
-        </div>
-
-        <div className="mt-10 grid gap-12 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:items-end">
+      <Container className="pb-10 pt-24 sm:pt-28">
+        <div className="grid gap-12 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:items-end">
           <div>
             <h1 className="font-sans text-[clamp(2.6rem,6.4vw,6rem)] font-bold leading-[0.95] tracking-[-0.03em] text-ink-950">
               AI Agents
