@@ -16,7 +16,12 @@ export default function AuthSplit({ formSide = "right", watermark, backdrop, chi
     <div className="relative lg:grid lg:grid-cols-2">
       {backdrop && (
         <div className="pointer-events-none fixed inset-0 z-0" aria-hidden="true">
-          <img src={backdrop} alt="" className="h-full w-full scale-110 object-cover blur-[20px]" />
+          <img
+            src={backdrop}
+            alt=""
+            className="h-full w-full scale-110 object-cover blur-[22px] saturate-[1.15]"
+          />
+          <div className="absolute inset-0 bg-paper/55" />
         </div>
       )}
 
@@ -26,7 +31,7 @@ export default function AuthSplit({ formSide = "right", watermark, backdrop, chi
       >
         <div
           className={`sticky top-0 flex h-[100dvh] flex-col justify-between overflow-hidden p-10 text-paper xl:p-14 ${
-            backdrop ? "bg-accent/90" : "bg-accent"
+            backdrop ? "bg-accent/80" : "bg-accent"
           }`}
         >
           <div className="grid-backdrop pointer-events-none absolute inset-0" />
@@ -55,7 +60,7 @@ export default function AuthSplit({ formSide = "right", watermark, backdrop, chi
 
       <main
         className={`relative z-10 flex min-h-[100dvh] flex-col ${
-          backdrop ? "bg-paper/88" : "bg-paper"
+          backdrop ? "bg-transparent" : "bg-paper"
         } ${panelOnLeft ? "lg:order-2" : "lg:order-1"}`}
       >
         <div className="flex items-center justify-between px-5 pt-4 sm:px-10">
