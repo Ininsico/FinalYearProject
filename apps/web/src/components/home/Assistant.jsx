@@ -21,7 +21,7 @@ export default function Assistant() {
   return (
     <section id="assistant" className="bg-paper-2 py-16 sm:py-24">
       <Container>
-        <div className="grid gap-12 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:items-center lg:gap-16">
+        <div className="grid gap-10 md:gap-12 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:items-center lg:gap-16">
           <div className="lg:order-2">
             <Micro className="text-ink-500">The AI assistant</Micro>
             <h2 className="display mt-6 text-[clamp(2rem,4.2vw,3.6rem)] leading-[1.02] tracking-[-0.02em] text-ink-950">
@@ -81,12 +81,12 @@ export default function Assistant() {
 
               <div
                 aria-hidden="true"
-                className="pointer-events-none flex select-none items-center justify-between gap-4 border-t border-line bg-paper-2 px-5 py-3"
+                className="pointer-events-none flex select-none items-center justify-between gap-3 border-t border-line bg-paper-2 px-5 py-3"
               >
-                <span className="font-mono text-[0.68rem] text-ink-400">
+                <span className="min-w-0 truncate font-mono text-[0.68rem] text-ink-400">
                   Ask anything about this lesson…
                 </span>
-                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-ink-950 text-paper">
+                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-ink-950 text-paper">
                   <ArrowIcon />
                 </span>
               </div>

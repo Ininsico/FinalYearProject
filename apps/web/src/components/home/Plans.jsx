@@ -79,14 +79,14 @@ export default function Plans() {
           {PLANS.map((p) => (
             <article
               key={p.name}
-              className={`relative flex h-full flex-col rounded-[15px] border p-7 transition-colors duration-300 sm:p-8 ${
+              className={`relative flex h-full flex-col rounded-[15px] border p-6 transition-colors duration-300 sm:p-8 ${
                 p.featured
                   ? "border-ink-950 bg-ink-950 text-paper"
                   : "border-line bg-paper hover:border-line-2 hover:bg-paper-2"
               }`}
             >
               {p.featured && (
-                <span className="absolute right-7 top-8 font-mono text-[0.62rem] uppercase tracking-[0.08em] text-accent-soft">
+                <span className="absolute right-6 top-7 font-mono text-[0.62rem] uppercase tracking-[0.08em] text-accent-soft sm:right-7 sm:top-8">
                   Most popular
                 </span>
               )}

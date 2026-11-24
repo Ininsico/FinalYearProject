@@ -47,11 +47,11 @@ export default function Exams() {
           MDCAT, CSS — whatever the exam, we have got you.
         </h2>
 
-        <div className="mt-16 grid gap-px overflow-hidden rounded-[15px] border border-paper/10 bg-paper/10 sm:grid-cols-3">
+        <div className="mt-16 grid gap-px overflow-hidden rounded-[15px] border border-paper/10 bg-paper/10 sm:grid-cols-2 lg:grid-cols-3">
           {EXAMS.map((e) => (
             <article
               key={e.code}
-              className="group bg-ink-950 p-7 transition-colors duration-300 hover:bg-paper/5 sm:p-9"
+              className="group bg-ink-950 p-6 transition-colors duration-300 hover:bg-paper/5 sm:p-8"
             >
               <span
                 aria-hidden="true"
@@ -71,7 +71,7 @@ export default function Exams() {
 
         <div className="mt-16">
           <Micro className="text-paper/60">Topics on the shelf</Micro>
-          <ul className="mt-6 grid grid-cols-2 gap-px overflow-hidden rounded-[15px] border border-paper/10 bg-paper/10 sm:grid-cols-4">
+          <ul className="mt-6 grid grid-cols-2 gap-px overflow-hidden rounded-[15px] border border-paper/10 bg-paper/10 sm:grid-cols-3 lg:grid-cols-4">
             {TOPICS.map((t) => (
               <li
                 key={t}

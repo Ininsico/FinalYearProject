@@ -31,9 +31,9 @@ export default function Faq() {
                     onClick={() => setOpen(isOpen ? -1 : i)}
                     aria-expanded={isOpen}
                     aria-controls={panelId}
-                    className="flex w-full items-start justify-between gap-6 px-4 py-5 text-left transition-colors duration-300 hover:bg-paper-2"
+                    className="flex w-full items-start justify-between gap-4 px-3 py-5 text-left transition-colors duration-300 hover:bg-paper-2 sm:gap-6 sm:px-4"
                   >
-                    <span className="display text-step-2 text-ink-950">{f.q}</span>
+                    <span className="display text-step-1 text-ink-950 sm:text-step-2">{f.q}</span>
                     <Plus
                       size={20}
                       weight="light"

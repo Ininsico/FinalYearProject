@@ -31,11 +31,11 @@ export default function ValueBand() {
           AI drafts. Instructors decide. You learn.
         </p>
 
-        <div className="mt-16 grid gap-px overflow-hidden rounded-[15px] border border-line bg-line sm:grid-cols-3">
+        <div className="mt-16 grid gap-px overflow-hidden rounded-[15px] border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">
           {STATEMENTS.map((s, i) => (
             <article
               key={s.title}
-              className="group relative bg-paper-2 p-7 transition-colors duration-300 hover:bg-paper sm:p-9"
+              className="group relative bg-paper-2 p-6 transition-colors duration-300 hover:bg-paper sm:p-8"
             >
               <div className="relative inline-block" aria-hidden="true">
                 <span className="absolute left-[3px] top-[3px] select-none font-sans text-[clamp(2.6rem,4.2vw,3.6rem)] font-bold italic leading-none tracking-[-0.03em] text-accent-soft">

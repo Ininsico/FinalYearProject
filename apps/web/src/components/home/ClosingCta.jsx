@@ -22,7 +22,7 @@ export default function ClosingCta() {
       </div>
 
       <Container className="py-16 sm:py-24">
-        <p className="display max-w-[16ch] text-[clamp(2.4rem,6vw,5.4rem)] leading-[1] tracking-[-0.02em]">
+        <p className="display max-w-[16ch] text-[clamp(2.1rem,6vw,5.4rem)] leading-[1] tracking-[-0.02em]">
           Every course we publish is free.
         </p>
         <p className="mt-6 max-w-[46ch] text-step--1 leading-relaxed text-paper/70">

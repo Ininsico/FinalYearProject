@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom"
 import Ticker from "./Ticker"
+import { Container } from "./layout"
 
 const COLUMNS = [
   {
@@ -48,7 +49,7 @@ export default function Footer() {
           "Courses drafted with AI",
           "Directed by instructors",
           "Short lessons, real assessments",
-          "Free to start",
+          "Every course we publish, free",
           "Seat plans for institutions",
           "Built by Artdevelopers",
         ]}
@@ -57,7 +58,7 @@ export default function Footer() {
         itemClassName="display text-step-1 text-ink-400"
       />
 
-      <div className="mx-auto max-w-[1240px] px-6 py-16 sm:px-8">
+      <Container className="py-16">
         <div className="grid gap-12 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,2.4fr)]">
           <div>
             <p className="max-w-[34ch] text-step-1 leading-[1.4] text-ink-700">
@@ -69,7 +70,7 @@ export default function Footer() {
             </a>
           </div>
 
-          <div className="grid gap-8 sm:grid-cols-4">
+          <div className="grid grid-cols-2 gap-8 sm:grid-cols-4">
             {COLUMNS.map((col) => (
               <div key={col.title}>
                 <h3 className="text-[0.8rem] font-medium text-ink-950">{col.title}</h3>
@@ -90,14 +91,14 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-16 border-t border-line pt-8">
-          <div className="flex items-center gap-6">
+        <div className="mt-12 border-t border-line pt-8 sm:mt-16">
+          <div className="flex items-center gap-4 sm:gap-6">
             <img
               src="/fablet-logo.png"
               alt=""
               aria-hidden="true"
               draggable="false"
-              className="h-20 w-auto sm:h-28"
+              className="h-16 w-auto sm:h-28"
             />
             <p className="display text-step-6 leading-none text-ink-950">Fablet</p>
           </div>
@@ -110,7 +111,7 @@ export default function Footer() {
             </p>
           </div>
         </div>
-      </div>
+      </Container>
     </footer>
   )
 }

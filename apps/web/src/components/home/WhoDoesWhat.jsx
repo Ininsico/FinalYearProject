@@ -39,7 +39,7 @@ export default function WhoDoesWhat() {
           {SIDES.map((s) => (
             <article
               key={s.title}
-              className="rounded-[15px] border border-paper/10 bg-paper/5 p-7 transition-colors duration-300 hover:bg-paper/10 sm:p-9"
+              className="rounded-[15px] border border-paper/10 bg-paper/5 p-6 transition-colors duration-300 hover:bg-paper/10 sm:p-9"
             >
               <div className="flex items-start justify-between">
                 <span className="relative inline-block" aria-hidden="true">

@@ -10,7 +10,7 @@ export default function TickerBand() {
       <Ticker
         items={SUBJECTS}
         duration={44}
-        itemClassName="font-sans text-[clamp(2.4rem,5.6vw,5rem)] font-bold leading-none tracking-[-0.03em] text-paper"
+        itemClassName="font-sans text-[clamp(2rem,5.6vw,5rem)] font-bold leading-none tracking-[-0.03em] text-paper"
       />
       <Ticker
         items={FACULTY}
@@ -18,7 +18,7 @@ export default function TickerBand() {
         offset={2}
         reverse
         className="mt-5 sm:mt-7"
-        itemClassName="font-sans text-[clamp(2.4rem,5.6vw,5rem)] font-bold italic leading-none tracking-[-0.03em] text-transparent opacity-70 [-webkit-text-stroke:1.5px_var(--color-paper)]"
+        itemClassName="font-sans text-[clamp(2rem,5.6vw,5rem)] font-bold italic leading-none tracking-[-0.03em] text-transparent opacity-70 [-webkit-text-stroke:1.5px_var(--color-paper)]"
       />
     </section>
   )

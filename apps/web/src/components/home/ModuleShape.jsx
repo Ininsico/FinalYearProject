@@ -42,18 +42,18 @@ export default function ModuleShape() {
               {LESSONS.map((l, i) => (
                 <li
                   key={l.title}
-                  className={`flex items-center gap-4 px-5 py-4 transition-colors duration-300 ${
+                  className={`flex items-center gap-3 px-4 py-4 transition-colors duration-300 sm:gap-4 sm:px-5 ${
                     l.assessment ? "bg-accent-soft" : "hover:bg-paper-2"
                   }`}
                 >
-                  <span className="font-mono text-[0.68rem] text-ink-400">0{i + 1}</span>
+                  <span className="shrink-0 font-mono text-[0.68rem] text-ink-400">0{i + 1}</span>
                   <div className="min-w-0 flex-1">
                     <p className="display text-step-1 text-ink-950">{l.title}</p>
                     <p className="mt-0.5 font-mono text-[0.62rem] uppercase tracking-[0.08em] text-ink-500">
                       {l.format}
                     </p>
                   </div>
-                  <span className="font-mono text-[0.68rem] tabular-nums text-ink-600">
+                  <span className="shrink-0 font-mono text-[0.68rem] tabular-nums text-ink-600">
                     {l.minutes} min
                   </span>
                   {l.assessment ? (
@@ -63,7 +63,7 @@ export default function ModuleShape() {
               ))}
             </ol>
 
-            <div className="flex items-center justify-between gap-4 border-t border-line bg-paper-2 px-5 py-3">
+            <div className="flex flex-col items-start gap-3 border-t border-line bg-paper-2 px-5 py-3 sm:flex-row sm:items-center sm:justify-between">
               <Micro dot={false} className="text-ink-500">
                 Complete all four to unlock the next module
               </Micro>

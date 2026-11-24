@@ -40,7 +40,7 @@ function FacultyCarousel() {
         <span className="hidden h-1.5 w-1.5 rotate-45 bg-accent sm:block" />
       </div>
 
-      <div className="relative mt-3 h-[200px] sm:h-[230px]" aria-hidden="true">
+      <div className="relative mt-3 h-[200px] sm:h-[230px] lg:h-[250px]" aria-hidden="true">
         {FACULTY.map((t, i) => (
           <img
             key={t.name}
@@ -78,9 +78,9 @@ export default function Hero() {
   return (
     <section className="relative overflow-hidden bg-paper lg:flex lg:min-h-[100svh] lg:flex-col">
       <Container className="pb-10 pt-20 sm:pt-24 lg:flex-1">
-        <div className="grid gap-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:items-end">
+        <div className="grid gap-10 md:gap-12 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:items-end">
           <div>
-            <h1 className="font-sans text-[clamp(2.2rem,5.4vw,5.2rem)] font-bold leading-[0.95] tracking-[-0.03em] text-ink-950">
+            <h1 className="font-sans text-[clamp(2rem,6vw,5.2rem)] font-bold leading-[0.95] tracking-[-0.03em] text-ink-950">
               AI Agents
               <br />
               The Next Gen Teachers
