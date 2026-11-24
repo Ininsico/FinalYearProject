@@ -22,21 +22,21 @@ export default function AuthSplit({ children }) {
         }}
       />
 
-      <header className="relative flex items-center justify-between px-5 pt-5 sm:px-8">
+      <header className="relative flex items-center justify-between px-5 pt-4 sm:px-8">
         <Link to="/" aria-label="Fablet home" className="text-paper">
           <Wordmark tone="light" />
         </Link>
         <Link
           to="/"
-          className="group inline-flex items-center gap-2 rounded-full border border-paper/25 px-4 py-2 text-[0.78rem] text-paper/80 transition-colors duration-300 hover:border-paper hover:bg-paper hover:text-ink-950"
+          className="group inline-flex items-center gap-1.5 rounded-full border border-paper/20 px-3.5 py-1.5 text-[0.72rem] text-paper/70 transition-colors duration-300 hover:border-paper/60 hover:bg-paper hover:text-ink-950"
         >
           <ArrowLeft
-            size={13}
+            size={12}
             weight="bold"
             aria-hidden="true"
             className="transition-transform duration-300 group-hover:-translate-x-0.5"
           />
-          Back to home
+          <span className="sr-only sm:not-sr-only">Back to home</span>
         </Link>
       </header>
 
