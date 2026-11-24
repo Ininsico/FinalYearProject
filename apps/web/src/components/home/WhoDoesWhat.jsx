@@ -1,4 +1,5 @@
 import { Container } from "../layout"
+import { Micro } from "./ui"
 
 const AI = [
   "Drafts descriptions, lesson text and quizzes.",
@@ -15,17 +16,16 @@ const INSTRUCTORS = [
 function Column({ title, items }) {
   return (
     <div>
-      <h3 className="display text-step-1 text-ink-950">{title}</h3>
-      <ul className="mt-4">
+      <Micro dot={false} className="text-paper/50">
+        {title}
+      </Micro>
+      <ul className="mt-6 border-t border-paper/10">
         {items.map((item) => (
           <li
             key={item}
-            className="flex items-start gap-3 border-t border-line py-4 text-step--1 leading-relaxed text-ink-700"
+            className="flex items-start gap-3 border-b border-paper/10 py-4 text-step--1 leading-relaxed text-paper/80 transition-colors duration-300 hover:bg-paper/5"
           >
-            <span
-              className="mt-[0.45rem] inline-block h-1.5 w-1.5 shrink-0 rotate-45 bg-accent"
-              aria-hidden="true"
-            />
+            <span className="mt-[0.45rem] h-1.5 w-1.5 shrink-0 rounded-full bg-accent" aria-hidden="true" />
             {item}
           </li>
         ))}
@@ -36,20 +36,18 @@ function Column({ title, items }) {
 
 export default function WhoDoesWhat() {
   return (
-    <section className="border-t border-line bg-paper py-14 sm:py-20">
+    <section className="bg-ink-950 py-16 text-paper sm:py-24">
       <Container>
         <div className="flex flex-wrap items-end justify-between gap-4">
-          <h2 className="display text-step-2 text-ink-950">Who does what.</h2>
-          <p className="max-w-[42ch] text-step--1 text-ink-500">
-            The AI does the drafting. A person signs off every module.
-          </p>
+          <h2 className="display text-[clamp(2rem,4.2vw,3.6rem)] leading-[1.02] tracking-[-0.02em]">
+            Who does what.
+          </h2>
+          <Micro className="text-paper/60">The AI drafts. A person signs off.</Micro>
         </div>
 
-        <div className="mt-10 grid gap-10 lg:grid-cols-2 lg:gap-16">
+        <div className="mt-12 grid gap-12 lg:grid-cols-2 lg:gap-16">
           <Column title="The AI" items={AI} />
-          <div className="lg:border-l lg:border-line lg:pl-16">
-            <Column title="The instructor" items={INSTRUCTORS} />
-          </div>
+          <Column title="The instructor" items={INSTRUCTORS} />
         </div>
       </Container>
     </section>

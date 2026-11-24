@@ -1,4 +1,5 @@
 import { Container } from "../layout"
+import { Micro } from "./ui"
 
 const TEACHERS = [
   { name: "Aleeza", image: "/teachers/Aleeza.jpg" },
@@ -9,19 +10,19 @@ const TEACHERS = [
 ]
 
 // Each half of the track is exactly one viewport wide and holds the five teachers
-// once, spread across it. The track loops by one full half, so a teacher is never
-// on screen twice at the same time, and the scroll never visibly restarts.
+// once, so a teacher is never on screen twice at the same time. The track loops by
+// one full half, keeping the scroll seamless.
 const HALVES = [0, 1]
 
 export default function Teachers() {
   return (
-    <section id="teachers" className="border-t border-line bg-paper py-14 sm:py-20">
+    <section id="teachers" className="border-y border-paper/10 bg-ink-950 py-16 text-paper sm:py-24">
       <Container>
         <div className="flex flex-wrap items-end justify-between gap-4">
-          <h2 className="display text-step-2 text-ink-950">The AI teachers.</h2>
-          <p className="max-w-[44ch] text-step--1 text-ink-500">
-            Each one is a trained persona with their own voice and pace.
-          </p>
+          <h2 className="display text-[clamp(2rem,4.2vw,3.6rem)] leading-[1.02] tracking-[-0.02em]">
+            The AI teachers.
+          </h2>
+          <Micro className="text-paper/60">Each with their own voice and pace</Micro>
         </div>
         <ul className="sr-only">
           {TEACHERS.map((t) => (
@@ -30,13 +31,10 @@ export default function Teachers() {
         </ul>
       </Container>
 
-      <div className="mt-10 overflow-hidden border-y border-line py-8" aria-hidden="true">
+      <div className="mt-12 overflow-hidden border-y border-paper/10 py-10" aria-hidden="true">
         <div className="ticker-track flex w-max" style={{ "--ticker-duration": "30s" }}>
           {HALVES.map((k) => (
-            <div
-              key={k}
-              className="flex w-screen shrink-0 items-start justify-around px-3"
-            >
+            <div key={k} className="flex w-screen shrink-0 items-start justify-around px-3">
               {TEACHERS.map((t) => (
                 <span key={t.name} className="flex flex-col items-center gap-3">
                   <img
@@ -44,9 +42,9 @@ export default function Teachers() {
                     alt=""
                     loading="lazy"
                     decoding="async"
-                    className="h-14 w-14 rounded-full border border-line object-cover sm:h-24 sm:w-24 lg:h-28 lg:w-28"
+                    className="h-14 w-14 rounded-full border border-paper/20 object-cover sm:h-24 sm:w-24 lg:h-28 lg:w-28"
                   />
-                  <span className="whitespace-nowrap text-[0.8rem] text-ink-700">
+                  <span className="whitespace-nowrap font-mono text-[0.66rem] uppercase tracking-[0.08em] text-paper/70">
                     {t.name}
                   </span>
                 </span>
@@ -57,8 +55,8 @@ export default function Teachers() {
       </div>
 
       <Container>
-        <p className="mt-6 text-center text-[0.8rem] text-ink-500">
-          More AI teachers are coming soon.
+        <p className="mt-8 text-center font-mono text-[0.68rem] uppercase tracking-[0.08em] text-paper/60">
+          More AI teachers are coming soon
         </p>
       </Container>
     </section>

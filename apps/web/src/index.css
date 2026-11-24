@@ -215,6 +215,28 @@ section[id], [id] { scroll-margin-top: 6.5rem; }
   }
 }
 
+/* Lusion-pattern word reveal: one orchestrated entrance, CSS only. */
+@keyframes word-rise {
+  from { transform: translateY(110%); }
+  to { transform: translateY(0); }
+}
+
+.word-rise {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+}
+
+.word-rise > span {
+  display: inline-block;
+  animation: word-rise 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: calc(var(--i) * 0.055s);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .word-rise > span { animation: none; }
+}
+
 /* Reveal primitives — GSAP animates these; no-JS / reduced-motion keeps them visible. */
 [data-reveal] { will-change: transform, opacity; }
 

@@ -18,18 +18,18 @@ const SUBJECTS = [
 
 export default function TickerBand() {
   return (
-    <section className="border-y border-line bg-paper-2 py-6 sm:py-8">
+    <section className="border-y border-paper/10 bg-ink-950 py-5 text-paper">
       <Ticker
         items={TEACHING}
-        duration={32}
-        itemClassName="display text-step-1 text-ink-950"
+        duration={30}
+        itemClassName="font-mono text-[0.68rem] uppercase tracking-[0.08em] text-paper/85"
       />
       <Ticker
         items={SUBJECTS}
         duration={44}
         reverse
         className="mt-2"
-        itemClassName="text-step--1 text-ink-500"
+        itemClassName="font-mono text-[0.68rem] uppercase tracking-[0.08em] text-paper/40"
       />
     </section>
   )
