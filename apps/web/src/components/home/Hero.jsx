@@ -2,17 +2,11 @@ import { useNavigate } from "react-router-dom"
 import { ArrowRight } from "@phosphor-icons/react"
 import { Container } from "../layout"
 
-const FACTS = [
-  "Seven courses are live across five subjects, from calculus to design systems.",
-  "Student accounts are free. Premium modules and the AI video agent are 9 USDT a month.",
-  "Institutions register on seat plans and publish their own modules.",
-]
-
 export default function Hero() {
   const navigate = useNavigate()
   return (
     <section className="border-b border-line bg-paper">
-      <Container className="grid gap-12 pb-16 pt-28 sm:pt-36 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:items-start lg:gap-20">
+      <Container className="grid gap-12 pb-16 pt-28 sm:pt-36 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:items-start lg:gap-20">
         <div>
           <h1 className="display text-[clamp(2.4rem,1.7rem+2.8vw,3.8rem)] text-ink-950">
             An online academy, taught by AI teachers.
@@ -31,26 +25,23 @@ export default function Hero() {
               Meet the teachers
             </a>
           </div>
+          <p className="mt-10 max-w-[46ch] border-t border-line pt-5 text-step--1 text-ink-500">
+            Free student accounts, seven courses live across five subjects, and seat
+            plans for institutions.
+          </p>
         </div>
 
-        <div className="border border-line bg-paper-2">
-          {FACTS.map((f) => (
-            <p
-              key={f}
-              className="border-t border-line px-6 py-5 text-step--1 leading-relaxed text-ink-700 first:border-t-0"
-            >
-              {f}
-            </p>
-          ))}
-          <div className="border-t border-line px-6 py-5">
-            <button
-              onClick={() => navigate("/institutions/register")}
-              className="link-underline text-step--1 font-medium"
-            >
-              Register your institution
-            </button>
-          </div>
-        </div>
+        <figure className="border border-line bg-paper-2">
+          <img
+            src="/teachers/Aleeza.jpg"
+            alt="Aleeza, an AI teacher at Fablet"
+            className="aspect-[4/5] w-full object-cover object-top"
+          />
+          <figcaption className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 border-t border-line px-5 py-3">
+            <span className="display text-step-1 text-ink-950">Aleeza</span>
+            <span className="text-[0.8rem] text-ink-500">AI teacher, faculty of five</span>
+          </figcaption>
+        </figure>
       </Container>
     </section>
   )

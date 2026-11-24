@@ -3,23 +3,23 @@ import { Container } from "../layout"
 const STEPS = [
   {
     n: "1",
-    title: "Choose your course",
-    body: "Browse by subject and level. Premium modules are marked before you start.",
+    title: "Create a free account",
+    body: "An email and a password. The free catalogue opens immediately.",
   },
   {
     n: "2",
-    title: "Learn in short lessons",
-    body: "Video, reading and worked examples, each sized to finish in one sitting.",
+    title: "Choose your course",
+    body: "Browse by subject and level; premium modules are marked before you start.",
   },
   {
     n: "3",
-    title: "Practise, then prove it",
-    body: "Hands-on exercises with sample solutions, closed by a module quiz.",
+    title: "Study and practise",
+    body: "Short lessons and worked exercises, at your own pace.",
   },
   {
     n: "4",
-    title: "Grow on your plan",
-    body: "Start free. Student Pro unlocks premium modules and the AI video agent.",
+    title: "Finish the module",
+    body: "A quiz that checks the whole module, then you move to the next one.",
   },
 ]
 
@@ -30,7 +30,7 @@ export default function HowItWorks() {
         <div className="flex flex-wrap items-end justify-between gap-4">
           <h2 className="display text-step-2 text-ink-950">How the academy works.</h2>
           <p className="max-w-[42ch] text-step--1 text-ink-500">
-            Four steps from choosing a course to proving you own the subject.
+            Four steps from a free account to finishing your first module.
           </p>
         </div>
 
