@@ -26,7 +26,6 @@ export default function AuthSplit({ formSide = "right", watermark, backdrop, chi
       )}
 
       <aside
-        aria-hidden="true"
         className={`relative z-10 hidden lg:block ${panelOnLeft ? "lg:order-1" : "lg:order-2"}`}
       >
         <div
@@ -34,8 +33,9 @@ export default function AuthSplit({ formSide = "right", watermark, backdrop, chi
             backdrop ? "bg-accent/80" : "bg-accent"
           }`}
         >
-          <div className="grid-backdrop pointer-events-none absolute inset-0" />
+          <div className="grid-backdrop pointer-events-none absolute inset-0" aria-hidden="true" />
           <div
+            aria-hidden="true"
             className="pointer-events-none absolute inset-0"
             style={{
               backgroundImage:
@@ -43,15 +43,32 @@ export default function AuthSplit({ formSide = "right", watermark, backdrop, chi
             }}
           />
 
-          <span className="pointer-events-none absolute -bottom-8 -left-4 select-none whitespace-nowrap font-sans text-[9rem] font-bold italic leading-none tracking-[-0.04em] text-transparent opacity-30 [-webkit-text-stroke:1.5px_var(--color-paper)] xl:text-[12rem]">
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute -bottom-8 -left-4 select-none whitespace-nowrap font-sans text-[9rem] font-bold italic leading-none tracking-[-0.04em] text-transparent opacity-30 [-webkit-text-stroke:1.5px_var(--color-paper)] xl:text-[12rem]"
+          >
             {watermark}
           </span>
 
-          <span className="relative inline-flex text-paper">
-            <Wordmark tone="light" />
-          </span>
+          <div className="relative flex items-center justify-between gap-4">
+            <Link to="/" aria-label="Fablet home" className="inline-flex text-paper">
+              <Wordmark tone="light" />
+            </Link>
+            <Link
+              to="/"
+              className="group inline-flex items-center gap-1.5 rounded-full border border-paper/25 px-3.5 py-1.5 text-[0.72rem] text-paper/80 transition-colors duration-300 hover:border-paper hover:bg-paper hover:text-ink-950"
+            >
+              <ArrowLeft
+                size={12}
+                weight="bold"
+                aria-hidden="true"
+                className="transition-transform duration-300 group-hover:-translate-x-0.5"
+              />
+              Back to home
+            </Link>
+          </div>
 
-          <span className="relative flex items-center gap-4 text-paper/60">
+          <span className="relative flex items-center gap-4 text-paper/60" aria-hidden="true">
             <Cross />
             <Cross />
           </span>
@@ -63,8 +80,8 @@ export default function AuthSplit({ formSide = "right", watermark, backdrop, chi
           backdrop ? "bg-transparent" : "bg-paper"
         } ${panelOnLeft ? "lg:order-2" : "lg:order-1"}`}
       >
-        <div className="flex items-center justify-between px-5 pt-4 sm:px-10">
-          <Link to="/" aria-label="Fablet home" className="lg:hidden">
+        <div className="flex items-center justify-between px-5 pt-4 sm:px-10 lg:hidden">
+          <Link to="/" aria-label="Fablet home">
             <Wordmark />
           </Link>
           <span className="hidden lg:block" />
@@ -82,7 +99,7 @@ export default function AuthSplit({ formSide = "right", watermark, backdrop, chi
           </Link>
         </div>
 
-        <div className="flex flex-1 items-center justify-center px-5 py-10 sm:px-10">
+        <div className="flex flex-1 items-center justify-center px-5 py-6 sm:px-10">
           <div className="w-full max-w-[440px]">
             <div className="auth-plate relative rounded-[15px] border border-line bg-paper-2 p-5 sm:p-7">
               <Cross className="absolute -left-2.5 -top-2.5 hidden text-line-2 sm:block" />
