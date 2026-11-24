@@ -111,7 +111,7 @@ export default function SignIn() {
                 <span className="block text-step--1 text-ink-950">
                   {demoBusy ? "Entering demo…" : "Instant demo access"}
                 </span>
-                <span className="block text-[0.74rem] text-ink-500">
+                <span className="auth-demo-hint block text-[0.74rem] text-ink-500">
                   One-click sign in for Student, Institution or Admin
                 </span>
               </span>
@@ -148,7 +148,7 @@ export default function SignIn() {
             </div>
           )}
 
-          <div className="mt-5 flex items-center gap-4" aria-hidden="true">
+          <div className="auth-demo-or mt-5 flex items-center gap-4" aria-hidden="true">
             <span className="h-px flex-1 bg-line" />
             <span className="font-mono text-[0.68rem] uppercase tracking-[0.16em] text-ink-500">or sign in</span>
             <span className="h-px flex-1 bg-line" />
@@ -156,7 +156,7 @@ export default function SignIn() {
         </div>
       )}
 
-      <form onSubmit={onSubmit} className="mt-6 space-y-5">
+      <form onSubmit={onSubmit} className="mt-5 space-y-4">
         <div>
           <label htmlFor="email" className="mb-2 block text-step--1 font-medium text-ink-700">
             Email
@@ -206,7 +206,7 @@ export default function SignIn() {
         )}
         {resent && <p className="text-step--1 text-ink-600">Activation email sent. Check your inbox.</p>}
 
-        <button type="submit" disabled={busy} className="btn btn-primary w-full">
+        <button type="submit" disabled={busy} className="btn btn-primary h-11 w-full">
           {busy ? (
             <>
               <CircleNotch size={16} weight="bold" className="animate-spin" aria-hidden="true" />

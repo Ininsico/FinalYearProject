@@ -25,7 +25,7 @@ export default function AuthPathSwitch({ active }) {
             onClick={() => {
               if (!isActive) navigate(o.to)
             }}
-            className={`h-10 rounded-full font-mono text-[0.66rem] uppercase tracking-[0.08em] transition-colors duration-300 ${
+            className={`h-9 rounded-full font-mono text-[0.64rem] uppercase tracking-[0.08em] transition-colors duration-300 ${
               isActive ? "bg-ink-950 text-paper" : "text-ink-600 hover:text-ink-950"
             }`}
           >

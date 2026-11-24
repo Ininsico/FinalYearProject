@@ -90,7 +90,7 @@ export default function InstitutionRegister() {
         Step {step} of 2 — {step === 1 ? "Organisation" : "Owner account"}
       </p>
 
-      <form onSubmit={onSubmit} noValidate className="mt-4 space-y-4">
+      <form onSubmit={onSubmit} noValidate className="mt-4 space-y-3">
         {step === 1 ? (
           <>
             <div>
@@ -109,7 +109,7 @@ export default function InstitutionRegister() {
               )}
             </div>
 
-            <div className="grid gap-4 sm:grid-cols-2">
+            <div className="grid gap-3 sm:grid-cols-2">
               <div>
                 <label htmlFor="i-domain" className="mb-2 block text-step--1 font-medium text-ink-700">
                   Domain (optional)
@@ -143,7 +143,7 @@ export default function InstitutionRegister() {
             <button
               type="button"
               onClick={() => validateStep1() && setStep(2)}
-              className="btn btn-primary w-full"
+              className="btn btn-primary h-11 w-full"
             >
               Continue
               <ArrowIcon />
@@ -181,7 +181,7 @@ export default function InstitutionRegister() {
               {errors.email && <p className="mt-2 text-step--1 text-red-700">{errors.email}</p>}
             </div>
 
-            <div className="grid gap-4 sm:grid-cols-2">
+            <div className="grid gap-3 sm:grid-cols-2">
               <div>
                 <label htmlFor="o-pass" className="mb-2 block text-step--1 font-medium text-ink-700">
                   Password
@@ -226,7 +226,7 @@ export default function InstitutionRegister() {
             )}
 
             <div className="flex items-center gap-4">
-              <button type="submit" disabled={busy} className="btn btn-primary flex-1">
+              <button type="submit" disabled={busy} className="btn btn-primary h-11 flex-1">
                 {busy ? (
                   <>
                     <CircleNotch size={15} weight="bold" className="animate-spin" aria-hidden="true" />

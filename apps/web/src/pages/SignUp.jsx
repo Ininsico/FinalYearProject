@@ -73,7 +73,7 @@ export default function SignUp() {
         A free account for one learner — the whole catalogue opens immediately.
       </p>
 
-      <form onSubmit={onSubmit} noValidate className="mt-6 space-y-4">
+      <form onSubmit={onSubmit} noValidate className="mt-5 space-y-3">
         <div>
           <label htmlFor="name" className="mb-2 block text-step--1 font-medium text-ink-700">
             Name
@@ -119,7 +119,7 @@ export default function SignUp() {
           </p>
         )}
 
-        <button type="submit" disabled={busy} className="btn btn-primary w-full">
+        <button type="submit" disabled={busy} className="btn btn-primary h-11 w-full">
           {busy ? (
             <>
               <CircleNotch size={16} weight="bold" className="animate-spin" aria-hidden="true" />

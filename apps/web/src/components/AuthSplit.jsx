@@ -75,8 +75,8 @@ export default function AuthSplit({ formSide = "right", watermark, children }) {
         </div>
 
         <div className="flex min-h-0 flex-1 items-center justify-center px-5 py-6 sm:px-10">
-          <div className="w-full max-w-[460px]">
-            <div className="auth-plate rounded-[15px] border border-line bg-paper-2 p-5 sm:p-7 lg:p-8">{children}</div>
+          <div className="w-full max-w-[400px]">
+            <div className="auth-plate rounded-[15px] border border-line bg-paper-2 p-5 sm:p-6">{children}</div>
           </div>
         </div>
       </main>
