@@ -194,6 +194,17 @@ section[id], [id] { scroll-margin-top: 6.5rem; }
 }
 .sweep:hover::before { transform: translateX(0); }
 
+/* Blueprint grid backdrop for dark bands. Lines are the paper tone at low
+   alpha and the mask fades the grid out toward the bottom. */
+.grid-backdrop {
+  background-image:
+    linear-gradient(to right, rgba(249, 247, 242, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(249, 247, 242, 0.08) 1px, transparent 1px);
+  background-size: 56px 56px;
+  -webkit-mask-image: radial-gradient(120% 100% at 50% 0%, #000 40%, transparent 100%);
+  mask-image: radial-gradient(120% 100% at 50% 0%, #000 40%, transparent 100%);
+}
+
 /* Marquees are JS-driven (see Ticker.jsx) so they run in every browser and
    regardless of OS or browser animation settings. */
 

@@ -1,7 +1,7 @@
 import Hero from "../components/home/Hero"
 import TickerBand from "../components/home/TickerBand"
 import ValueBand from "../components/home/ValueBand"
-import Facts from "../components/home/Facts"
+import Exams from "../components/home/Exams"
 import Manifesto from "../components/home/Manifesto"
 import Teachers from "../components/home/Teachers"
 import ModuleShape from "../components/home/ModuleShape"
@@ -19,7 +19,7 @@ export default function Home() {
       <Hero />
       <TickerBand />
       <ValueBand />
-      <Facts />
+      <Exams />
       <Manifesto />
       <Teachers />
       <ModuleShape />
