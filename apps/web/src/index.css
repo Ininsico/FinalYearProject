@@ -205,6 +205,16 @@ section[id], [id] { scroll-margin-top: 6.5rem; }
   mask-image: radial-gradient(120% 100% at 50% 0%, #000 40%, transparent 100%);
 }
 
+/* The same grid, in ink, for the light auth canvas. */
+.grid-backdrop-light {
+  background-image:
+    linear-gradient(to right, rgba(26, 21, 17, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(26, 21, 17, 0.05) 1px, transparent 1px);
+  background-size: 56px 56px;
+  -webkit-mask-image: radial-gradient(120% 100% at 50% 0%, #000 45%, transparent 100%);
+  mask-image: radial-gradient(120% 100% at 50% 0%, #000 45%, transparent 100%);
+}
+
 /* Marquees are JS-driven (see Ticker.jsx) so they run in every browser and
    regardless of OS or browser animation settings. */
 
@@ -228,10 +238,8 @@ section[id], [id] { scroll-margin-top: 6.5rem; }
   .auth-plate { padding: 1.25rem; }
 }
 @media (max-height: 680px) {
-  .auth-demo { margin-top: 1rem; }
-  .auth-demo button { padding-top: 0.5rem; padding-bottom: 0.5rem; }
-  .auth-demo-hint { display: none; }
-  .auth-demo-or { margin-top: 0.75rem; }
+  .auth-demo { margin-top: 0.9rem; padding-top: 0.9rem; }
+  .auth-demo button { height: 2.1rem; }
 }
 @media (max-height: 640px) {
   .auth-plate { padding: 1rem; }

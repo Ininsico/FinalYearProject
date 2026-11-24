@@ -75,7 +75,7 @@ export default function InstitutionRegister() {
   }
 
   return (
-    <AuthSplit formSide="left" watermark="institution">
+    <AuthSplit>
       <AuthPathSwitch active="institution" />
 
       <h1 className="display auth-title mt-5 text-ink-950">

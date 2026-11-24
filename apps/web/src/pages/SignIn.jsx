@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useState } from "react"
 import { Link, useNavigate, useLocation } from "react-router-dom"
-import { CircleNotch, Warning, Lightning, CaretDown } from "@phosphor-icons/react"
+import { CircleNotch, Warning } from "@phosphor-icons/react"
 import AuthSplit from "../components/AuthSplit"
 import { ArrowIcon } from "../components/home/ui"
 import { useAuth, api, homeForRole } from "../lib/auth"
@@ -16,8 +16,6 @@ export default function SignIn() {
   const [busy, setBusy] = useState(false)
   const [demo, setDemo] = useState(null)
   const [demoBusy, setDemoBusy] = useState("")
-  const [demoOpen, setDemoOpen] = useState(false)
-  const demoRef = useRef(null)
 
   const update = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }))
 
@@ -26,20 +24,6 @@ export default function SignIn() {
       .then(setDemo)
       .catch(() => setDemo({ enabled: false, identities: [] }))
   }, [])
-
-  useEffect(() => {
-    if (!demoOpen) return
-    const onPointerDown = (e) => {
-      if (!demoRef.current?.contains(e.target)) setDemoOpen(false)
-    }
-    const onKey = (e) => e.key === "Escape" && setDemoOpen(false)
-    document.addEventListener("pointerdown", onPointerDown)
-    window.addEventListener("keydown", onKey)
-    return () => {
-      document.removeEventListener("pointerdown", onPointerDown)
-      window.removeEventListener("keydown", onKey)
-    }
-  }, [demoOpen])
 
   async function onSubmit(e) {
     e.preventDefault()
@@ -58,7 +42,6 @@ export default function SignIn() {
   }
 
   async function demoLogin(identity) {
-    setDemoOpen(false)
     setDemoBusy(identity.role)
     setError("")
     try {
@@ -85,78 +68,13 @@ export default function SignIn() {
   const demos = demo?.enabled ? demo.identities : []
 
   return (
-    <AuthSplit formSide="right" watermark="fablet">
+    <AuthSplit>
       <h1 className="display auth-title text-ink-950">Sign in</h1>
-      <p className="auth-subtitle mt-2 text-step--1 leading-relaxed text-ink-600 sm:mt-3">
+      <p className="auth-subtitle mt-2 text-step--1 leading-relaxed text-ink-600">
         Students, institutions and operators all sign in here.
       </p>
 
-      {demos.length > 0 && (
-        <div className="auth-demo relative mt-6" ref={demoRef}>
-          <button
-            type="button"
-            onClick={() => setDemoOpen((v) => !v)}
-            aria-haspopup="menu"
-            aria-expanded={demoOpen}
-            disabled={Boolean(demoBusy)}
-            className="flex w-full items-center justify-between gap-4 rounded-[12px] border border-line-2 bg-paper px-4 py-3 text-left transition-colors duration-300 hover:border-ink-950"
-          >
-            <span className="flex items-center gap-3">
-              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-accent-soft text-accent-ink" aria-hidden="true">
-                {demoBusy
-                  ? <CircleNotch size={15} weight="bold" className="animate-spin" />
-                  : <Lightning size={15} weight="fill" />}
-              </span>
-              <span>
-                <span className="block text-step--1 text-ink-950">
-                  {demoBusy ? "Entering demo…" : "Instant demo access"}
-                </span>
-                <span className="auth-demo-hint block text-[0.74rem] text-ink-500">
-                  One-click sign in for Student, Institution or Admin
-                </span>
-              </span>
-            </span>
-            <CaretDown
-              size={14}
-              weight="bold"
-              aria-hidden="true"
-              className={`shrink-0 text-ink-500 transition-transform duration-200 ${demoOpen ? "rotate-180" : ""}`}
-            />
-          </button>
-
-          {demoOpen && (
-            <div
-              role="menu"
-              className="absolute inset-x-0 top-[calc(100%+6px)] z-10 overflow-hidden rounded-[12px] border border-line-2 bg-paper shadow-[0_18px_40px_-20px_rgba(20,18,30,0.35)]"
-            >
-              {demos.map((identity) => (
-                <button
-                  key={identity.role}
-                  role="menuitem"
-                  type="button"
-                  onClick={() => demoLogin(identity)}
-                  disabled={Boolean(demoBusy)}
-                  className="flex w-full items-center justify-between gap-4 border-b border-line px-4 py-3 text-left transition-colors last:border-b-0 hover:bg-paper-2"
-                >
-                  <span>
-                    <span className="block text-step--1 text-ink-950">{identity.label}</span>
-                    <span className="block text-[0.74rem] text-ink-500">{identity.summary}</span>
-                  </span>
-                  <span className="font-mono text-[0.68rem] uppercase tracking-[0.14em] text-ink-500">enter</span>
-                </button>
-              ))}
-            </div>
-          )}
-
-          <div className="auth-demo-or mt-5 flex items-center gap-4" aria-hidden="true">
-            <span className="h-px flex-1 bg-line" />
-            <span className="font-mono text-[0.68rem] uppercase tracking-[0.16em] text-ink-500">or sign in</span>
-            <span className="h-px flex-1 bg-line" />
-          </div>
-        </div>
-      )}
-
-      <form onSubmit={onSubmit} className="mt-5 space-y-4">
+      <form onSubmit={onSubmit} className="mt-6 space-y-4">
         <div>
           <label htmlFor="email" className="mb-2 block text-step--1 font-medium text-ink-700">
             Email
@@ -221,19 +139,41 @@ export default function SignIn() {
         </button>
       </form>
 
-      <div className="mt-6 border-t border-line pt-5">
-        <p className="font-mono text-[0.66rem] uppercase tracking-[0.08em] text-ink-500">
-          New to Fablet?
-        </p>
-        <div className="mt-3 grid gap-2 sm:grid-cols-2">
-          <Link to="/signup" className="btn btn-ghost h-11 text-[0.78rem]">
-            Student account
-          </Link>
-          <Link to="/institutions/register" className="btn btn-ghost h-11 text-[0.78rem]">
-            Institution account
-          </Link>
+      {demos.length > 0 && (
+        <div className="auth-demo mt-5 border-t border-line pt-5">
+          <p className="font-mono text-[0.62rem] uppercase tracking-[0.08em] text-ink-500">
+            Or try a demo account
+          </p>
+          <div className="mt-3 flex flex-wrap gap-2">
+            {demos.map((identity) => (
+              <button
+                key={identity.role}
+                type="button"
+                onClick={() => demoLogin(identity)}
+                disabled={Boolean(demoBusy)}
+                title={identity.summary}
+                className="inline-flex h-9 items-center gap-2 rounded-full border border-line-2 px-4 font-mono text-[0.64rem] uppercase tracking-[0.08em] text-ink-700 transition-colors duration-300 hover:border-ink-950 hover:bg-ink-950 hover:text-paper disabled:opacity-60"
+              >
+                {demoBusy === identity.role && (
+                  <CircleNotch size={12} weight="bold" className="animate-spin" aria-hidden="true" />
+                )}
+                {identity.label}
+              </button>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
+
+      <p className="mt-5 border-t border-line pt-4 text-step--1 text-ink-600">
+        New to Fablet?{" "}
+        <Link to="/signup" className="link-underline font-medium">
+          Create a student account
+        </Link>
+        {" · "}
+        <Link to="/institutions/register" className="link-underline font-medium">
+          Register an institution
+        </Link>
+      </p>
     </AuthSplit>
   )
 }
