@@ -1,12 +1,12 @@
 import { Container } from "../layout"
 
 const FACTS = [
-  ["Courses live in the catalogue", "7, and growing module by module"],
-  ["Subjects", "5, from calculus to design systems"],
-  ["Lesson formats", "Video, reading, exercise and quiz"],
-  ["Assessment", "At the end of every module"],
-  ["Student accounts", "Free; Pro is 9 USDT a month"],
-  ["Institution plans", "10 to 50 seats, 49 to 149 USDT a month"],
+  { label: "Courses live", value: "7", note: "and growing module by module" },
+  { label: "Subjects", value: "5", note: "from calculus to design systems" },
+  { label: "Lesson formats", value: "4", note: "video, reading, exercise and quiz" },
+  { label: "Assessment", value: "Every module", note: "a quiz covers the whole of it" },
+  { label: "Student accounts", value: "Free", note: "Pro is 9 USDT a month" },
+  { label: "Institution plans", value: "49 to 149 USDT", note: "10 to 50 seats, billed monthly" },
 ]
 
 export default function Facts() {
@@ -20,14 +20,15 @@ export default function Facts() {
           </p>
         </div>
 
-        <dl className="mt-10">
-          {FACTS.map(([k, v]) => (
+        <dl className="mt-10 border-t border-line">
+          {FACTS.map(({ label, value, note }) => (
             <div
-              key={k}
-              className="grid gap-1 border-t border-line py-4 last:border-b md:grid-cols-[260px_minmax(0,1fr)] md:gap-6"
+              key={label}
+              className="grid gap-1 border-b border-line py-5 md:grid-cols-[minmax(0,1fr)_200px_minmax(0,1.5fr)] md:items-baseline md:gap-8"
             >
-              <dt className="text-step--1 text-ink-500">{k}</dt>
-              <dd className="text-step--1 text-ink-950">{v}</dd>
+              <dt className="text-[0.8rem] text-ink-500">{label}</dt>
+              <dd className="display text-step-1 tabular text-ink-950">{value}</dd>
+              <dd className="text-step--1 leading-relaxed text-ink-600">{note}</dd>
             </div>
           ))}
         </dl>
