@@ -21,11 +21,18 @@ function FacultyCarousel() {
   const active = FACULTY[index]
 
   return (
-    <div className="relative ml-auto w-full max-w-[420px]">
+    <div className="relative mx-auto w-full max-w-[420px] lg:mx-0 lg:ml-auto">
       <Cross className="absolute -left-5 -top-5 hidden text-ink-400 sm:block" />
       <Cross className="absolute -bottom-5 -right-5 hidden text-ink-400 sm:block" />
 
-      <div className="relative h-[280px] sm:h-[340px]" aria-hidden="true">
+      <div className="relative h-[250px] sm:h-[300px]" aria-hidden="true">
+        {/* Wireframe name plate sits behind the transparent portrait. */}
+        <div className="pointer-events-none absolute inset-x-0 bottom-[22%] flex justify-center">
+          <span className="whitespace-nowrap font-sans text-[clamp(2rem,4.2vw,3.4rem)] font-semibold leading-none tracking-[-0.02em] text-transparent [-webkit-text-stroke:1.5px_var(--color-ink-500)]">
+            {active.name}
+          </span>
+        </div>
+
         {FACULTY.map((t, i) => (
           <img
             key={t.name}
@@ -33,7 +40,7 @@ function FacultyCarousel() {
             alt=""
             loading={i === 0 ? "eager" : "lazy"}
             decoding="async"
-            className={`absolute inset-0 mx-auto h-full w-auto object-contain transition-all duration-700 ease-out ${
+            className={`absolute inset-0 z-10 mx-auto h-full w-auto object-contain transition-all duration-700 ease-out ${
               i === index ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
             }`}
           />
@@ -48,18 +55,11 @@ function FacultyCarousel() {
         ))}
       </ul>
 
-      <div className="mt-4 border-t border-line pt-4" aria-hidden="true">
-        <div className="flex items-baseline justify-between gap-4">
-          <p className="font-sans text-[clamp(1.8rem,3.2vw,2.6rem)] font-semibold leading-none tracking-[-0.02em] text-transparent [-webkit-text-stroke:1px_var(--color-ink-950)]">
-            {active.name}
-          </p>
-          <Micro dot={false} className="text-ink-400">
-            AI teacher
-          </Micro>
-        </div>
-        <p className="mt-2 font-mono text-[0.68rem] uppercase tracking-[0.08em] text-ink-500">
-          {active.line}
-        </p>
+      <div className="mt-3 flex items-baseline justify-between gap-4 border-t border-line pt-3" aria-hidden="true">
+        <p className="font-mono text-[0.68rem] uppercase tracking-[0.08em] text-ink-500">{active.line}</p>
+        <Micro dot={false} className="text-ink-400">
+          AI teacher
+        </Micro>
       </div>
     </div>
   )
@@ -68,22 +68,22 @@ function FacultyCarousel() {
 export default function Hero() {
   const navigate = useNavigate()
   return (
-    <section className="relative overflow-hidden bg-paper">
-      <Container className="pb-10 pt-24 sm:pt-28">
-        <div className="grid gap-12 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:items-end">
+    <section className="relative overflow-hidden bg-paper lg:flex lg:min-h-[100svh] lg:flex-col">
+      <Container className="pb-10 pt-20 sm:pt-24 lg:flex-1">
+        <div className="grid gap-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:items-end">
           <div>
-            <h1 className="font-sans text-[clamp(2.6rem,6.4vw,6rem)] font-bold leading-[0.95] tracking-[-0.03em] text-ink-950">
+            <h1 className="font-sans text-[clamp(2.2rem,5.4vw,5.2rem)] font-bold leading-[0.95] tracking-[-0.03em] text-ink-950">
               AI Agents
               <br />
               The Next Gen Teachers
             </h1>
-            <p className="mt-8 max-w-[56ch] text-step-0 leading-[1.7] text-ink-600">
+            <p className="mt-6 max-w-[54ch] text-step-0 leading-[1.7] text-ink-600">
               Fablet is an online academy where AI teachers carry the course: short
               lessons, worked practice and an assessment at the end of every module,
               all directed by the instructors who own what publishes. Start free, or
               bring your whole institution onto one curriculum.
             </p>
-            <div className="mt-8 flex flex-wrap items-center gap-3">
+            <div className="mt-7 flex flex-wrap items-center gap-3">
               <Pill onClick={() => navigate("/signup")} tone="dark">
                 Create a free account
                 <ArrowIcon />
@@ -98,7 +98,7 @@ export default function Hero() {
         </div>
       </Container>
 
-      <div className="flex items-center justify-center gap-5 pb-8 text-ink-400">
+      <div className="flex items-center justify-center gap-5 pb-6 text-ink-400">
         <Cross />
         <Micro dot={false} className="text-ink-500">
           Scroll to explore
