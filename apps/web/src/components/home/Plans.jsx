@@ -9,7 +9,7 @@ const PLANS = [
     price: "Free",
     period: "forever",
     features: [
-      "The full free catalogue",
+      "Every course Fablet publishes, free",
       "Progress tracking module by module",
       "The AI assistant in every lesson",
     ],
@@ -24,8 +24,7 @@ const PLANS = [
     period: "a month",
     features: [
       "Everything in Basic",
-      "Premium modules",
-      "The AI video agent",
+      "The AI video agent, on every module",
       "40% off with the OpenUp code",
     ],
     cta: "Create an account",
@@ -147,7 +146,8 @@ export default function Plans() {
         </div>
 
         <p className="mt-6 font-mono text-[0.68rem] uppercase tracking-[0.08em] text-ink-500">
-          Premium modules and the AI video agent are part of Student Pro and every
+          Courses Fablet publishes are free; courses published by institutions are
+          priced by them. The AI video agent is part of Student Pro and every
           institution plan
         </p>
       </Container>

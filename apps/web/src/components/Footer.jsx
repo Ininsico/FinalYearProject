@@ -50,7 +50,7 @@ export default function Footer() {
           "Short lessons, real assessments",
           "Free to start",
           "Seat plans for institutions",
-          "Built in Abbottabad",
+          "Built by Artdevelopers",
         ]}
         duration={38}
         className="border-b border-line py-4"
@@ -106,7 +106,7 @@ export default function Footer() {
               &copy; {new Date().getFullYear()} Fablet. All rights reserved.
             </p>
             <p className="text-[0.8rem] text-ink-500">
-              Built in Abbottabad
+              Built by Artdevelopers
             </p>
           </div>
         </div>
