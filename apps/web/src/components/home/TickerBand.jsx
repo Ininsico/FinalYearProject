@@ -1,35 +1,23 @@
 import Ticker from "../Ticker"
 
-const TEACHING = [
-  "Courses drafted with AI",
-  "Directed by instructors",
-  "Short lessons, worked practice",
-  "Assessment at the end of every module",
-]
+const SUBJECTS = ["Mathematics", "Physics", "Computer Science", "Business", "Design"]
 
-const SUBJECTS = [
-  "Mathematics",
-  "Physics",
-  "Computer Science",
-  "Business",
-  "Design",
-  "Seat plans for institutions",
-]
+const FACULTY = ["Aleeza", "David", "Kim Yaun", "Lisa", "Xavier"]
 
 export default function TickerBand() {
   return (
-    <section className="border-y border-paper/10 bg-ink-950 py-5 text-paper">
-      <Ticker
-        items={TEACHING}
-        duration={30}
-        itemClassName="font-mono text-[0.68rem] uppercase tracking-[0.08em] text-paper/85"
-      />
+    <section className="overflow-hidden border-y border-paper/10 bg-ink-950 py-12 text-paper sm:py-16">
       <Ticker
         items={SUBJECTS}
         duration={44}
-        reverse
-        className="mt-2"
-        itemClassName="font-mono text-[0.68rem] uppercase tracking-[0.08em] text-paper/40"
+        itemClassName="font-sans text-[clamp(2.4rem,5.6vw,5rem)] font-bold leading-none tracking-[-0.03em] text-paper"
+      />
+      <Ticker
+        items={FACULTY}
+        duration={58}
+        offset={2}
+        className="mt-5 sm:mt-7"
+        itemClassName="font-sans text-[clamp(2.4rem,5.6vw,5rem)] font-bold italic leading-none tracking-[-0.03em] text-transparent opacity-70 [-webkit-text-stroke:1.5px_var(--color-paper)]"
       />
     </section>
   )
