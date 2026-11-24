@@ -100,13 +100,13 @@ export default function SignIn() {
 
   return (
     <AuthSplit {...PANEL}>
-      <h1 className="display text-step-3 text-ink-950">Sign in</h1>
-      <p className="mt-3 text-step--1 leading-relaxed text-ink-600">
+      <h1 className="display text-step-2 text-ink-950 sm:text-step-3">Sign in</h1>
+      <p className="mt-2 text-step--1 leading-relaxed text-ink-600 sm:mt-3 [@media(max-height:760px)]:hidden">
         Students, institutions and operators all sign in here.
       </p>
 
       {demos.length > 0 && (
-        <div className="relative mt-8" ref={demoRef}>
+        <div className="relative mt-6" ref={demoRef}>
           <button
             type="button"
             onClick={() => setDemoOpen((v) => !v)}
@@ -170,7 +170,7 @@ export default function SignIn() {
         </div>
       )}
 
-      <form onSubmit={onSubmit} className="mt-8 space-y-6">
+      <form onSubmit={onSubmit} className="mt-6 space-y-5">
         <div>
           <label htmlFor="email" className="mb-2 block text-step--1 font-medium text-ink-700">
             Email
@@ -235,7 +235,7 @@ export default function SignIn() {
         </button>
       </form>
 
-      <div className="mt-8 border-t border-line pt-6 text-step--1 text-ink-600">
+      <div className="mt-6 border-t border-line pt-5 text-step--1 text-ink-600">
         New to Fablet?{" "}
         <Link to="/signup" className="link-underline font-medium">
           Create a student account

@@ -20,9 +20,9 @@ export default function AuthSplit({
   const quoteOnLeft = formSide === "right"
 
   return (
-    <div className="lg:grid lg:min-h-[100dvh] lg:grid-cols-2">
+    <div className="lg:grid lg:h-[100dvh] lg:grid-cols-2">
       <aside
-        className={`relative hidden overflow-hidden bg-ink-950 lg:flex lg:flex-col lg:justify-between lg:p-12 xl:p-16 ${
+        className={`relative hidden overflow-hidden bg-ink-950 lg:flex lg:flex-col lg:justify-between lg:p-10 xl:p-14 ${
           quoteOnLeft ? "lg:order-1" : "lg:order-2"
         }`}
       >
@@ -52,17 +52,19 @@ export default function AuthSplit({
 
         <div className="relative max-w-[42ch] text-paper">
           <Micro className="text-paper/50">{eyebrow}</Micro>
-          <p className="display mt-6 text-step-3 leading-[1.05] tracking-[-0.02em]">{quote}</p>
-          <p className="mt-6 font-mono text-[0.68rem] uppercase tracking-[0.08em] text-paper/40">
+          <p className="display mt-5 text-step-3 leading-[1.05] tracking-[-0.02em] [@media(max-height:800px)]:text-step-2">
+            {quote}
+          </p>
+          <p className="mt-5 font-mono text-[0.68rem] uppercase tracking-[0.08em] text-paper/40">
             {source}
           </p>
 
           {points.length > 0 && (
-            <ul className="mt-10 border-t border-paper/10">
+            <ul className="mt-8 border-t border-paper/10 [@media(max-height:800px)]:mt-6">
               {points.map((point) => (
                 <li
                   key={point}
-                  className="flex items-start gap-3 border-b border-paper/10 py-3.5 text-step--1 leading-relaxed text-paper/75"
+                  className="flex items-start gap-3 border-b border-paper/10 py-3 text-step--1 leading-relaxed text-paper/75 [@media(max-height:800px)]:py-2.5"
                 >
                   <span
                     className="mt-[0.45rem] h-1.5 w-1.5 shrink-0 rotate-45 bg-accent"
@@ -81,11 +83,11 @@ export default function AuthSplit({
       </aside>
 
       <main
-        className={`flex min-h-[100dvh] flex-col bg-paper lg:h-[100dvh] lg:min-h-0 lg:overflow-y-auto ${
+        className={`flex min-h-[100dvh] flex-col bg-paper lg:h-[100dvh] lg:min-h-0 ${
           quoteOnLeft ? "lg:order-2" : "lg:order-1"
         }`}
       >
-        <div className="flex items-center justify-between px-5 pt-6 sm:px-10">
+        <div className="flex items-center justify-between px-5 pt-5 sm:px-10">
           <Link to="/" aria-label="Fablet home" className="lg:hidden">
             <Wordmark />
           </Link>
@@ -104,9 +106,9 @@ export default function AuthSplit({
           </Link>
         </div>
 
-        <div className="flex flex-1 items-center justify-center px-5 py-10 sm:px-10">
+        <div className="flex flex-1 items-center justify-center px-5 py-6 sm:px-10">
           <div className="w-full max-w-[460px]">
-            <div className="rounded-[15px] border border-line bg-paper-2 p-6 sm:p-9">{children}</div>
+            <div className="rounded-[15px] border border-line bg-paper-2 p-5 sm:p-7 lg:p-8">{children}</div>
           </div>
         </div>
       </main>

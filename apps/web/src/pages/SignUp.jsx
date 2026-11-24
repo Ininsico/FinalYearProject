@@ -77,12 +77,12 @@ export default function SignUp() {
 
   return (
     <AuthSplit {...PANEL}>
-      <h1 className="display text-step-3 text-ink-950">Create your account</h1>
-      <p className="mt-3 text-step--1 leading-relaxed text-ink-600">
+      <h1 className="display text-step-2 text-ink-950 sm:text-step-3">Create your account</h1>
+      <p className="mt-2 text-step--1 leading-relaxed text-ink-600 sm:mt-3 [@media(max-height:760px)]:hidden">
         Your free student account — the whole catalogue opens immediately.
       </p>
 
-      <form onSubmit={onSubmit} noValidate className="mt-8 space-y-6">
+      <form onSubmit={onSubmit} noValidate className="mt-6 space-y-4">
         <div>
           <label htmlFor="name" className="mb-2 block text-step--1 font-medium text-ink-700">
             Name
@@ -143,7 +143,7 @@ export default function SignUp() {
         </button>
       </form>
 
-      <div className="mt-8 border-t border-line pt-6 text-step--1 text-ink-600">
+      <div className="mt-6 border-t border-line pt-5 text-step--1 text-ink-600">
         Already have an account?{" "}
         <Link to="/signin" className="link-underline font-medium">
           Sign in
