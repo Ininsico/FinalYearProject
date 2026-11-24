@@ -9,16 +9,26 @@ import { Cross } from "./home/ui"
  * mirrors the pages — sign in carries the form on the right, sign up and
  * institution registration on the left.
  */
-export default function AuthSplit({ formSide = "right", watermark, children }) {
+export default function AuthSplit({ formSide = "right", watermark, backdrop, children }) {
   const panelOnLeft = formSide === "right"
 
   return (
-    <div className="lg:grid lg:grid-cols-2">
+    <div className="relative lg:grid lg:grid-cols-2">
+      {backdrop && (
+        <div className="pointer-events-none fixed inset-0 z-0" aria-hidden="true">
+          <img src={backdrop} alt="" className="h-full w-full scale-110 object-cover blur-[20px]" />
+        </div>
+      )}
+
       <aside
         aria-hidden="true"
-        className={`relative hidden lg:block ${panelOnLeft ? "lg:order-1" : "lg:order-2"}`}
+        className={`relative z-10 hidden lg:block ${panelOnLeft ? "lg:order-1" : "lg:order-2"}`}
       >
-        <div className="sticky top-0 flex h-[100dvh] flex-col justify-between overflow-hidden bg-accent p-10 text-paper xl:p-14">
+        <div
+          className={`sticky top-0 flex h-[100dvh] flex-col justify-between overflow-hidden p-10 text-paper xl:p-14 ${
+            backdrop ? "bg-accent/90" : "bg-accent"
+          }`}
+        >
           <div className="grid-backdrop pointer-events-none absolute inset-0" />
           <div
             className="pointer-events-none absolute inset-0"
@@ -44,9 +54,9 @@ export default function AuthSplit({ formSide = "right", watermark, children }) {
       </aside>
 
       <main
-        className={`flex min-h-[100dvh] flex-col bg-paper ${
-          panelOnLeft ? "lg:order-2" : "lg:order-1"
-        }`}
+        className={`relative z-10 flex min-h-[100dvh] flex-col ${
+          backdrop ? "bg-paper/88" : "bg-paper"
+        } ${panelOnLeft ? "lg:order-2" : "lg:order-1"}`}
       >
         <div className="flex items-center justify-between px-5 pt-4 sm:px-10">
           <Link to="/" aria-label="Fablet home" className="lg:hidden">
