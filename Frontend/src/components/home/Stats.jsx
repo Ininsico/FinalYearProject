@@ -31,10 +31,12 @@ export default function Stats() {
   )
 
   return (
-    <section ref={root} data-bg="#eef0ff" className="border-t border-line py-20 sm:py-28">
+    <section ref={root} data-bg="#f4f1eb" className="border-t border-line py-20 sm:py-28">
       <Container>
         <Reveal>
-          <p className="eyebrow">By the numbers</p>
+          <h2 className="display max-w-[18ch] text-step-3 text-ink-950">
+            The catalogue, in numbers.
+          </h2>
         </Reveal>
         <dl className="mt-12 grid gap-10 sm:grid-cols-3">
           {STATS.map((s, i) => (
@@ -44,7 +46,7 @@ export default function Stats() {
                   <span data-count={s.value}>0</span>
                   {s.suffix}
                 </dd>
-                <dt className="mt-4 max-w-[26ch] text-step--1 text-ink-600">{s.label}</dt>
+                <dt className="mt-4 max-w-[28ch] text-step--1 text-ink-600">{s.label}</dt>
               </div>
             </Reveal>
           ))}

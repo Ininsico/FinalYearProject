@@ -36,10 +36,8 @@ export default function ScrollStatement() {
   return (
     <section ref={root} data-bg="#f9f7f3" className="border-t border-line py-28 sm:py-40">
       <Container>
-        <p className="eyebrow">The idea</p>
-        <p data-words className="display mt-8 max-w-[26ch] text-step-4 text-ink-950">
-          A brief is not a prompt. It is an outcome, and the swarm is the machine that
-          turns one into the other.
+        <p data-words className="display max-w-[26ch] text-step-4 text-ink-950">
+          A course should leave you knowing the subject, not just having watched it.
         </p>
       </Container>
     </section>

@@ -28,11 +28,11 @@ export default function ParallaxBand() {
         aria-hidden="true"
         className="display pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap text-[22vw] leading-none text-ink-950/[0.04]"
       >
-        orchestrate
+        mastery
       </span>
       <div className="relative mx-auto max-w-[1240px] px-6 sm:px-8">
-        <p data-parallax-line className="display mx-auto max-w-[22ch] text-center text-step-3 text-ink-950">
-          Stop assembling tools. Start directing a swarm.
+        <p data-parallax-line className="display mx-auto max-w-[24ch] text-center text-step-3 text-ink-950">
+          Stop collecting recordings. Learn in an academy that keeps up.
         </p>
       </div>
     </section>

@@ -44,7 +44,7 @@ export default function Footer() {
   return (
     <footer className="border-t border-line bg-paper-2">
       <Marquee
-        items={["Brief", "Plan", "Execute", "Operate", "Refine"]}
+        items={["Study", "Practise", "Prove", "Teach", "Publish"]}
         speed={45}
         className="border-b border-line py-5"
         itemClassName="mx-8 display text-step-1 text-ink-400"
@@ -54,8 +54,8 @@ export default function Footer() {
         <div className="grid gap-12 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,2.4fr)]">
           <div>
             <p className="max-w-[34ch] text-step-1 leading-[1.4] text-ink-700">
-              A self-orchestrating network of AI agents that turns a brief into a
-              working product.
+              An online teaching academy. AI drafts the material, instructors direct
+              it, and students learn in short lessons, exercises and assessments.
             </p>
             <a href="mailto:fablet@artdevelopers.site" className="link-underline mt-5 inline-block text-step--1">
               fablet@artdevelopers.site

@@ -2,35 +2,35 @@ import { useEffect, useRef, useState } from "react"
 import { useGSAP } from "@gsap/react"
 import { gsap } from "../../lib/gsap"
 import {
-  Brain, PaintBrush, FilmStrip, Waveform, Microphone, Translate,
-  MagnifyingGlass, ChartLine, Sparkle, Cube, Broadcast, Robot,
-  TreeStructure, ShieldCheck,
+  MathOperations, Atom, Flask, Code, Calculator, ChartLine,
+  Briefcase, PaintBrush, BookOpen, Notebook, GraduationCap,
+  Certificate, Lightbulb, Compass,
 } from "@phosphor-icons/react"
 import { Container } from "../layout"
 
-// Each node rides its own arc segment, so the swarm never moves in lockstep.
-// Nodes on one path are spaced 0.22 apart — a stream of specialists, never a pile-up.
+// Each node rides its own arc segment, so the subjects never move in lockstep.
+// Nodes on one path are spaced 0.22 apart — a stream of disciplines, never a pile-up.
 const NODES = [
-  { icon: Brain, path: "mp-a", start: 0, end: 0.34, scale: 1.25 },
-  { icon: Waveform, path: "mp-b", start: 0, end: 0.34, scale: 1.05 },
-  { icon: FilmStrip, path: "mp-c", start: 0, end: 0.4, scale: 1.15 },
-  { icon: ChartLine, path: "mp-d", start: 0, end: 0.4, scale: 1 },
-  { icon: Microphone, path: "mp-a", start: 0.22, end: 0.56, scale: 1.1 },
-  { icon: MagnifyingGlass, path: "mp-b", start: 0.22, end: 0.56, scale: 1.2 },
-  { icon: Translate, path: "mp-c", start: 0.3, end: 0.7, scale: 0.95 },
-  { icon: Cube, path: "mp-d", start: 0.3, end: 0.7, scale: 1.05 },
-  { icon: Sparkle, path: "mp-a", start: 0.44, end: 0.78, scale: 1.15 },
-  { icon: Broadcast, path: "mp-b", start: 0.44, end: 0.78, scale: 1 },
-  { icon: Robot, path: "mp-c", start: 0.6, end: 1, scale: 1.3 },
-  { icon: TreeStructure, path: "mp-d", start: 0.6, end: 1, scale: 0.95 },
-  { icon: PaintBrush, path: "mp-a", start: 0.66, end: 1, scale: 1 },
-  { icon: ShieldCheck, path: "mp-b", start: 0.66, end: 1, scale: 1.1 },
+  { icon: MathOperations, path: "mp-a", start: 0, end: 0.34, scale: 1.25 },
+  { icon: Atom, path: "mp-b", start: 0, end: 0.34, scale: 1.05 },
+  { icon: Flask, path: "mp-c", start: 0, end: 0.4, scale: 1.15 },
+  { icon: Code, path: "mp-d", start: 0, end: 0.4, scale: 1 },
+  { icon: Calculator, path: "mp-a", start: 0.22, end: 0.56, scale: 1.1 },
+  { icon: ChartLine, path: "mp-b", start: 0.22, end: 0.56, scale: 1.2 },
+  { icon: Briefcase, path: "mp-c", start: 0.3, end: 0.7, scale: 0.95 },
+  { icon: PaintBrush, path: "mp-d", start: 0.3, end: 0.7, scale: 1.05 },
+  { icon: BookOpen, path: "mp-a", start: 0.44, end: 0.78, scale: 1.15 },
+  { icon: Notebook, path: "mp-b", start: 0.44, end: 0.78, scale: 1 },
+  { icon: GraduationCap, path: "mp-c", start: 0.6, end: 1, scale: 1.3 },
+  { icon: Certificate, path: "mp-d", start: 0.6, end: 1, scale: 0.95 },
+  { icon: Lightbulb, path: "mp-a", start: 0.66, end: 1, scale: 1 },
+  { icon: Compass, path: "mp-b", start: 0.66, end: 1, scale: 1.1 },
 ]
 
 /**
  * The curves are drawn per breakpoint and the icons live *inside* the SVG, so
  * they stay glued to their arcs at every viewport size — no drift, no clipped
- * fly-aways. Scroll drives travel; fade-in/out windows keep the whole swarm
+ * fly-aways. Scroll drives travel; fade-in/out windows keep the whole set
  * visible while the section is on screen.
  */
 const LAYOUTS = {
@@ -73,7 +73,6 @@ export default function MotionPaths() {
 
   useGSAP(
     () => {
-      const layout = narrow ? LAYOUTS.narrow : LAYOUTS.wide
       const nodes = gsap.utils.toArray("[data-node]", root.current)
       const mm = gsap.matchMedia(root)
 
@@ -94,7 +93,7 @@ export default function MotionPaths() {
             },
           })
 
-          // Fly in small while the section approaches — staggered so the swarm
+          // Fly in small while the section approaches — staggered so the set
           // flows in rather than popping as one block.
           gsap.fromTo(
             el,
@@ -127,7 +126,7 @@ export default function MotionPaths() {
         })
       })
 
-      // Reduced motion: place the swarm statically along its arcs — no drift, no gaps.
+      // Reduced motion: place the set statically along its arcs — no drift, no gaps.
       mm.add("(prefers-reduced-motion: reduce)", () => {
         nodes.forEach((el, i) => {
           const cfg = NODES[i]
@@ -157,15 +156,12 @@ export default function MotionPaths() {
     >
       <Container>
         <div className="flex flex-wrap items-end justify-between gap-6">
-          <div>
-            <p className="eyebrow">In motion</p>
-            <h2 className="display mt-5 max-w-[20ch] text-step-4 text-ink-950">
-              Agents on their run, from brief to output.
-            </h2>
-          </div>
+          <h2 className="display max-w-[20ch] text-step-4 text-ink-950">
+            Every course is a path, not a playlist.
+          </h2>
           <p className="max-w-[36ch] text-step--1 text-ink-500">
-            Every specialist travels its own path through the production, coordinated
-            through one shared warehouse.
+            Foundations, practice, proof. Each course is charted in that order, and the
+            lessons follow the line.
           </p>
         </div>
       </Container>

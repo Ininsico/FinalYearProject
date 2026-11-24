@@ -2,12 +2,10 @@ import Hero from "../components/home/Hero"
 import MotionPaths from "../components/home/MotionPaths"
 import Statement from "../components/home/Statement"
 import Steps from "../components/home/Steps"
-import Capabilities from "../components/home/Capabilities"
-import DomainRail from "../components/home/DomainRail"
-import ScrollStatement from "../components/home/ScrollStatement"
+import Catalogue from "../components/home/Catalogue"
 import Showcase from "../components/home/Showcase"
-import IconBand from "../components/home/IconBand"
-import Agents from "../components/home/Agents"
+import Institutions from "../components/home/Institutions"
+import ScrollStatement from "../components/home/ScrollStatement"
 import ParallaxBand from "../components/home/ParallaxBand"
 import Stats from "../components/home/Stats"
 import Faq from "../components/home/Faq"
@@ -20,12 +18,10 @@ export default function Home() {
       <MotionPaths />
       <Statement />
       <Steps />
-      <Capabilities />
-      <DomainRail />
-      <ScrollStatement />
+      <Catalogue />
       <Showcase />
-      <IconBand />
-      <Agents />
+      <Institutions />
+      <ScrollStatement />
       <ParallaxBand />
       <Stats />
       <Faq />

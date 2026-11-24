@@ -2,7 +2,6 @@ import { useId, useState } from "react"
 import { Plus } from "@phosphor-icons/react"
 import { FAQS } from "../../lib/content"
 import { Container } from "../layout"
-import Reveal from "../Reveal"
 import SplitHeading from "../SplitHeading"
 
 export default function Faq() {
@@ -14,7 +13,7 @@ export default function Faq() {
       <Container>
         <div className="grid gap-12 lg:grid-cols-[minmax(0,0.7fr)_minmax(0,1.6fr)] lg:gap-20">
           <div>
-            <p className="eyebrow">FAQ</p>
+            <p className="font-mono text-[0.7rem] tabular text-accent-ink">03</p>
             <SplitHeading as="h2" className="mt-5 max-w-[12ch] text-step-4 text-ink-950 display">
               Questions, answered.
             </SplitHeading>

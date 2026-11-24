@@ -1,9 +1,31 @@
 import { useRef, useState } from "react"
 import { useGSAP } from "@gsap/react"
 import { gsap, ScrollTrigger } from "../../lib/gsap"
-import { STEPS } from "../../lib/content"
 import { Container } from "../layout"
 import SplitHeading from "../SplitHeading"
+
+const STEPS = [
+  {
+    n: "01",
+    title: "Choose your course",
+    body: "The catalogue opens with mathematics, physics, computer science, business and design. Filter by subject and level, with premium modules clearly marked.",
+  },
+  {
+    n: "02",
+    title: "Learn in short lessons",
+    body: "Video, reading and worked examples, foundations first, each sized to finish in one sitting rather than one semester.",
+  },
+  {
+    n: "03",
+    title: "Practise, then prove it",
+    body: "Hands-on exercises with sample solutions, closed by a module quiz that covers the whole ground, not just the last page.",
+  },
+  {
+    n: "04",
+    title: "Grow on your plan",
+    body: "Start free with the whole free catalogue. Student Pro unlocks premium modules and the AI video agent, and institutions bring their members on seat plans.",
+  },
+]
 
 export default function Steps() {
   const root = useRef(null)
@@ -39,12 +61,12 @@ export default function Steps() {
         <Container className="py-20 sm:py-28 lg:py-0">
           <div className="grid gap-12 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:gap-20">
             <div>
-              <p className="eyebrow">How it works</p>
+              <p className="font-mono text-[0.7rem] tabular text-accent-ink">02</p>
               <SplitHeading
                 as="h2"
                 className="mt-5 max-w-[14ch] text-step-4 text-ink-950 display"
               >
-                From one sentence to a running system.
+                How the academy works.
               </SplitHeading>
 
               <ol className="mt-12 hidden lg:block">

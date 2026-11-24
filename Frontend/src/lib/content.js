@@ -61,18 +61,18 @@ export const DOMAINS = [
 ]
 
 export const STATS = [
-  { value: 24, suffix: "", label: "specialist agent roles in the catalog" },
-  { value: 4, suffix: "", label: "content domains served by one foundation" },
-  { value: 0, suffix: "", label: "engineers required to ship a production" },
+  { value: 7, suffix: "", label: "courses in the opening catalogue" },
+  { value: 5, suffix: "", label: "subjects, from calculus to design systems" },
+  { value: 4, suffix: "", label: "lesson formats: video, reading, exercise, quiz" },
 ]
 
 export const FAQS = [
-  { q: "What exactly is Fablet?", a: "A self-orchestrating swarm of AI agents. You describe an outcome in plain language, and a coordinated network of specialists plans, builds, runs, and refines it for you." },
-  { q: "Do I need to know how to code?", a: "No. Fablet is no-code by default. You brief the swarm in natural language and it handles architecture, wiring, and delivery behind the scenes." },
-  { q: "What can I build with it?", a: "Anything the swarm can orchestrate: personalized courses, comedy and news channels, branded media, enterprise workflows, internal tools, and beyond." },
-  { q: "How does the orchestration work?", a: "A single brief is decomposed into a sequenced plan, assigned to specialist agents that execute in parallel, then operated and optimized end to end." },
-  { q: "Is my data and IP safe?", a: "Your briefs, assets, and outputs stay within your workspace. The swarm improves from usage patterns, never by exposing your private content." },
-  { q: "How much does it cost?", a: "Fablet is built to remove gatekeepers, so there is no budget wall to start. Plans and pricing are coming soon, reach out on the contact page for early access." },
+  { q: "What is Fablet?", a: "An online teaching academy. Courses across mathematics, physics, computer science, business and design are drafted with AI, directed by instructors, and delivered as short video, reading, exercise and quiz lessons." },
+  { q: "Who can join?", a: "Anyone can create a free student account and study the free modules. Institutions register separately, choose a seat plan, and bring their members under one roof." },
+  { q: "How much does it cost?", a: "Students start free. Student Pro is 9 USDT per month for premium modules and the AI video agent. Institutions pay 49 or 149 USDT per month for 10 or 50 seats." },
+  { q: "What does the AI actually do?", a: "It drafts course material: descriptions, lesson text and quizzes. It can also turn uploaded notes, PDFs and images into module content. Instructors direct it, edit it, and decide what gets published." },
+  { q: "How do payments work?", a: "Plans are paid in USDT on the TRX network. A deposit is matched against the exact amount within a small tolerance, and the subscription activates automatically." },
+  { q: "Can an institution publish its own courses?", a: "Yes. Institutions build modules with the same editor and AI tools as the platform, publish them to the shared catalogue, and keep them current module by module." },
 ]
 
 export const TEAM = [

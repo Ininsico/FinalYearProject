@@ -5,22 +5,22 @@ import { Container } from "../layout"
 
 const PANELS = [
   {
-    kicker: "01 — Brief",
-    title: "You describe the outcome.",
-    body: "Plain language in. The swarm reads intent, not a specification, and treats one sentence as a complete brief.",
-    points: ["Natural language input", "No-code by default", "Any domain"],
+    kicker: "01 / Study",
+    title: "Short lessons, foundations first.",
+    body: "Video, reading and worked examples, sequenced so each idea stands on the last. Nothing is recorded just to fill an hour.",
+    points: ["Video and reading", "Worked examples", "Foundations first"],
   },
   {
-    kicker: "02 — Build",
-    title: "The swarm plans and builds.",
-    body: "The orchestrator sequences the work and instantiates specialists that reason against a shared warehouse of content.",
-    points: ["Decomposed plan", "Parallel agents", "Shared memory"],
+    kicker: "02 / Practise",
+    title: "Then you do it yourself.",
+    body: "Hands-on exercises with sample solutions, sized to finish in one sitting.",
+    points: ["Guided tasks", "Sample solutions", "One-sitting scope"],
   },
   {
-    kicker: "03 — Operate",
-    title: "It runs, and keeps improving.",
-    body: "Fablet validates and refines what it built, then sustains it. Every run feeds the warehouse, so the next is better.",
-    points: ["Semantic QA", "Iterative refinement", "Sustained operation"],
+    kicker: "03 / Prove",
+    title: "And prove you own it.",
+    body: "Every module closes with a quiz that covers the whole ground, not just the last page.",
+    points: ["Module quizzes", "Whole-module coverage", "Taken any time"],
   },
 ]
 
@@ -59,9 +59,11 @@ export default function Showcase() {
       <div className="lg:flex lg:h-full lg:flex-col lg:justify-center lg:pt-28 lg:pb-12">
         <Container className="pt-20 sm:pt-28 lg:pt-0">
           <div className="flex flex-wrap items-end justify-between gap-6">
-            <p className="eyebrow">The run</p>
+            <h2 className="display max-w-[20ch] text-step-3 text-ink-950">
+              Inside a course, end to end.
+            </h2>
             <p className="max-w-[34ch] text-step--1 text-ink-500">
-              Three movements, one production. Scroll to advance.
+              Three movements per module. Scroll to advance.
             </p>
           </div>
 
@@ -74,7 +76,9 @@ export default function Showcase() {
               >
                 <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-20">
                   <div>
-                    <p className="eyebrow text-accent-ink">{p.kicker}</p>
+                    <p className="font-mono text-[0.7rem] text-accent-ink">
+                      {p.kicker}
+                    </p>
                     <h3 className="display mt-5 max-w-[16ch] text-step-4 text-ink-950">{p.title}</h3>
                   </div>
                   <div>

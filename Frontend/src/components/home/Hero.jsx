@@ -6,7 +6,12 @@ import { gsap } from "../../lib/gsap"
 import { Container } from "../layout"
 import SplitHeading from "../SplitHeading"
 
-const META = ["24 agent roles", "Model-agnostic", "4 content domains", "No-code by default"]
+const META = [
+  "Free student tier",
+  "Courses in 5 subjects",
+  "AI course building",
+  "Seat plans for institutions",
+]
 
 export default function Hero() {
   const navigate = useNavigate()
@@ -62,39 +67,37 @@ export default function Hero() {
         aria-hidden="true"
         className="display pointer-events-none absolute -right-[4vw] top-16 select-none whitespace-nowrap text-[32vw] leading-none text-ink-950/[0.035]"
       >
-        swarm
+        academy
       </span>
 
       <Container>
         <div data-hero-content className="relative">
-          <p className="eyebrow">Agentic AI orchestration</p>
-
           <SplitHeading
             as="h1"
             immediate
             delay={0.08}
-            className="mt-8 max-w-[15ch] text-step-5 text-ink-950 display"
+            className="max-w-[17ch] text-step-5 text-ink-950 display"
           >
-            From a sentence{" "}
+            An online academy,{" "}
             <br />
-            <em className="text-accent-ink">to a running product.</em>
+            <em className="text-accent-ink">taught with AI.</em>
           </SplitHeading>
 
           <div className="mt-12 grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-end">
-            <p data-hero-meta className="max-w-[52ch] text-step-1 leading-[1.5] text-ink-600">
-              Fablet is a self-orchestrating network of AI agents. Brief it in plain
-              language and it plans, builds, runs, and refines the result, so you ship
-              without an engineering team.
+            <p data-hero-meta className="max-w-[54ch] text-step-1 leading-[1.5] text-ink-600">
+              Fablet runs courses across mathematics, physics, computer science,
+              business and design. AI drafts the material, instructors direct it, and
+              students learn in short lessons, exercises and assessments.
             </p>
 
             <div data-hero-meta className="flex flex-wrap items-center gap-x-8 gap-y-4 lg:justify-end">
               <button onClick={() => navigate("/signup")} className="btn btn-accent">
-                Get started
+                Create your free account
                 <ArrowRight size={16} weight="bold" aria-hidden="true" />
               </button>
-              <button onClick={() => navigate("/platform")} className="link-underline text-step--1">
-                See how it works
-              </button>
+              <a href="#catalogue" className="link-underline text-step--1">
+                Browse the catalogue
+              </a>
             </div>
           </div>
 
