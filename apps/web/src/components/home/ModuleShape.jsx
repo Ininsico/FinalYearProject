@@ -1,69 +1,82 @@
-import Ticker from "../Ticker"
 import { Container } from "../layout"
 import { Micro } from "./ui"
 
-const STAGES = [
-  {
-    title: "Foundations",
-    body: "A welcome video and the core reading for the subject.",
-    formats: "Video and reading",
-  },
-  {
-    title: "Practice",
-    body: "A guided exercise sized for one sitting, with a sample solution to check against.",
-    formats: "Exercise",
-  },
-  {
-    title: "Assessment",
-    body: "A quiz that covers the whole module, not just the last page.",
-    formats: "Quiz",
-  },
-]
-
-const FORMATS = [
-  "Video, 8 minutes",
-  "Reading, 15 minutes",
-  "Exercise, 30 minutes",
-  "Quiz, 15 minutes",
+const LESSONS = [
+  { title: "Foundation lesson", format: "Video", minutes: 8 },
+  { title: "Core reading", format: "Reading", minutes: 15 },
+  { title: "Worked practice", format: "Exercise", minutes: 30 },
+  { title: "Module assessment", format: "Quiz", minutes: 15, assessment: true },
 ]
 
 export default function ModuleShape() {
   return (
     <section className="bg-paper py-16 sm:py-24">
       <Container>
-        <div className="flex flex-wrap items-end justify-between gap-4">
-          <h2 className="display text-[clamp(2rem,4.2vw,3.6rem)] leading-[1.02] tracking-[-0.02em] text-ink-950">
-            Inside a module.
-          </h2>
-          <Micro className="text-ink-500">The same shape every time</Micro>
-        </div>
+        <div className="grid gap-12 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-center lg:gap-16">
+          <div>
+            <Micro className="text-ink-500">Inside a module</Micro>
+            <h2 className="display mt-6 text-[clamp(2rem,4.2vw,3.6rem)] leading-[1.02] tracking-[-0.02em] text-ink-950">
+              One module, start to finish.
+            </h2>
+            <p className="mt-6 max-w-[48ch] text-step-0 leading-[1.7] text-ink-600">
+              Every module follows the same arc: a taught foundation, a worked practice,
+              then an assessment that covers all of it. The pacing is fixed, so you
+              always know what a sitting costs before you start it.
+            </p>
+            <p className="mt-6 font-mono text-[0.68rem] uppercase tracking-[0.08em] text-ink-500">
+              About 68 minutes, end to end
+            </p>
+          </div>
 
-        <div className="relative mt-14">
-          <div className="dash-flow absolute left-0 right-0 top-4 hidden h-px lg:block" aria-hidden="true" />
-          <ol className="grid gap-12 lg:grid-cols-3 lg:gap-8">
-            {STAGES.map((s, i) => (
-              <li key={s.title} className="relative lg:pr-10">
-                <span className="relative z-10 flex h-8 w-8 items-center justify-center rounded-full border border-line-2 bg-paper font-mono text-[0.68rem] text-ink-950">
-                  {i + 1}
+          <div className="overflow-hidden rounded-[15px] border border-line bg-paper">
+            <div className="flex items-center justify-between border-b border-line bg-paper-2 px-5 py-3">
+              <Micro dot={false} className="text-ink-500">
+                Module anatomy
+              </Micro>
+              <Micro dot={false} className="text-ink-400">
+                4 lessons
+              </Micro>
+            </div>
+
+            <ol className="divide-y divide-line">
+              {LESSONS.map((l, i) => (
+                <li
+                  key={l.title}
+                  className={`flex items-center gap-4 px-5 py-4 transition-colors duration-300 ${
+                    l.assessment ? "bg-accent-soft" : "hover:bg-paper-2"
+                  }`}
+                >
+                  <span className="font-mono text-[0.68rem] text-ink-400">0{i + 1}</span>
+                  <div className="min-w-0 flex-1">
+                    <p className="display text-step-1 text-ink-950">{l.title}</p>
+                    <p className="mt-0.5 font-mono text-[0.62rem] uppercase tracking-[0.08em] text-ink-500">
+                      {l.format}
+                    </p>
+                  </div>
+                  <span className="font-mono text-[0.68rem] tabular-nums text-ink-600">
+                    {l.minutes} min
+                  </span>
+                  {l.assessment ? (
+                    <span className="h-1.5 w-1.5 rotate-45 bg-accent" aria-hidden="true" />
+                  ) : null}
+                </li>
+              ))}
+            </ol>
+
+            <div className="flex items-center justify-between gap-4 border-t border-line bg-paper-2 px-5 py-3">
+              <Micro dot={false} className="text-ink-500">
+                Complete all four to unlock the next module
+              </Micro>
+              <span className="flex items-center gap-3">
+                <span className="block h-[3px] w-20 overflow-hidden rounded-full bg-line-2">
+                  <span className="block h-full w-3/4 rounded-full bg-accent" />
                 </span>
-                <h3 className="display mt-5 text-step-2 text-ink-950">{s.title}</h3>
-                <p className="mt-2 max-w-[40ch] text-step--1 leading-relaxed text-ink-600">{s.body}</p>
-                <span className="mt-5 inline-block rounded-full border border-line-2 px-4 py-1.5 font-mono text-[0.66rem] uppercase tracking-[0.08em] text-ink-700">
-                  {s.formats}
-                </span>
-              </li>
-            ))}
-          </ol>
+                <span className="font-mono text-[0.68rem] tabular-nums text-ink-600">3 / 4</span>
+              </span>
+            </div>
+          </div>
         </div>
       </Container>
-
-      <div className="mt-14 border-y border-line bg-paper-2 py-5">
-        <Ticker
-          items={FORMATS}
-          duration={38}
-          itemClassName="font-mono text-[0.68rem] uppercase tracking-[0.08em] text-ink-700"
-        />
-      </div>
     </section>
   )
 }
