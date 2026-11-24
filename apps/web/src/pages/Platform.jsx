@@ -1,5 +1,4 @@
 import { PageHero, Section, SectionHeading, Prose, Container } from "../components/layout"
-import Steps from "../components/home/Steps"
 import Reveal from "../components/Reveal"
 import { AGENT_ROLES } from "../lib/content"
 
@@ -33,8 +32,6 @@ export default function Platform() {
         title="How the swarm works."
         lede="Fablet replaces manual orchestration with a coordinated swarm of specialized agents that share one understanding of the content being created."
       />
-
-      <Steps />
 
       <Section>
         <SectionHeading

@@ -60,12 +60,6 @@ export const DOMAINS = [
   },
 ]
 
-export const STATS = [
-  { value: 7, suffix: "", label: "courses in the opening catalogue" },
-  { value: 5, suffix: "", label: "subjects, from calculus to design systems" },
-  { value: 4, suffix: "", label: "lesson formats: video, reading, exercise, quiz" },
-]
-
 export const FAQS = [
   { q: "What is Fablet?", a: "An online teaching academy. Courses across mathematics, physics, computer science, business and design are drafted with AI, directed by instructors, and delivered as short video, reading, exercise and quiz lessons." },
   { q: "Who can join?", a: "Anyone can create a free student account and study the free modules. Institutions register separately, choose a seat plan, and bring their members under one roof." },
