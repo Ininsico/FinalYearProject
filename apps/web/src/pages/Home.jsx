@@ -5,6 +5,7 @@ import Exams from "../components/home/Exams"
 import Manifesto from "../components/home/Manifesto"
 import Teachers from "../components/home/Teachers"
 import ModuleShape from "../components/home/ModuleShape"
+import OfferBand from "../components/home/OfferBand"
 import HowItWorks from "../components/home/HowItWorks"
 import WhoDoesWhat from "../components/home/WhoDoesWhat"
 import Plans from "../components/home/Plans"
@@ -23,6 +24,7 @@ export default function Home() {
       <Manifesto />
       <Teachers />
       <ModuleShape />
+      <OfferBand />
       <HowItWorks />
       <WhoDoesWhat />
       <Plans />
