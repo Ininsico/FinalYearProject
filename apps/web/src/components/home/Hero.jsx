@@ -25,14 +25,14 @@ function FacultyCarousel() {
       <Cross className="absolute -left-5 -top-5 hidden text-ink-400 sm:block" />
       <Cross className="absolute -bottom-5 -right-5 hidden text-ink-400 sm:block" />
 
-      <div className="relative h-[250px] sm:h-[300px]" aria-hidden="true">
-        {/* Wireframe name plate sits behind the transparent portrait. */}
-        <div className="pointer-events-none absolute inset-x-0 bottom-[22%] flex justify-center">
-          <span className="whitespace-nowrap font-sans text-[clamp(2rem,4.2vw,3.4rem)] font-semibold leading-none tracking-[-0.02em] text-transparent [-webkit-text-stroke:1.5px_var(--color-ink-500)]">
-            {active.name}
-          </span>
-        </div>
+      <p
+        aria-hidden="true"
+        className="whitespace-nowrap text-center font-sans text-[clamp(1.8rem,3.6vw,2.7rem)] font-bold italic leading-none tracking-[-0.02em] text-transparent [-webkit-text-stroke:1.5px_var(--color-ink-950)]"
+      >
+        {active.name}
+      </p>
 
+      <div className="relative mt-3 h-[220px] sm:h-[250px]" aria-hidden="true">
         {FACULTY.map((t, i) => (
           <img
             key={t.name}
@@ -40,7 +40,7 @@ function FacultyCarousel() {
             alt=""
             loading={i === 0 ? "eager" : "lazy"}
             decoding="async"
-            className={`absolute inset-0 z-10 mx-auto h-full w-auto object-contain transition-all duration-700 ease-out ${
+            className={`absolute inset-0 mx-auto h-full w-auto object-contain transition-all duration-700 ease-out ${
               i === index ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
             }`}
           />
