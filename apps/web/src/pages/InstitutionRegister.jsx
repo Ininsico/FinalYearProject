@@ -78,9 +78,7 @@ export default function InstitutionRegister() {
     <AuthSplit>
       <AuthPathSwitch active="institution" />
 
-      <h1 className="display auth-title mt-5 text-ink-950">
-        Register your institution.
-      </h1>
+      <h1 className="display auth-title mt-5 text-ink-950">Register your institution.</h1>
       <p className="auth-subtitle mt-2 text-step--1 leading-relaxed text-ink-600 sm:mt-3">
         Seats, a shared catalogue and your own console. The owner account created here
         manages all of it.

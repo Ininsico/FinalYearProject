@@ -66,9 +66,7 @@ export default function SignUp() {
   return (
     <AuthSplit>
       <AuthPathSwitch active="student" />
-      <h1 className="display auth-title mt-5 text-ink-950">
-        Create your account
-      </h1>
+      <h1 className="display auth-title mt-5 text-ink-950">Create your account</h1>
       <p className="auth-subtitle mt-2 text-step--1 leading-relaxed text-ink-600 sm:mt-3">
         A free account for one learner — the whole catalogue opens immediately.
       </p>

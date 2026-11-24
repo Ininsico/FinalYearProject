@@ -1,22 +1,33 @@
 import { useNavigate } from "react-router-dom"
+import { Buildings, GraduationCap } from "@phosphor-icons/react"
 
-// Segmented student/institution switcher shared by the three registration paths,
-// so the two account types are always visibly differentiated.
+const OPTIONS = [
+  {
+    id: "student",
+    icon: GraduationCap,
+    label: "Student",
+    line: "Free, for one learner",
+    to: "/signup",
+  },
+  {
+    id: "institution",
+    icon: Buildings,
+    label: "Institution",
+    line: "Seats and a shared catalogue",
+    to: "/institutions/register",
+  },
+]
+
+// The account-type choice, as two explicit plates rather than a segmented
+// control: each carries an icon, its name and what it gets you.
 export default function AuthPathSwitch({ active }) {
   const navigate = useNavigate()
 
-  const options = [
-    { id: "student", label: "Student", to: "/signup" },
-    { id: "institution", label: "Institution", to: "/institutions/register" },
-  ]
-
   return (
-    <nav
-      aria-label="Account type"
-      className="grid grid-cols-2 gap-1 rounded-full border border-line-2 bg-paper p-1"
-    >
-      {options.map((o) => {
+    <div role="group" aria-label="Account type" className="grid gap-3 sm:grid-cols-2">
+      {OPTIONS.map((o) => {
         const isActive = o.id === active
+        const Icon = o.icon
         return (
           <button
             key={o.id}
@@ -25,14 +36,33 @@ export default function AuthPathSwitch({ active }) {
             onClick={() => {
               if (!isActive) navigate(o.to)
             }}
-            className={`h-9 rounded-full font-mono text-[0.64rem] uppercase tracking-[0.08em] transition-colors duration-300 ${
-              isActive ? "bg-ink-950 text-paper" : "text-ink-600 hover:text-ink-950"
+            className={`flex items-start gap-3 rounded-[12px] border p-3.5 text-left transition-colors duration-300 ${
+              isActive
+                ? "border-ink-950 bg-ink-950 text-paper"
+                : "border-line-2 bg-paper text-ink-800 hover:border-ink-950"
             }`}
           >
-            {o.label}
+            <Icon
+              size={18}
+              weight={isActive ? "fill" : "regular"}
+              aria-hidden="true"
+              className={`mt-0.5 shrink-0 ${isActive ? "text-accent-soft" : "text-ink-500"}`}
+            />
+            <span className="min-w-0">
+              <span className="block font-mono text-[0.66rem] uppercase tracking-[0.08em]">
+                {o.label}
+              </span>
+              <span
+                className={`mt-0.5 block text-[0.74rem] leading-snug ${
+                  isActive ? "text-paper/70" : "text-ink-500"
+                }`}
+              >
+                {o.line}
+              </span>
+            </span>
           </button>
         )
       })}
-    </nav>
+    </div>
   )
 }
