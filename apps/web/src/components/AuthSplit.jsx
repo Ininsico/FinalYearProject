@@ -1,22 +1,15 @@
 import { Link } from "react-router-dom"
 import { ArrowLeft } from "@phosphor-icons/react"
 import Wordmark from "./Wordmark"
-import { Cross, Micro } from "./home/ui"
+import { Cross } from "./home/ui"
 
 /**
  * Split-screen frame for the auth pages: one half is the form card, the other
- * half is the brand panel. `formSide` mirrors the two pages — sign in carries
- * the form on the right, sign up on the left — without changing the DOM order.
+ * half is the brand panel. `formSide` mirrors the pages — sign in carries the
+ * form on the right, sign up and institution registration on the left — without
+ * changing the DOM order.
  */
-export default function AuthSplit({
-  formSide = "right",
-  eyebrow,
-  quote,
-  source,
-  points = [],
-  watermark,
-  children,
-}) {
+export default function AuthSplit({ formSide = "right", watermark, children }) {
   const quoteOnLeft = formSide === "right"
 
   return (
@@ -50,32 +43,7 @@ export default function AuthSplit({
           <Cross className="text-paper/40" />
         </div>
 
-        <div className="relative max-w-[42ch] text-paper">
-          <Micro className="text-paper/50">{eyebrow}</Micro>
-          <p className="display auth-quote mt-5 text-step-3 leading-[1.05] tracking-[-0.02em]">
-            {quote}
-          </p>
-          <p className="mt-5 font-mono text-[0.68rem] uppercase tracking-[0.08em] text-paper/40">
-            {source}
-          </p>
-
-          {points.length > 0 && (
-            <ul className="auth-points mt-8 border-t border-paper/10">
-              {points.map((point) => (
-                <li
-                  key={point}
-                  className="flex items-start gap-3 border-b border-paper/10 py-3 text-step--1 leading-relaxed text-paper/75"
-                >
-                  <span
-                    className="mt-[0.45rem] h-1.5 w-1.5 shrink-0 rotate-45 bg-accent"
-                    aria-hidden="true"
-                  />
-                  {point}
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
+        <span className="relative" aria-hidden="true" />
 
         <p className="relative font-mono text-[0.68rem] uppercase tracking-[0.08em] text-paper/30">
           Built by Artdevelopers

@@ -17,19 +17,6 @@ const EMPTY = {
   confirm: "",
 }
 
-const PANEL = {
-  formSide: "left",
-  eyebrow: "For institutions",
-  quote: "Run the whole institution on one curriculum.",
-  source: "Fablet — institutions",
-  points: [
-    "Seat plans from 10 to 50 members",
-    "A shared course library",
-    "One console for members, modules and billing",
-  ],
-  watermark: "institution",
-}
-
 export default function InstitutionRegister() {
   const navigate = useNavigate()
   const { refresh } = useAuth()
@@ -88,7 +75,7 @@ export default function InstitutionRegister() {
   }
 
   return (
-    <AuthSplit {...PANEL}>
+    <AuthSplit formSide="left" watermark="institution">
       <AuthPathSwitch active="institution" />
 
       <h1 className="display auth-title mt-5 text-step-2 text-ink-950 sm:text-step-3">

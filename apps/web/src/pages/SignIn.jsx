@@ -5,20 +5,6 @@ import AuthSplit from "../components/AuthSplit"
 import { ArrowIcon } from "../components/home/ui"
 import { useAuth, api, homeForRole } from "../lib/auth"
 
-const PANEL = {
-  formSide: "right",
-  eyebrow: "The academy",
-  quote:
-    "Studying that keeps score. Every module you finish is checked, and every answer you miss comes back as practice.",
-  source: "Fablet — how it works",
-  points: [
-    "Seven courses live, more every month",
-    "Taught by AI teachers, directed by instructors",
-    "Every course Fablet publishes is free",
-  ],
-  watermark: "fablet",
-}
-
 export default function SignIn() {
   const { signIn } = useAuth()
   const navigate = useNavigate()
@@ -99,7 +85,7 @@ export default function SignIn() {
   const demos = demo?.enabled ? demo.identities : []
 
   return (
-    <AuthSplit {...PANEL}>
+    <AuthSplit formSide="right" watermark="fablet">
       <h1 className="display auth-title text-step-2 text-ink-950 sm:text-step-3">Sign in</h1>
       <p className="auth-subtitle mt-2 text-step--1 leading-relaxed text-ink-600 sm:mt-3">
         Students, institutions and operators all sign in here.

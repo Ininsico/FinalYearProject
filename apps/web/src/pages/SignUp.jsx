@@ -8,19 +8,6 @@ import { useAuth } from "../lib/auth"
 
 const EMPTY = { name: "", email: "", password: "", confirm: "" }
 
-const PANEL = {
-  formSide: "left",
-  eyebrow: "Start free",
-  quote: "Create an account and the whole Fablet catalogue opens at no cost.",
-  source: "Fablet — the academy",
-  points: [
-    "Short lessons, worked practice, real assessments",
-    "The AI assistant tracks your progress",
-    "Institutions publish their own modules",
-  ],
-  watermark: "academy",
-}
-
 export default function SignUp() {
   const { signUp } = useAuth()
   const [form, setForm] = useState(EMPTY)
@@ -61,7 +48,7 @@ export default function SignUp() {
 
   if (done) {
     return (
-      <AuthSplit {...PANEL}>
+      <AuthSplit formSide="left" watermark="academy">
         <h1 className="display text-step-3 text-ink-950">Check your email</h1>
         <p className="mt-3 text-step--1 leading-relaxed text-ink-600">
           We sent an activation link to {form.email}. Open it to activate your account.
@@ -77,7 +64,7 @@ export default function SignUp() {
   }
 
   return (
-    <AuthSplit {...PANEL}>
+    <AuthSplit formSide="left" watermark="academy">
       <AuthPathSwitch active="student" />
       <h1 className="display auth-title mt-5 text-step-2 text-ink-950 sm:text-step-3">
         Create your account
