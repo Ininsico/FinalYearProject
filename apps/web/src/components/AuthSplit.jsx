@@ -84,7 +84,7 @@ export default function AuthSplit({ formSide = "right", watermark, backdrop, chi
 
         <div className="flex flex-1 items-center justify-center px-5 py-10 sm:px-10">
           <div className="w-full max-w-[440px]">
-            <div className="auth-plate relative rounded-[15px] border border-line bg-paper-2 p-6 sm:p-8">
+            <div className="auth-plate relative rounded-[15px] border border-line bg-paper-2 p-5 sm:p-7">
               <Cross className="absolute -left-2.5 -top-2.5 hidden text-line-2 sm:block" />
               <Cross className="absolute -bottom-2.5 -right-2.5 hidden text-line-2 sm:block" />
               {children}

@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { Link, useNavigate, useLocation } from "react-router-dom"
-import { CircleNotch, Warning } from "@phosphor-icons/react"
+import { CaretDown, CircleNotch, Lightning, Warning } from "@phosphor-icons/react"
 import AuthSplit from "../components/AuthSplit"
 import { ArrowIcon } from "../components/home/ui"
 import { useAuth, api, homeForRole } from "../lib/auth"
@@ -16,6 +16,8 @@ export default function SignIn() {
   const [busy, setBusy] = useState(false)
   const [demo, setDemo] = useState(null)
   const [demoBusy, setDemoBusy] = useState("")
+  const [demoOpen, setDemoOpen] = useState(false)
+  const demoRef = useRef(null)
 
   const update = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }))
 
@@ -24,6 +26,20 @@ export default function SignIn() {
       .then(setDemo)
       .catch(() => setDemo({ enabled: false, identities: [] }))
   }, [])
+
+  useEffect(() => {
+    if (!demoOpen) return
+    const onPointerDown = (e) => {
+      if (!demoRef.current?.contains(e.target)) setDemoOpen(false)
+    }
+    const onKey = (e) => e.key === "Escape" && setDemoOpen(false)
+    document.addEventListener("pointerdown", onPointerDown)
+    window.addEventListener("keydown", onKey)
+    return () => {
+      document.removeEventListener("pointerdown", onPointerDown)
+      window.removeEventListener("keydown", onKey)
+    }
+  }, [demoOpen])
 
   async function onSubmit(e) {
     e.preventDefault()
@@ -42,6 +58,7 @@ export default function SignIn() {
   }
 
   async function demoLogin(identity) {
+    setDemoOpen(false)
     setDemoBusy(identity.role)
     setError("")
     try {
@@ -69,14 +86,65 @@ export default function SignIn() {
 
   return (
     <AuthSplit formSide="right" watermark="fablet" backdrop="/signin.svg">
-      <h1 className="display auth-title text-ink-950">Sign in</h1>
-      <p className="auth-subtitle mt-2 text-step--1 leading-relaxed text-ink-600">
+      {demos.length > 0 && (
+        <div className="relative flex justify-end" ref={demoRef}>
+          <button
+            type="button"
+            onClick={() => setDemoOpen((v) => !v)}
+            aria-haspopup="menu"
+            aria-expanded={demoOpen}
+            disabled={Boolean(demoBusy)}
+            className="inline-flex h-7 items-center gap-1.5 rounded-full border border-line-2 px-3 font-mono text-[0.6rem] uppercase tracking-[0.08em] text-ink-600 transition-colors duration-300 hover:border-ink-950 hover:text-ink-950"
+          >
+            {demoBusy ? (
+              <CircleNotch size={11} weight="bold" className="animate-spin" aria-hidden="true" />
+            ) : (
+              <Lightning size={11} weight="fill" className="text-accent-ink" aria-hidden="true" />
+            )}
+            Demo
+            <CaretDown
+              size={11}
+              weight="bold"
+              aria-hidden="true"
+              className={`transition-transform duration-200 ${demoOpen ? "rotate-180" : ""}`}
+            />
+          </button>
+
+          {demoOpen && (
+            <div
+              role="menu"
+              className="absolute right-0 top-[calc(100%+6px)] z-20 w-44 overflow-hidden rounded-[10px] border border-line-2 bg-paper shadow-[0_14px_30px_-16px_rgba(20,18,30,0.35)]"
+            >
+              {demos.map((identity) => (
+                <button
+                  key={identity.role}
+                  role="menuitem"
+                  type="button"
+                  onClick={() => demoLogin(identity)}
+                  disabled={Boolean(demoBusy)}
+                  className="flex w-full items-center justify-between gap-3 border-b border-line px-3 py-2 text-left transition-colors hover:bg-paper-2 last:border-b-0"
+                >
+                  <span className="text-[0.72rem] text-ink-800">{identity.label}</span>
+                  <span className="font-mono text-[0.58rem] uppercase tracking-[0.08em] text-ink-400">
+                    enter
+                  </span>
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+
+      <h1 className={`display auth-title text-ink-950 ${demos.length > 0 ? "mt-4" : ""}`}>
+        Sign in
+      </h1>
+      <p className="auth-subtitle mt-1.5 text-[0.82rem] leading-relaxed text-ink-600">
         Students, institutions and operators all sign in here.
       </p>
 
-      <form onSubmit={onSubmit} className="mt-6 space-y-4">
+      <form onSubmit={onSubmit} className="mt-4 space-y-3">
         <div>
-          <label htmlFor="email" className="mb-2 block text-step--1 font-medium text-ink-700">
+          <label htmlFor="email" className="mb-2 block text-[0.8rem] font-medium text-ink-700">
             Email
           </label>
           <input
@@ -92,10 +160,10 @@ export default function SignIn() {
 
         <div>
           <div className="mb-2 flex items-baseline justify-between">
-            <label htmlFor="password" className="block text-step--1 font-medium text-ink-700">
+            <label htmlFor="password" className="block text-[0.8rem] font-medium text-ink-700">
               Password
             </label>
-            <Link to="/forgot-password" className="link-underline text-[0.78rem]">
+            <Link to="/forgot-password" className="link-underline text-[0.74rem]">
               Forgot password?
             </Link>
           </div>
@@ -111,18 +179,20 @@ export default function SignIn() {
         </div>
 
         {error && (
-          <p role="alert" className="flex items-start gap-2 text-step--1 text-red-700">
-            <Warning size={16} weight="bold" className="mt-0.5 shrink-0" aria-hidden="true" />
+          <p role="alert" className="flex items-start gap-2 text-[0.82rem] text-red-700">
+            <Warning size={15} weight="bold" className="mt-0.5 shrink-0" aria-hidden="true" />
             {error}
           </p>
         )}
 
         {needsVerify && !resent && (
-          <button type="button" onClick={resend} className="link-underline text-step--1">
+          <button type="button" onClick={resend} className="link-underline text-[0.82rem]">
             Resend activation email
           </button>
         )}
-        {resent && <p className="text-step--1 text-ink-600">Activation email sent. Check your inbox.</p>}
+        {resent && (
+          <p className="text-[0.82rem] text-ink-600">Activation email sent. Check your inbox.</p>
+        )}
 
         <button type="submit" disabled={busy} className="btn btn-primary h-11 w-full">
           {busy ? (
@@ -139,46 +209,21 @@ export default function SignIn() {
         </button>
       </form>
 
-      {demos.length > 0 && (
-        <div className="auth-demo mt-5 border-t border-line pt-5">
-          <p className="font-mono text-[0.62rem] uppercase tracking-[0.08em] text-ink-500">
-            Or try a demo account
-          </p>
-          <div className="mt-3 flex flex-wrap gap-2">
-            {demos.map((identity) => (
-              <button
-                key={identity.role}
-                type="button"
-                onClick={() => demoLogin(identity)}
-                disabled={Boolean(demoBusy)}
-                title={identity.summary}
-                className="inline-flex h-9 items-center gap-2 rounded-full border border-line-2 px-4 font-mono text-[0.64rem] uppercase tracking-[0.08em] text-ink-700 transition-colors duration-300 hover:border-ink-950 hover:bg-ink-950 hover:text-paper disabled:opacity-60"
-              >
-                {demoBusy === identity.role && (
-                  <CircleNotch size={12} weight="bold" className="animate-spin" aria-hidden="true" />
-                )}
-                {identity.label}
-              </button>
-            ))}
-          </div>
-        </div>
-      )}
-
-      <div className="mt-5 border-t border-line pt-4">
-        <p className="font-mono text-[0.62rem] uppercase tracking-[0.08em] text-ink-500">
+      <div className="mt-4 border-t border-line pt-3">
+        <p className="font-mono text-[0.6rem] uppercase tracking-[0.08em] text-ink-500">
           New to Fablet?
         </p>
-        <div className="mt-1">
+        <div>
           <Link
             to="/signup"
-            className="group flex items-center justify-between border-b border-line py-2.5 text-step--1 font-medium text-ink-800 transition-colors duration-300 hover:text-ink-950"
+            className="group flex items-center justify-between border-b border-line py-2 text-[0.82rem] font-medium text-ink-800 transition-colors duration-300 hover:text-ink-950"
           >
             Create a student account
             <ArrowIcon />
           </Link>
           <Link
             to="/institutions/register"
-            className="group flex items-center justify-between py-2.5 text-step--1 font-medium text-ink-800 transition-colors duration-300 hover:text-ink-950"
+            className="group flex items-center justify-between py-2 text-[0.82rem] font-medium text-ink-800 transition-colors duration-300 hover:text-ink-950"
           >
             Register an institution
             <ArrowIcon />

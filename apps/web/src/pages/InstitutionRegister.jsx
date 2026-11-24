@@ -78,13 +78,13 @@ export default function InstitutionRegister() {
     <AuthSplit formSide="left" watermark="institution">
       <AuthPathSwitch active="institution" />
 
-      <h1 className="display auth-title mt-5 text-ink-950">Register your institution.</h1>
-      <p className="auth-subtitle mt-2 text-step--1 leading-relaxed text-ink-600 sm:mt-3">
+      <h1 className="display auth-title mt-4 text-ink-950">Register your institution.</h1>
+      <p className="auth-subtitle mt-1.5 text-[0.82rem] leading-relaxed text-ink-600">
         Seats, a shared catalogue and your own console. The owner account created here
         manages all of it.
       </p>
 
-      <p className="mt-5 font-mono text-[0.66rem] uppercase tracking-[0.08em] text-ink-500">
+      <p className="mt-4 font-mono text-[0.6rem] uppercase tracking-[0.08em] text-ink-500">
         Step {step} of 2 — {step === 1 ? "Organisation" : "Owner account"}
       </p>
 
@@ -92,7 +92,7 @@ export default function InstitutionRegister() {
         {step === 1 ? (
           <>
             <div>
-              <label htmlFor="i-name" className="mb-2 block text-step--1 font-medium text-ink-700">
+              <label htmlFor="i-name" className="mb-2 block text-[0.8rem] font-medium text-ink-700">
                 Institution name
               </label>
               <input
@@ -109,7 +109,7 @@ export default function InstitutionRegister() {
 
             <div className="grid gap-3 sm:grid-cols-2">
               <div>
-                <label htmlFor="i-domain" className="mb-2 block text-step--1 font-medium text-ink-700">
+                <label htmlFor="i-domain" className="mb-2 block text-[0.8rem] font-medium text-ink-700">
                   Domain (optional)
                 </label>
                 <input
@@ -121,7 +121,7 @@ export default function InstitutionRegister() {
                 />
               </div>
               <div>
-                <label htmlFor="i-contact" className="mb-2 block text-step--1 font-medium text-ink-700">
+                <label htmlFor="i-contact" className="mb-2 block text-[0.8rem] font-medium text-ink-700">
                   Contact email (optional)
                 </label>
                 <input
@@ -150,7 +150,7 @@ export default function InstitutionRegister() {
         ) : (
           <>
             <div>
-              <label htmlFor="o-name" className="mb-2 block text-step--1 font-medium text-ink-700">
+              <label htmlFor="o-name" className="mb-2 block text-[0.8rem] font-medium text-ink-700">
                 Your name
               </label>
               <input
@@ -164,7 +164,7 @@ export default function InstitutionRegister() {
             </div>
 
             <div>
-              <label htmlFor="o-email" className="mb-2 block text-step--1 font-medium text-ink-700">
+              <label htmlFor="o-email" className="mb-2 block text-[0.8rem] font-medium text-ink-700">
                 Work email
               </label>
               <input
@@ -181,7 +181,7 @@ export default function InstitutionRegister() {
 
             <div className="grid gap-3 sm:grid-cols-2">
               <div>
-                <label htmlFor="o-pass" className="mb-2 block text-step--1 font-medium text-ink-700">
+                <label htmlFor="o-pass" className="mb-2 block text-[0.8rem] font-medium text-ink-700">
                   Password
                 </label>
                 <input
@@ -198,7 +198,7 @@ export default function InstitutionRegister() {
                 )}
               </div>
               <div>
-                <label htmlFor="o-conf" className="mb-2 block text-step--1 font-medium text-ink-700">
+                <label htmlFor="o-conf" className="mb-2 block text-[0.8rem] font-medium text-ink-700">
                   Confirm password
                 </label>
                 <input
@@ -245,14 +245,14 @@ export default function InstitutionRegister() {
         )}
       </form>
 
-      <div className="mt-5 border-t border-line pt-4">
-        <p className="text-step--1 leading-relaxed text-ink-600">
+      <div className="mt-4 border-t border-line pt-3">
+        <p className="text-[0.82rem] leading-relaxed text-ink-600">
           Plan and payment come next, in USDT.
         </p>
-        <div className="mt-1">
+        <div>
           <Link
             to="/signin"
-            className="group flex items-center justify-between py-2.5 text-step--1 font-medium text-ink-800 transition-colors duration-300 hover:text-ink-950"
+            className="group flex items-center justify-between py-2 text-[0.82rem] font-medium text-ink-800 transition-colors duration-300 hover:text-ink-950"
           >
             Already have an account? Sign in
             <ArrowIcon />

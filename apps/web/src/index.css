@@ -210,17 +210,17 @@ section[id], [id] { scroll-margin-top: 6.5rem; }
 
 /* Auth typography and field sizing shared by the split auth pages. */
 .auth-title {
-  font-size: clamp(1.4rem, 1.2rem + 0.9vw, 2rem);
+  font-size: clamp(1.3rem, 1.1rem + 0.8vw, 1.75rem);
   line-height: 1.15;
 }
 .auth-plate .field {
-  padding-top: 0.6rem;
-  padding-bottom: 0.6rem;
-  font-size: 0.95rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  font-size: 0.9rem;
   border-radius: 10px;
 }
 .auth-plate label {
-  margin-bottom: 0.375rem;
+  margin-bottom: 0.3rem;
 }
 
 /* Landing art + diagram motion. CSS-only, transform/background only, and off
