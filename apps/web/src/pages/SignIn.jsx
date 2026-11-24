@@ -101,7 +101,7 @@ export default function SignIn() {
   return (
     <AuthSplit {...PANEL}>
       <h1 className="display text-step-2 text-ink-950 sm:text-step-3">Sign in</h1>
-      <p className="mt-2 text-step--1 leading-relaxed text-ink-600 sm:mt-3 [@media(max-height:760px)]:hidden">
+      <p className="auth-subtitle mt-2 text-step--1 leading-relaxed text-ink-600 sm:mt-3">
         Students, institutions and operators all sign in here.
       </p>
 

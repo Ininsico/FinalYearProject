@@ -52,7 +52,7 @@ export default function AuthSplit({
 
         <div className="relative max-w-[42ch] text-paper">
           <Micro className="text-paper/50">{eyebrow}</Micro>
-          <p className="display mt-5 text-step-3 leading-[1.05] tracking-[-0.02em] [@media(max-height:800px)]:text-step-2">
+          <p className="display auth-quote mt-5 text-step-3 leading-[1.05] tracking-[-0.02em]">
             {quote}
           </p>
           <p className="mt-5 font-mono text-[0.68rem] uppercase tracking-[0.08em] text-paper/40">
@@ -60,11 +60,11 @@ export default function AuthSplit({
           </p>
 
           {points.length > 0 && (
-            <ul className="mt-8 border-t border-paper/10 [@media(max-height:800px)]:mt-6">
+            <ul className="auth-points mt-8 border-t border-paper/10">
               {points.map((point) => (
                 <li
                   key={point}
-                  className="flex items-start gap-3 border-b border-paper/10 py-3 text-step--1 leading-relaxed text-paper/75 [@media(max-height:800px)]:py-2.5"
+                  className="flex items-start gap-3 border-b border-paper/10 py-3 text-step--1 leading-relaxed text-paper/75"
                 >
                   <span
                     className="mt-[0.45rem] h-1.5 w-1.5 shrink-0 rotate-45 bg-accent"
@@ -108,7 +108,7 @@ export default function AuthSplit({
 
         <div className="flex flex-1 items-center justify-center px-5 py-6 sm:px-10">
           <div className="w-full max-w-[460px]">
-            <div className="rounded-[15px] border border-line bg-paper-2 p-5 sm:p-7 lg:p-8">{children}</div>
+            <div className="auth-plate rounded-[15px] border border-line bg-paper-2 p-5 sm:p-7 lg:p-8">{children}</div>
           </div>
         </div>
       </main>

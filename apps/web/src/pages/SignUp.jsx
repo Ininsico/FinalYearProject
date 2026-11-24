@@ -78,7 +78,7 @@ export default function SignUp() {
   return (
     <AuthSplit {...PANEL}>
       <h1 className="display text-step-2 text-ink-950 sm:text-step-3">Create your account</h1>
-      <p className="mt-2 text-step--1 leading-relaxed text-ink-600 sm:mt-3 [@media(max-height:760px)]:hidden">
+      <p className="auth-subtitle mt-2 text-step--1 leading-relaxed text-ink-600 sm:mt-3">
         Your free student account — the whole catalogue opens immediately.
       </p>
 
