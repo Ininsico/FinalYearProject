@@ -25,7 +25,7 @@ const STEPS = [
 
 export default function HowItWorks() {
   return (
-    <section className="bg-paper py-14 sm:py-20">
+    <section id="how-it-works" className="border-y border-line bg-paper-2 py-14 sm:py-20">
       <Container>
         <div className="flex flex-wrap items-end justify-between gap-4">
           <h2 className="display text-step-2 text-ink-950">How the academy works.</h2>

@@ -34,8 +34,8 @@ export default function Hero() {
               Create your free account
               <ArrowRight size={16} weight="bold" aria-hidden="true" />
             </button>
-            <a href="#catalogue" className="link-underline text-step--1">
-              Browse the catalogue
+            <a href="#how-it-works" className="link-underline text-step--1">
+              See how it works
             </a>
           </div>
           <ul className="mt-10 flex flex-wrap gap-x-8 gap-y-2 border-t border-line pt-5">

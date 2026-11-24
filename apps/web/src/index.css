@@ -164,6 +164,22 @@ section[id], [id] { scroll-margin-top: 6.5rem; }
   .md hr { @apply border-t border-line; }
 }
 
+/* Continuous ticker — CSS-driven so the loop is seamless and cheap. The track
+   holds two identical halves; translating one half width loops without a seam. */
+@keyframes ticker-x {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.ticker-track {
+  animation: ticker-x var(--ticker-duration, 30s) linear infinite;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ticker-track { animation: none; }
+}
+
 /* Reveal primitives — GSAP animates these; no-JS / reduced-motion keeps them visible. */
 [data-reveal] { will-change: transform, opacity; }
 

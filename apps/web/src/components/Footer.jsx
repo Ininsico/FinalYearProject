@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom"
-import Marquee from "./Marquee"
+import Ticker from "./Ticker"
 
 const COLUMNS = [
   {
@@ -43,11 +43,18 @@ export default function Footer() {
   const navigate = useNavigate()
   return (
     <footer className="border-t border-line bg-paper-2">
-      <Marquee
-        items={["Study", "Practise", "Prove", "Teach", "Publish"]}
-        speed={45}
-        className="border-b border-line py-5"
-        itemClassName="mx-8 display text-step-1 text-ink-400"
+      <Ticker
+        items={[
+          "Courses drafted with AI",
+          "Directed by instructors",
+          "Short lessons, real assessments",
+          "Free to start",
+          "Seat plans for institutions",
+          "Built in Abbottabad",
+        ]}
+        duration={38}
+        className="border-b border-line py-4"
+        itemClassName="display text-step-1 text-ink-400"
       />
 
       <div className="mx-auto max-w-[1240px] px-6 py-16 sm:px-8">
