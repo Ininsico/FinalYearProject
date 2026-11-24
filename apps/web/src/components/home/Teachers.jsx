@@ -1,3 +1,4 @@
+import Ticker from "../Ticker"
 import { Container } from "../layout"
 
 const TEACHERS = [
@@ -8,46 +9,47 @@ const TEACHERS = [
   { name: "Xavier", image: "/teachers/Xavier.png" },
 ]
 
+// Doubled so the half-track is wide enough to loop seamlessly on large screens.
+const LOOP = [...TEACHERS, ...TEACHERS]
+
+const ITEMS = LOOP.map((t, i) => (
+  <span key={i} className="flex w-28 flex-col items-center gap-3 sm:w-32">
+    <img
+      src={t.image}
+      alt=""
+      loading="lazy"
+      decoding="async"
+      className="h-24 w-24 rounded-full border border-line object-cover sm:h-28 sm:w-28"
+    />
+    <span className="text-step--1 text-ink-700">{t.name}</span>
+  </span>
+))
+
 export default function Teachers() {
   return (
     <section id="teachers" className="border-t border-line bg-paper py-14 sm:py-20">
       <Container>
         <div className="flex flex-wrap items-end justify-between gap-4">
-          <h2 className="display max-w-[20ch] text-step-2 text-ink-950">
-            Meet the AI teachers.
-          </h2>
-          <p className="max-w-[46ch] text-step--1 text-ink-500">
-            Every teacher is a trained persona with their own voice and delivery. A few
-            have joined the faculty so far, with many more coming up.
+          <h2 className="display text-step-2 text-ink-950">Meet the AI teachers.</h2>
+          <p className="max-w-[44ch] text-step--1 text-ink-500">
+            A trained persona behind every voice, with their own delivery and pacing.
           </p>
         </div>
-
-        <ul className="mt-10 grid gap-px overflow-hidden border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">
+        <ul className="sr-only">
           {TEACHERS.map((t) => (
-            <li key={t.name} className="bg-paper">
-              <img
-                src={t.image}
-                alt={`${t.name}, an AI teacher at Fablet`}
-                loading="lazy"
-                decoding="async"
-                className="aspect-[4/5] w-full object-cover"
-              />
-              <div className="flex items-baseline justify-between gap-3 border-t border-line px-4 py-3">
-                <h3 className="display text-step-1 text-ink-950">{t.name}</h3>
-                <span className="font-mono text-[0.64rem] uppercase tracking-[0.14em] text-ink-500">
-                  AI teacher
-                </span>
-              </div>
-            </li>
+            <li key={t.name}>{t.name}, AI teacher</li>
           ))}
-
-          <li className="flex flex-col justify-center bg-accent-soft p-6 sm:p-8">
-            <p className="display text-step-1 text-accent-ink">Many more coming up.</p>
-            <p className="mt-2 max-w-[30ch] text-step--1 leading-relaxed text-ink-700">
-              New teachers join the faculty as their voices and courses are trained.
-            </p>
-          </li>
         </ul>
+      </Container>
+
+      <div className="mt-10 border-y border-line py-8">
+        <Ticker items={ITEMS} duration={34} separator={null} itemClassName="mx-4 sm:mx-6" />
+      </div>
+
+      <Container>
+        <p className="mt-6 text-center font-mono text-[0.7rem] uppercase tracking-[0.2em] text-ink-500">
+          More AI teachers soon
+        </p>
       </Container>
     </section>
   )
