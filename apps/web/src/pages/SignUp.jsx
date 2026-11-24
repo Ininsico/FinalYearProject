@@ -2,6 +2,7 @@ import { useState } from "react"
 import { Link } from "react-router-dom"
 import { CircleNotch, Warning } from "@phosphor-icons/react"
 import AuthSplit from "../components/AuthSplit"
+import AuthPathSwitch from "../components/AuthPathSwitch"
 import { ArrowIcon } from "../components/home/ui"
 import { useAuth } from "../lib/auth"
 
@@ -77,9 +78,12 @@ export default function SignUp() {
 
   return (
     <AuthSplit {...PANEL}>
-      <h1 className="display text-step-2 text-ink-950 sm:text-step-3">Create your account</h1>
+      <AuthPathSwitch active="student" />
+      <h1 className="display auth-title mt-5 text-step-2 text-ink-950 sm:text-step-3">
+        Create your account
+      </h1>
       <p className="auth-subtitle mt-2 text-step--1 leading-relaxed text-ink-600 sm:mt-3">
-        Your free student account — the whole catalogue opens immediately.
+        A free account for one learner — the whole catalogue opens immediately.
       </p>
 
       <form onSubmit={onSubmit} noValidate className="mt-6 space-y-4">
@@ -147,6 +151,10 @@ export default function SignUp() {
         Already have an account?{" "}
         <Link to="/signin" className="link-underline font-medium">
           Sign in
+        </Link>
+        <span className="mx-2 text-ink-400">·</span>
+        <Link to="/institutions/register" className="link-underline font-medium">
+          Register an institution instead
         </Link>
       </div>
     </AuthSplit>

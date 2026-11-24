@@ -155,13 +155,13 @@ export default function App() {
         {/* Split-screen auth — full-bleed, no navbar/footer */}
         <Route path="/signin" element={<GuestRoute><SignIn /></GuestRoute>} />
         <Route path="/signup" element={<GuestRoute><SignUp /></GuestRoute>} />
+        <Route path="/institutions/register" element={<GuestRoute><InstitutionRegister /></GuestRoute>} />
 
-        {/* Public auth + B2B onboarding */}
+        {/* Public auth */}
         <Route element={<AuthLayout />}>
           <Route path="/forgot-password" element={<GuestRoute><ForgotPassword /></GuestRoute>} />
           <Route path="/auth/reset" element={<GuestRoute><ResetPassword /></GuestRoute>} />
           <Route path="/auth/verify" element={<VerifyEmail />} />
-          <Route path="/institutions/register" element={<GuestRoute><InstitutionRegister /></GuestRoute>} />
         </Route>
 
         {/* Student */}

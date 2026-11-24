@@ -100,13 +100,13 @@ export default function SignIn() {
 
   return (
     <AuthSplit {...PANEL}>
-      <h1 className="display text-step-2 text-ink-950 sm:text-step-3">Sign in</h1>
+      <h1 className="display auth-title text-step-2 text-ink-950 sm:text-step-3">Sign in</h1>
       <p className="auth-subtitle mt-2 text-step--1 leading-relaxed text-ink-600 sm:mt-3">
         Students, institutions and operators all sign in here.
       </p>
 
       {demos.length > 0 && (
-        <div className="relative mt-6" ref={demoRef}>
+        <div className="auth-demo relative mt-6" ref={demoRef}>
           <button
             type="button"
             onClick={() => setDemoOpen((v) => !v)}
@@ -235,15 +235,18 @@ export default function SignIn() {
         </button>
       </form>
 
-      <div className="mt-6 border-t border-line pt-5 text-step--1 text-ink-600">
-        New to Fablet?{" "}
-        <Link to="/signup" className="link-underline font-medium">
-          Create a student account
-        </Link>
-        {" · "}
-        <Link to="/institutions/register" className="link-underline font-medium">
-          Register an institution
-        </Link>
+      <div className="mt-6 border-t border-line pt-5">
+        <p className="font-mono text-[0.66rem] uppercase tracking-[0.08em] text-ink-500">
+          New to Fablet?
+        </p>
+        <div className="mt-3 grid gap-2 sm:grid-cols-2">
+          <Link to="/signup" className="btn btn-ghost h-11 text-[0.78rem]">
+            Student account
+          </Link>
+          <Link to="/institutions/register" className="btn btn-ghost h-11 text-[0.78rem]">
+            Institution account
+          </Link>
+        </div>
       </div>
     </AuthSplit>
   )

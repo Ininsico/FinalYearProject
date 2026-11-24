@@ -20,7 +20,7 @@ export default function AuthSplit({
   const quoteOnLeft = formSide === "right"
 
   return (
-    <div className="lg:grid lg:h-[100dvh] lg:grid-cols-2">
+    <div className="h-[100dvh] overflow-hidden lg:grid lg:grid-cols-2">
       <aside
         className={`relative hidden overflow-hidden bg-ink-950 lg:flex lg:flex-col lg:justify-between lg:p-10 xl:p-14 ${
           quoteOnLeft ? "lg:order-1" : "lg:order-2"
@@ -83,7 +83,7 @@ export default function AuthSplit({
       </aside>
 
       <main
-        className={`flex min-h-[100dvh] flex-col bg-paper lg:h-[100dvh] lg:min-h-0 ${
+        className={`flex h-full min-h-0 flex-col bg-paper ${
           quoteOnLeft ? "lg:order-2" : "lg:order-1"
         }`}
       >
@@ -106,7 +106,7 @@ export default function AuthSplit({
           </Link>
         </div>
 
-        <div className="flex flex-1 items-center justify-center px-5 py-6 sm:px-10">
+        <div className="flex min-h-0 flex-1 items-center justify-center px-5 py-6 sm:px-10">
           <div className="w-full max-w-[460px]">
             <div className="auth-plate rounded-[15px] border border-line bg-paper-2 p-5 sm:p-7 lg:p-8">{children}</div>
           </div>
