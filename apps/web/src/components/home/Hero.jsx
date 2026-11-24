@@ -1,21 +1,70 @@
+import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { Container } from "../layout"
 import { ArrowIcon, Cross, Micro, Pill } from "./ui"
 
-const LINE_1 = ["An", "online", "academy,"]
-const LINE_2 = ["taught", "by", "AI", "teachers."]
+const FACULTY = [
+  { name: "Aleeza", image: "/teachers/nobgaleeza.png", line: "Mathematics, explained until it clicks" },
+  { name: "David", image: "/teachers/nobgdavid.png", line: "Physics, rebuilt from first principles" },
+  { name: "Kim Yaun", image: "/teachers/nobgkimyaun.png", line: "Computer science, one idea at a time" },
+  { name: "Lisa", image: "/teachers/nobglisa.png", line: "Business, taught by the pitch" },
+]
+
+function FacultyCarousel() {
+  const [index, setIndex] = useState(0)
+
+  useEffect(() => {
+    const id = setInterval(() => setIndex((v) => (v + 1) % FACULTY.length), 4200)
+    return () => clearInterval(id)
+  }, [])
+
+  const active = FACULTY[index]
+
+  return (
+    <div className="relative ml-auto w-full max-w-[420px]">
+      <Cross className="absolute -left-5 -top-5 hidden text-ink-400 sm:block" />
+      <Cross className="absolute -bottom-5 -right-5 hidden text-ink-400 sm:block" />
+
+      <div className="relative h-[280px] sm:h-[340px]" aria-hidden="true">
+        {FACULTY.map((t, i) => (
+          <img
+            key={t.name}
+            src={t.image}
+            alt=""
+            loading={i === 0 ? "eager" : "lazy"}
+            decoding="async"
+            className={`absolute inset-0 mx-auto h-full w-auto object-contain transition-all duration-700 ease-out ${
+              i === index ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
+            }`}
+          />
+        ))}
+      </div>
+
+      <ul className="sr-only">
+        {FACULTY.map((t) => (
+          <li key={t.name}>
+            {t.name}, AI teacher: {t.line}
+          </li>
+        ))}
+      </ul>
+
+      <div className="mt-4 border-t border-line pt-3" aria-hidden="true">
+        <div className="flex items-baseline justify-between gap-4">
+          <p className="display text-step-1 text-ink-950">{active.name}</p>
+          <Micro dot={false} className="text-ink-400">
+            AI teacher
+          </Micro>
+        </div>
+        <p className="mt-1 font-mono text-[0.68rem] uppercase tracking-[0.08em] text-ink-500">
+          {active.line}
+        </p>
+      </div>
+    </div>
+  )
+}
 
 export default function Hero() {
   const navigate = useNavigate()
-  let order = 0
-
-  const words = (line) =>
-    line.map((w) => (
-      <span key={`${w}-${order}`} className="word-rise">
-        <span style={{ "--i": order++ }}>{w}</span>
-      </span>
-    ))
-
   return (
     <section className="relative overflow-hidden bg-paper">
       <Container className="pb-10 pt-28 sm:pt-32">
@@ -26,45 +75,31 @@ export default function Hero() {
           </Micro>
         </div>
 
-        <h1 className="display mt-10 max-w-[15ch] text-[clamp(2.8rem,7.2vw,6.8rem)] leading-[0.98] tracking-[-0.02em] text-ink-950">
-          <span className="block">{words(LINE_1)}</span>
-          <span className="block">{words(LINE_2)}</span>
-        </h1>
+        <div className="mt-10 grid gap-12 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:items-end">
+          <div>
+            <h1 className="font-sans text-[clamp(2.6rem,6.4vw,6rem)] font-bold leading-[0.95] tracking-[-0.03em] text-ink-950">
+              AI Agents
+              <br />
+              The Next Gen Teachers
+            </h1>
+            <p className="mt-8 max-w-[56ch] text-step-0 leading-[1.7] text-ink-600">
+              Fablet is an online academy where AI teachers carry the course: short
+              lessons, worked practice and an assessment at the end of every module,
+              all directed by the instructors who own what publishes. Start free, or
+              bring your whole institution onto one curriculum.
+            </p>
+            <div className="mt-8 flex flex-wrap items-center gap-3">
+              <Pill onClick={() => navigate("/signup")} tone="dark">
+                Create a free account
+                <ArrowIcon />
+              </Pill>
+              <Pill onClick={() => navigate("/institutions/register")} tone="outline">
+                For institutions
+              </Pill>
+            </div>
+          </div>
 
-        <div className="mt-10 flex flex-wrap items-center gap-3">
-          <Pill onClick={() => navigate("/signup")} tone="dark">
-            Create a free account
-            <ArrowIcon />
-          </Pill>
-          <Pill onClick={() => navigate("/institutions/register")} tone="outline">
-            For institutions
-          </Pill>
-        </div>
-
-        <div className="mt-16 grid gap-6 md:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] md:items-end md:gap-12">
-          <p className="max-w-[56ch] text-step-0 leading-[1.7] text-ink-600">
-            Fablet writes its courses with AI, keeps them current with the instructors
-            who own them, and teaches them in short lessons, worked practice and an
-            assessment at the end of every module.
-          </p>
-
-          <figure className="relative ml-auto w-full max-w-[460px]">
-            <Cross className="absolute -left-6 -top-6 hidden text-ink-400 sm:block" />
-            <Cross className="absolute -bottom-6 -right-6 hidden text-ink-400 sm:block" />
-            <img
-              src="/teachers/Aleeza.jpg"
-              alt="Aleeza, an AI teacher at Fablet"
-              className="aspect-[4/3] w-full rounded-[15px] object-cover object-top"
-            />
-            <figcaption className="mt-3 flex items-center justify-between">
-              <Micro dot={false} className="text-ink-500">
-                Aleeza, faculty of five
-              </Micro>
-              <Micro dot={false} className="text-ink-400">
-                AI teacher
-              </Micro>
-            </figcaption>
-          </figure>
+          <FacultyCarousel />
         </div>
       </Container>
 
