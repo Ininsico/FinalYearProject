@@ -42,7 +42,7 @@ export default function AuthSplit({ children }) {
 
       <main className="relative flex min-h-0 flex-1 items-center justify-center px-5 py-6">
         <div className="w-full max-w-[440px]">
-          <div className="auth-plate relative rounded-[15px] border border-line bg-paper p-6 sm:p-8">
+          <div className="auth-plate relative rounded-[15px] border border-line bg-paper-2 p-6 sm:p-8">
             <Cross className="absolute -left-2.5 -top-2.5 hidden text-paper/40 sm:block" />
             <Cross className="absolute -bottom-2.5 -right-2.5 hidden text-paper/40 sm:block" />
             {children}
