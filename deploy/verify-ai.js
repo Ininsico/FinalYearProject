@@ -24,7 +24,7 @@ echo "— ai status —"
 curl -s --max-time 8 http://127.0.0.1:8001/status || echo "status endpoint unreachable"
 echo
 echo "— ai venv python —"
-/var/www/fablet-src/AI/.venv/bin/python -V
+/var/www/fablet-src/services/ai/.venv/bin/python -V
 echo "— tesseract —"
 tesseract --version 2>&1 | head -1
 `);

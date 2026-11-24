@@ -14,7 +14,7 @@ const USER = process.env.FABLET_SSH_USER;
 const PASS = process.env.FABLET_SSH_PASS;
 
 // --- inputs ----------------------------------------------------------------
-const AI_DIR = path.join(__dirname, '..', 'AI');
+const AI_DIR = path.join(__dirname, '..', 'services', 'ai');
 const groqKey = fs
   .readFileSync(path.join(AI_DIR, '.env'), 'utf8')
   .split('\n')
@@ -52,10 +52,10 @@ async function main() {
   console.log('connected');
 
   // 0 — preflight sanity -----------------------------------------------------
-  await sh(ssh, 'sanity', 'set -e; hostname; git -C ' + REPO + ' rev-parse --abbrev-ref HEAD; test -f ' + REPO + '/Backend/.env && echo backend-env-ok');
+  await sh(ssh, 'sanity', 'set -e; hostname; git -C ' + REPO + ' rev-parse --abbrev-ref HEAD; test -f ' + REPO + '/apps/api/.env && echo backend-env-ok');
 
   // 0b — existing AI key (idempotent) ---------------------------------------
-  const keyProbe = await ssh.execCommand(`grep '^AI_SERVICE_KEY=' ${REPO}/AI/.env 2>/dev/null | cut -d= -f2`);
+  const keyProbe = await ssh.execCommand(`grep '^AI_SERVICE_KEY=' ${REPO}/services/ai/.env 2>/dev/null | cut -d= -f2`);
   const aiKey = (keyProbe.stdout || '').trim() || 'fablet-ai-' + crypto.randomBytes(24).toString('hex');
   console.log(`\nAI shared key: ${aiKey.slice(0, 10)}… (${(keyProbe.stdout || '').trim() ? 'reused' : 'generated'})`);
 
@@ -86,12 +86,12 @@ ls -la $DIR | tail -n +2`
   await sh(
     ssh,
     'backend npm ci',
-    `cd ${REPO}/Backend && npm ci --include=dev --no-audit --no-fund --loglevel=error 2>&1 | tail -5`
+    `cd ${REPO}/apps/api && npm ci --include=dev --no-audit --no-fund --loglevel=error 2>&1 | tail -5`
   );
   await sh(
     ssh,
     'backend env: AI service wiring',
-    `cd ${REPO}/Backend
+    `cd ${REPO}/apps/api
 if grep -q '^AI_SERVICE_URL=' .env; then sed -i 's|^AI_SERVICE_URL=.*|AI_SERVICE_URL=http://127.0.0.1:8001|' .env; else echo 'AI_SERVICE_URL=http://127.0.0.1:8001' >> .env; fi
 if grep -q '^AI_SERVICE_KEY=' .env; then sed -i 's|^AI_SERVICE_KEY=.*|AI_SERVICE_KEY=${aiKey}|' .env; else echo 'AI_SERVICE_KEY=${aiKey}' >> .env; fi
 grep -E '^(AI_SERVICE_URL|AI_SERVICE_KEY)=' .env | sed 's/=\\(.\\{10\\}\\).*/=\\1…/'`
@@ -101,13 +101,13 @@ grep -E '^(AI_SERVICE_URL|AI_SERVICE_KEY)=' .env | sed 's/=\\(.\\{10\\}\\).*/=\\
   await sh(
     ssh,
     'frontend npm ci',
-    `cd ${REPO}/Frontend && npm ci --include=dev --no-audit --no-fund --loglevel=error 2>&1 | tail -5`
+    `cd ${REPO}/apps/web && npm ci --include=dev --no-audit --no-fund --loglevel=error 2>&1 | tail -5`
   );
-  await sh(ssh, 'frontend build', `cd ${REPO}/Frontend && npm run build 2>&1 | tail -12`);
+  await sh(ssh, 'frontend build', `cd ${REPO}/apps/web && npm run build 2>&1 | tail -12`);
   await sh(
     ssh,
     'publish dist to nginx root',
-    `rsync -a --delete --exclude .well-known ${REPO}/Frontend/dist/ /var/www/fablet/ && ls /var/www/fablet | head -5 && grep -o 'assets/index-[A-Za-z0-9_-]*\\.js' /var/www/fablet/index.html`
+    `rsync -a --delete --exclude .well-known ${REPO}/apps/web/dist/ /var/www/fablet/ && ls /var/www/fablet | head -5 && grep -o 'assets/index-[A-Za-z0-9_-]*\\.js' /var/www/fablet/index.html`
   );
 
   // 5 — system packages (tesseract for OCR) --------------------------------
@@ -124,7 +124,7 @@ python3 -V; tesseract --version 2>&1 | head -1`
   await sh(
     ssh,
     'AI venv + pip install',
-    `cd ${REPO}/AI
+    `cd ${REPO}/services/ai
 [ -d .venv ] || python3 -m venv .venv
 .venv/bin/pip install --quiet --upgrade pip
 .venv/bin/pip install --quiet -r requirements.txt
@@ -154,7 +154,7 @@ python3 -V; tesseract --version 2>&1 | head -1`
   await sh(
     ssh,
     'upload AI/.env',
-    `mkdir -p ${REPO}/AI && cat > ${REPO}/AI/.env <<'ENVEOF'\n${aiEnv}ENVEOF\nchmod 600 ${REPO}/AI/.env && echo ai-env-written`
+    `mkdir -p ${REPO}/services/ai && cat > ${REPO}/services/ai/.env <<'ENVEOF'\n${aiEnv}ENVEOF\nchmod 600 ${REPO}/services/ai/.env && echo ai-env-written`
   );
 
   // 8 — chroma embedding model cache ---------------------------------------
@@ -190,9 +190,9 @@ After=network.target
 
 [Service]
 Type=simple
-WorkingDirectory=${REPO}/AI
-ExecStart=${REPO}/AI/.venv/bin/python ${REPO}/AI/app.py
-EnvironmentFile=${REPO}/AI/.env
+WorkingDirectory=${REPO}/services/ai
+ExecStart=${REPO}/services/ai/.venv/bin/python ${REPO}/services/ai/app.py
+EnvironmentFile=${REPO}/services/ai/.env
 Restart=on-failure
 RestartSec=3
 

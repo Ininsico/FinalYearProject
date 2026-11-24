@@ -12,14 +12,14 @@ WEB_ROOT="${WEB_ROOT:-/var/www/fablet}"
 API_SERVICE="${API_SERVICE:-fablet-api}"
 
 echo "[deploy] installing frontend deps"
-cd "$REPO_DIR/Frontend"
+cd "$REPO_DIR/apps/web"
 npm ci --include=dev --no-audit --no-fund
 
 echo "[deploy] building frontend"
 npm run build
 
-echo "[deploy] syncing $REPO_DIR/Frontend/dist -> $WEB_ROOT"
-rsync -a --delete --exclude ".well-known" "$REPO_DIR/Frontend/dist/" "$WEB_ROOT/"
+echo "[deploy] syncing $REPO_DIR/apps/web/dist -> $WEB_ROOT"
+rsync -a --delete --exclude ".well-known" "$REPO_DIR/apps/web/dist/" "$WEB_ROOT/"
 
 echo "[deploy] restarting $API_SERVICE"
 systemctl restart "$API_SERVICE"

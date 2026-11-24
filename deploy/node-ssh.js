@@ -25,7 +25,7 @@ if (!PASS) {
   console.error('FABLET_SSH_PASS is not set. Refusing to deploy.');
   process.exit(1);
 }
-const FRONTEND = path.join(__dirname, '..', 'Frontend');
+const FRONTEND = path.join(__dirname, '..', 'apps', 'web');
 const DIST = path.join(FRONTEND, 'dist');
 const TAR = path.join(__dirname, 'dist.tar');
 

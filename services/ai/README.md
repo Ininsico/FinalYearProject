@@ -3,10 +3,10 @@
 Flask + ChromaDB microservice behind Fablet's course content generation.
 
 ```
-Frontend course editor
+apps/web course editor
         │  (via the Node backend — the only caller)
         ▼
-Backend  /api/admin/courses/:id/ai/*  ·  /api/institutions/modules/:id/ai/*
+apps/api  /api/admin/courses/:id/ai/*  ·  /api/institutions/modules/:id/ai/*
         │  X-AI-Key shared secret
         ▼
 AI service (this folder, 127.0.0.1:8001)
@@ -34,7 +34,7 @@ AI service (this folder, 127.0.0.1:8001)
 ## Run
 
 ```sh
-cd Fablet/AI
+cd services/ai
 .venv\Scripts\python.exe app.py        # Windows
 # or:  .venv/bin/python app.py         # macOS/Linux
 ```

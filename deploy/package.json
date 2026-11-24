@@ -1,0 +1,19 @@
+{
+  "name": "@fablet/deploy",
+  "version": "1.0.0",
+  "description": "Deployment tooling for the Fablet VM",
+  "main": "deploy-live.js",
+  "scripts": {
+    "preflight": "node preflight.js",
+    "deploy": "node deploy-live.js",
+    "verify": "node verify-live.js",
+    "verify:ai": "node verify-ai.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "node-ssh": "^13.2.1"
+  }
+}

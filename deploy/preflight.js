@@ -2,7 +2,7 @@ const { NodeSSH } = require('node-ssh');
 const fs = require('fs');
 const path = require('path');
 
-// Load deploy creds from Server/.env (gitignored).
+// Load deploy creds from deploy/.env (gitignored).
 for (const line of fs.readFileSync(path.join(__dirname, '.env'), 'utf8').split('\n')) {
   const m = line.match(/^\s*([\w.]+)\s*=\s*(.*)\s*$/);
   if (m && !(m[1] in process.env)) process.env[m[1]] = m[2].replace(/^["']|["']$/g, '');
@@ -34,8 +34,8 @@ async function main() {
   await run(ssh, 'api service', 'systemctl is-active fablet-api; systemctl is-enabled fablet-api; systemctl status fablet-api --no-pager 2>&1 | head -6');
   await run(ssh, 'checkout state', 'git -C /var/www/fablet-src log --oneline -1; git -C /var/www/fablet-src status --porcelain | head -10; git -C /var/www/fablet-src branch --show-current');
   await run(ssh, 'github reachability', 'cd /var/www/fablet-src && GIT_TERMINAL_PROMPT=0 timeout 25 git ls-remote origin refs/heads/main 2>&1 | head -3', 40000);
-  await run(ssh, 'web root', 'ls /var/www/fablet | head -8; ls /var/www/fablet-src/Backend/.env 2>/dev/null && echo "backend .env present"');
-  await run(ssh, 'ai dir', 'ls /var/www/fablet-src/AI 2>/dev/null | head -12 || echo "no AI dir yet"');
+  await run(ssh, 'web root', 'ls /var/www/fablet | head -8; ls /var/www/fablet-src/apps/api/.env 2>/dev/null && echo "backend .env present"');
+  await run(ssh, 'ai dir', 'ls /var/www/fablet-src/services/ai 2>/dev/null | head -12 || echo "no ai dir yet"');
   await run(ssh, 'ai service', 'systemctl is-active fablet-ai 2>/dev/null || echo "no fablet-ai unit"');
   await run(ssh, 'ports', 'ss -ltnp | grep -E "4000|8001|80|443" || netstat -ltnp 2>/dev/null | grep -E "4000|8001" ');
 

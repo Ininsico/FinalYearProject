@@ -24,4 +24,4 @@ if (-not (Test-Path $model)) {
 }
 
 Write-Host 'AI service ready. Start it with:'
-Write-Host '  cd Fablet\AI; .\.venv\Scripts\python.exe app.py'
+Write-Host '  cd services\ai; .\.venv\Scripts\python.exe app.py'

@@ -57,7 +57,7 @@ $RECYCLE.BIN/
 .classpath
 .settings/
 
-# PYTHON (ArtificalIntelligence / Research)
+# PYTHON (services/ai, docs/research)
 __pycache__/
 *.py[cod]
 *$py.class
@@ -78,7 +78,7 @@ htmlcov/
 /go/bin/
 /go/pkg/
 
-# FLUTTER / DART (MobileApp)
+# FLUTTER / DART (apps/mobile)
 .dart_tool/
 .packages
 .pub-preload-cache/
@@ -126,7 +126,7 @@ junit.xml
 dist.tar
 server.log
 
-# EMBEDDED / C/C++ (OperatingSystem)
+# EMBEDDED / C/C++
 *.o
 *.a
 *.so
@@ -142,5 +142,5 @@ server.log
 *.ilk
 
 # DEPLOY SCRATCH
-Server/tmp-deploy/
-Server/dist.tar
+deploy/tmp-deploy/
+deploy/dist.tar

@@ -25,7 +25,7 @@ echo "— units —"
 systemctl is-active fablet-api fablet-ai
 systemctl is-enabled fablet-ai
 echo "— backend env (masked) —"
-grep -E '^(AI_SERVICE_URL|AI_SERVICE_KEY)=' /var/www/fablet-src/Backend/.env | sed 's/=\\(.\\{12\\}\\).*/=\\1…/'
+grep -E '^(AI_SERVICE_URL|AI_SERVICE_KEY)=' /var/www/fablet-src/apps/api/.env | sed 's/=\\(.\\{12\\}\\).*/=\\1…/'
 echo "— ai health —"
 curl -s --max-time 8 http://127.0.0.1:8001/health || echo "AI UNREACHABLE"
 echo
