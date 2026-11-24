@@ -10,14 +10,15 @@ export default function Manifesto() {
           <Cross className="hidden sm:block" />
         </div>
 
-        <p className="display mt-12 max-w-[22ch] text-[clamp(2.2rem,5vw,4.6rem)] leading-[1.02] tracking-[-0.02em]">
-          Taught like a subject, not like a video library.
-        </p>
-
-        <p className="mt-8 max-w-[40ch] text-step-2 leading-[1.25] text-paper">
-          A course is a sequence, not a shelf. Foundations first, practice next, then an
-          assessment that means something.
-        </p>
+        <div className="mt-12 ml-auto max-w-[52rem] text-right">
+          <p className="display text-[clamp(2.2rem,5vw,4.6rem)] leading-[1.02] tracking-[-0.02em]">
+            Structured to be finished.
+          </p>
+          <p className="ml-auto mt-8 max-w-[42ch] text-step-2 leading-[1.3] text-paper">
+            Authored with AI, signed off by instructors, and sequenced module by module —
+            so you always know what comes next, and what finishing it proves.
+          </p>
+        </div>
       </Container>
     </section>
   )
