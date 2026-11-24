@@ -143,7 +143,7 @@ section[id], [id] { scroll-margin-top: 6.5rem; }
   }
 
   .field {
-    @apply w-full rounded-[3px] border border-line-2 bg-paper px-4 py-3 text-step-0 text-ink-950;
+    @apply w-full rounded-[12px] border border-line-2 bg-paper px-4 py-3 text-step-0 text-ink-950;
     transition: border-color 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out);
   }
   .field::placeholder { color: var(--color-ink-400); }

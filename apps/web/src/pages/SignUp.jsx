@@ -2,18 +2,22 @@ import { useState } from "react"
 import { Link } from "react-router-dom"
 import { CircleNotch, Warning } from "@phosphor-icons/react"
 import AuthSplit from "../components/AuthSplit"
+import { ArrowIcon } from "../components/home/ui"
 import { useAuth } from "../lib/auth"
-import { STEPS } from "../lib/content"
 
 const EMPTY = { name: "", email: "", password: "", confirm: "" }
 
 const PANEL = {
   formSide: "left",
-  eyebrow: "How a production runs",
-  quote: "Stop assembling tools. Start directing a swarm.",
-  source: "Fablet — on the work",
-  points: STEPS.map((s) => `${s.n} — ${s.title}`),
-  watermark: "orchestrate",
+  eyebrow: "Start free",
+  quote: "Create an account and the whole Fablet catalogue opens at no cost.",
+  source: "Fablet — the academy",
+  points: [
+    "Short lessons, worked practice, real assessments",
+    "The AI assistant tracks your progress",
+    "Institutions publish their own modules",
+  ],
+  watermark: "academy",
 }
 
 export default function SignUp() {
@@ -57,7 +61,7 @@ export default function SignUp() {
   if (done) {
     return (
       <AuthSplit {...PANEL}>
-        <h1 className="text-step-3 font-semibold text-ink-950">Check your email</h1>
+        <h1 className="display text-step-3 text-ink-950">Check your email</h1>
         <p className="mt-3 text-step--1 leading-relaxed text-ink-600">
           We sent an activation link to {form.email}. Open it to activate your account.
         </p>
@@ -73,9 +77,9 @@ export default function SignUp() {
 
   return (
     <AuthSplit {...PANEL}>
-      <h1 className="text-step-3 font-semibold text-ink-950">Create your account</h1>
+      <h1 className="display text-step-3 text-ink-950">Create your account</h1>
       <p className="mt-3 text-step--1 leading-relaxed text-ink-600">
-        Brief the swarm once, then build anything.
+        Your free student account — the whole catalogue opens immediately.
       </p>
 
       <form onSubmit={onSubmit} noValidate className="mt-8 space-y-6">
@@ -131,7 +135,10 @@ export default function SignUp() {
               Creating account
             </>
           ) : (
-            "Create account"
+            <>
+              Create account
+              <ArrowIcon />
+            </>
           )}
         </button>
       </form>

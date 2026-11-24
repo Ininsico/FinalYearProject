@@ -2,20 +2,21 @@ import { useEffect, useRef, useState } from "react"
 import { Link, useNavigate, useLocation } from "react-router-dom"
 import { CircleNotch, Warning, Lightning, CaretDown } from "@phosphor-icons/react"
 import AuthSplit from "../components/AuthSplit"
+import { ArrowIcon } from "../components/home/ui"
 import { useAuth, api, homeForRole } from "../lib/auth"
 
 const PANEL = {
   formSide: "right",
-  eyebrow: "The idea",
+  eyebrow: "The academy",
   quote:
-    "A brief is not a prompt. It is an outcome, and the swarm is the machine that turns one into the other.",
-  source: "Fablet — the architecture",
+    "Studying that keeps score. Every module you finish is checked, and every answer you miss comes back as practice.",
+  source: "Fablet — how it works",
   points: [
-    "24 specialist agent roles, one orchestrated network",
-    "Four content domains on a single foundation",
-    "Model-agnostic by design",
+    "Seven courses live, more every month",
+    "Taught by AI teachers, directed by instructors",
+    "Every course Fablet publishes is free",
   ],
-  watermark: "swarm",
+  watermark: "fablet",
 }
 
 export default function SignIn() {
@@ -99,7 +100,7 @@ export default function SignIn() {
 
   return (
     <AuthSplit {...PANEL}>
-      <h1 className="text-step-3 font-semibold text-ink-950">Sign in</h1>
+      <h1 className="display text-step-3 text-ink-950">Sign in</h1>
       <p className="mt-3 text-step--1 leading-relaxed text-ink-600">
         Students, institutions and operators all sign in here.
       </p>
@@ -112,7 +113,7 @@ export default function SignIn() {
             aria-haspopup="menu"
             aria-expanded={demoOpen}
             disabled={Boolean(demoBusy)}
-            className="flex w-full items-center justify-between gap-4 border border-line-2 bg-paper-2 px-4 py-3 text-left transition-colors hover:border-accent-ink"
+            className="flex w-full items-center justify-between gap-4 rounded-[12px] border border-line-2 bg-paper px-4 py-3 text-left transition-colors duration-300 hover:border-ink-950"
           >
             <span className="flex items-center gap-3">
               <span className="flex h-8 w-8 items-center justify-center rounded-full bg-accent-soft text-accent-ink" aria-hidden="true">
@@ -140,7 +141,7 @@ export default function SignIn() {
           {demoOpen && (
             <div
               role="menu"
-              className="absolute inset-x-0 top-[calc(100%+6px)] z-10 border border-line-2 bg-paper shadow-[0_18px_40px_-20px_rgba(20,18,30,0.35)]"
+              className="absolute inset-x-0 top-[calc(100%+6px)] z-10 overflow-hidden rounded-[12px] border border-line-2 bg-paper shadow-[0_18px_40px_-20px_rgba(20,18,30,0.35)]"
             >
               {demos.map((identity) => (
                 <button
@@ -226,7 +227,10 @@ export default function SignIn() {
               Signing in
             </>
           ) : (
-            "Sign in"
+            <>
+              Sign in
+              <ArrowIcon />
+            </>
           )}
         </button>
       </form>
