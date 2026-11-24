@@ -24,7 +24,7 @@ export default function AppShell({ nav, footerNote = null }) {
             end={end}
             onClick={() => setOpen(false)}
             className={({ isActive }) =>
-              `mb-1 flex items-center gap-3 rounded-[3px] px-3 py-2.5 text-step--1 transition-colors ${
+              `mb-1 flex items-center gap-3 rounded-full px-3 py-2.5 text-step--1 transition-colors ${
                 isActive ? "bg-accent-soft text-accent-ink" : "text-ink-600 hover:bg-paper-3 hover:text-ink-950"
               }`
             }
@@ -76,7 +76,7 @@ export default function AppShell({ nav, footerNote = null }) {
           onClick={() => setOpen((v) => !v)}
           aria-label={open ? "Close menu" : "Open menu"}
           aria-expanded={open}
-          className="flex h-10 w-10 items-center justify-center rounded-[3px] border border-line-2 text-ink-900"
+          className="flex h-10 w-10 items-center justify-center rounded-full border border-line-2 text-ink-900"
         >
           {open ? <X size={18} /> : <List size={18} />}
         </button>

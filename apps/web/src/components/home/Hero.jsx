@@ -48,14 +48,16 @@ function FacultyCarousel() {
         ))}
       </ul>
 
-      <div className="mt-4 border-t border-line pt-3" aria-hidden="true">
+      <div className="mt-4 border-t border-line pt-4" aria-hidden="true">
         <div className="flex items-baseline justify-between gap-4">
-          <p className="display text-step-1 text-ink-950">{active.name}</p>
+          <p className="font-sans text-[clamp(1.8rem,3.2vw,2.6rem)] font-semibold leading-none tracking-[-0.02em] text-transparent [-webkit-text-stroke:1px_var(--color-ink-950)]">
+            {active.name}
+          </p>
           <Micro dot={false} className="text-ink-400">
             AI teacher
           </Micro>
         </div>
-        <p className="mt-1 font-mono text-[0.68rem] uppercase tracking-[0.08em] text-ink-500">
+        <p className="mt-2 font-mono text-[0.68rem] uppercase tracking-[0.08em] text-ink-500">
           {active.line}
         </p>
       </div>

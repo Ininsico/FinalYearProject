@@ -35,8 +35,6 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll)
   }, [open])
 
-  useEffect(() => setOpen(false), [location.pathname])
-
   useEffect(() => {
     if (!open) return
     const onKey = (e) => e.key === "Escape" && setOpen(false)
@@ -106,7 +104,7 @@ export default function Navbar() {
           aria-label={open ? "Close menu" : "Open menu"}
           aria-expanded={open}
           aria-controls="mobile-menu"
-          className="flex h-11 w-11 items-center justify-center rounded-[3px] border border-line-2 text-ink-900 lg:hidden"
+          className="flex h-11 w-11 items-center justify-center rounded-full border border-line-2 text-ink-900 lg:hidden"
         >
           {open ? <X size={18} /> : <List size={18} />}
         </button>

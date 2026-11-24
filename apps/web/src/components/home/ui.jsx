@@ -1,5 +1,6 @@
 // Lusion-pattern primitives for the marketing surface: uppercase mono micro
-// labels with a dot, pill controls, cross decorations and arrow links.
+// labels with a dot, pill controls with a left-to-right sweep, cross
+// decorations and arrow links.
 
 export function Micro({ children, className = "", dot = true }) {
   return (
@@ -41,11 +42,13 @@ export function ArrowIcon({ className = "" }) {
 }
 
 const TONES = {
-  dark: "bg-ink-950 text-paper hover:bg-accent",
-  accent: "bg-accent text-paper hover:bg-accent-ink",
-  light: "bg-paper text-ink-950 hover:bg-accent hover:text-paper",
-  outline: "border border-line-2 text-ink-900 hover:border-ink-950 hover:bg-ink-950 hover:text-paper",
-  outlineLight: "border border-paper/30 text-paper hover:border-paper hover:bg-paper hover:text-ink-950",
+  dark: "bg-ink-950 text-paper [--sweep-color:var(--color-accent-ink)]",
+  accent: "bg-accent text-paper [--sweep-color:var(--color-ink-950)]",
+  light: "bg-paper text-ink-950 hover:text-paper [--sweep-color:var(--color-ink-950)]",
+  outline:
+    "border border-line-2 text-ink-900 hover:border-ink-950 hover:text-paper [--sweep-color:var(--color-ink-950)]",
+  outlineLight:
+    "border border-paper/30 text-paper hover:border-paper hover:text-ink-950 [--sweep-color:var(--color-paper)]",
 }
 
 export function Pill({ children, onClick, tone = "dark", className = "", type = "button" }) {
@@ -53,7 +56,7 @@ export function Pill({ children, onClick, tone = "dark", className = "", type = 
     <button
       type={type}
       onClick={onClick}
-      className={`group inline-flex h-12 items-center justify-center gap-2.5 rounded-full px-7 font-mono text-[0.68rem] uppercase tracking-[0.08em] transition-colors duration-300 ${TONES[tone]} ${className}`}
+      className={`group sweep inline-flex h-12 items-center justify-center gap-2.5 rounded-full px-7 font-mono text-[0.68rem] uppercase tracking-[0.08em] transition-colors duration-300 ${TONES[tone]} ${className}`}
     >
       {children}
     </button>

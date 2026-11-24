@@ -101,24 +101,34 @@ section[id], [id] { scroll-margin-top: 6.5rem; }
 
 @layer components {
   .btn {
-    @apply inline-flex h-12 items-center justify-center gap-2 rounded-[3px] px-6 text-step--1 font-medium;
-    transition: background-color 0.2s var(--ease-out), color 0.2s var(--ease-out),
-      border-color 0.2s var(--ease-out), transform 0.12s var(--ease-out), opacity 0.2s var(--ease-out);
+    @apply relative isolate inline-flex h-12 items-center justify-center gap-2 overflow-hidden rounded-full px-7 text-step--1 font-medium;
+    transition: color 0.25s var(--ease-out), border-color 0.25s var(--ease-out),
+      transform 0.12s var(--ease-out), opacity 0.2s var(--ease-out);
   }
+  .btn::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    z-index: -1;
+    border-radius: inherit;
+    background: var(--sweep-color, var(--color-accent-ink));
+    transform: translateX(-101%);
+    transition: transform 0.45s cubic-bezier(0.4, 0, 0.1, 1);
+  }
+  .btn:hover::before { transform: translateX(0); }
   .btn:active { transform: translateY(1px); }
   .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+  .btn:disabled::before { display: none; }
   .btn:disabled:active { transform: none; }
 
   .btn-primary { @apply bg-ink-950 text-paper; }
-  .btn-primary:hover { @apply bg-accent-ink; }
 
-  .btn-accent { @apply bg-accent text-paper; }
-  .btn-accent:hover { @apply bg-accent-ink; }
+  .btn-accent { @apply bg-accent text-paper; --sweep-color: var(--color-ink-950); }
 
-  .btn-ghost { @apply border border-line-2 bg-transparent text-ink-800; }
-  .btn-ghost:hover { @apply border-ink-700 text-ink-950; }
+  .btn-ghost { @apply border border-line-2 bg-transparent text-ink-800; --sweep-color: var(--color-ink-950); }
+  .btn-ghost:hover { @apply border-ink-950 text-paper; }
 
-  .btn-quiet { @apply px-1 text-ink-600; }
+  .btn-quiet { @apply px-3 text-ink-600; --sweep-color: var(--color-accent-soft); }
   .btn-quiet:hover { @apply text-ink-950; }
 
   .link-underline {
@@ -163,6 +173,25 @@ section[id], [id] { scroll-margin-top: 6.5rem; }
   .md li::marker { color: var(--color-accent-ink); }
   .md hr { @apply border-t border-line; }
 }
+
+/* Left-to-right hover sweep for pill controls outside the .btn system.
+   The fill is a pseudo layer that slides in from the left edge. */
+.sweep {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+.sweep::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  z-index: -1;
+  border-radius: inherit;
+  background: var(--sweep-color, var(--color-accent-ink));
+  transform: translateX(-101%);
+  transition: transform 0.45s cubic-bezier(0.4, 0, 0.1, 1);
+}
+.sweep:hover::before { transform: translateX(0); }
 
 /* Continuous ticker — CSS-driven so the loop is seamless and cheap. The track
    holds two identical halves; translating one half width loops without a seam. */
