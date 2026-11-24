@@ -132,15 +132,26 @@ export default function SignUp() {
         </button>
       </form>
 
-      <div className="mt-6 border-t border-line pt-5 text-step--1 text-ink-600">
-        Already have an account?{" "}
-        <Link to="/signin" className="link-underline font-medium">
-          Sign in
-        </Link>
-        <span className="mx-2 text-ink-400">·</span>
-        <Link to="/institutions/register" className="link-underline font-medium">
-          Register an institution instead
-        </Link>
+      <div className="mt-5 border-t border-line pt-4">
+        <p className="font-mono text-[0.62rem] uppercase tracking-[0.08em] text-ink-500">
+          Already have an account?
+        </p>
+        <div className="mt-1">
+          <Link
+            to="/signin"
+            className="group flex items-center justify-between border-b border-line py-2.5 text-step--1 font-medium text-ink-800 transition-colors duration-300 hover:text-ink-950"
+          >
+            Sign in
+            <ArrowIcon />
+          </Link>
+          <Link
+            to="/institutions/register"
+            className="group flex items-center justify-between py-2.5 text-step--1 font-medium text-ink-800 transition-colors duration-300 hover:text-ink-950"
+          >
+            Register an institution instead
+            <ArrowIcon />
+          </Link>
+        </div>
       </div>
     </AuthSplit>
   )

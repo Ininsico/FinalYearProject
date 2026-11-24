@@ -164,16 +164,27 @@ export default function SignIn() {
         </div>
       )}
 
-      <p className="mt-5 border-t border-line pt-4 text-step--1 text-ink-600">
-        New to Fablet?{" "}
-        <Link to="/signup" className="link-underline font-medium">
-          Create a student account
-        </Link>
-        {" · "}
-        <Link to="/institutions/register" className="link-underline font-medium">
-          Register an institution
-        </Link>
-      </p>
+      <div className="mt-5 border-t border-line pt-4">
+        <p className="font-mono text-[0.62rem] uppercase tracking-[0.08em] text-ink-500">
+          New to Fablet?
+        </p>
+        <div className="mt-1">
+          <Link
+            to="/signup"
+            className="group flex items-center justify-between border-b border-line py-2.5 text-step--1 font-medium text-ink-800 transition-colors duration-300 hover:text-ink-950"
+          >
+            Create a student account
+            <ArrowIcon />
+          </Link>
+          <Link
+            to="/institutions/register"
+            className="group flex items-center justify-between py-2.5 text-step--1 font-medium text-ink-800 transition-colors duration-300 hover:text-ink-950"
+          >
+            Register an institution
+            <ArrowIcon />
+          </Link>
+        </div>
+      </div>
     </AuthSplit>
   )
 }

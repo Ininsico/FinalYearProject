@@ -245,11 +245,19 @@ export default function InstitutionRegister() {
         )}
       </form>
 
-      <div className="mt-6 border-t border-line pt-5 text-step--1 text-ink-600">
-        Plan and payment come next, in USDT. Already have an account?{" "}
-        <Link to="/signin" className="link-underline font-medium">
-          Sign in
-        </Link>
+      <div className="mt-5 border-t border-line pt-4">
+        <p className="text-step--1 leading-relaxed text-ink-600">
+          Plan and payment come next, in USDT.
+        </p>
+        <div className="mt-1">
+          <Link
+            to="/signin"
+            className="group flex items-center justify-between py-2.5 text-step--1 font-medium text-ink-800 transition-colors duration-300 hover:text-ink-950"
+          >
+            Already have an account? Sign in
+            <ArrowIcon />
+          </Link>
+        </div>
       </div>
     </AuthSplit>
   )
