@@ -34,9 +34,9 @@ export default function ScrollStatement() {
   )
 
   return (
-    <section ref={root} data-bg="#f9f7f3" className="border-t border-line py-28 sm:py-40">
+    <section ref={root} data-bg="#f9f7f3" className="border-t border-line py-20 sm:py-28">
       <Container>
-        <p data-words className="display max-w-[26ch] text-step-4 text-ink-950">
+        <p data-words className="display max-w-[26ch] text-step-3 text-ink-950">
           A course should leave you knowing the subject, not just having watched it.
         </p>
       </Container>

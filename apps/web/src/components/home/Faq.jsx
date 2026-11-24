@@ -9,12 +9,12 @@ export default function Faq() {
   const uid = useId()
 
   return (
-    <section id="faq" data-bg="#f9f7f3" className="border-t border-line py-20 sm:py-28">
+    <section id="faq" data-bg="#f9f7f3" className="border-t border-line py-14 sm:py-20">
       <Container>
         <div className="grid gap-12 lg:grid-cols-[minmax(0,0.7fr)_minmax(0,1.6fr)] lg:gap-20">
           <div>
-            <p className="font-mono text-[0.7rem] tabular text-accent-ink">03</p>
-            <SplitHeading as="h2" className="mt-5 max-w-[12ch] text-step-4 text-ink-950 display">
+            <p className="font-mono text-[0.7rem] tabular text-ink-400">03</p>
+            <SplitHeading as="h2" className="mt-5 max-w-[12ch] text-step-3 text-ink-950 display">
               Questions, answered.
             </SplitHeading>
           </div>
@@ -32,9 +32,9 @@ export default function Faq() {
                       onClick={() => setOpen(isOpen ? -1 : i)}
                       aria-expanded={isOpen}
                       aria-controls={panelId}
-                      className="flex w-full items-start justify-between gap-6 py-6 text-left"
+                      className="flex w-full items-start justify-between gap-6 py-5 text-left"
                     >
-                      <span className="display text-step-2 text-ink-950">{f.q}</span>
+                      <span className="display text-step-1 text-ink-950">{f.q}</span>
                       <Plus
                         size={20}
                         weight="light"

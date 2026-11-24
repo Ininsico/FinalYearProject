@@ -31,18 +31,18 @@ export default function Stats() {
   )
 
   return (
-    <section ref={root} data-bg="#f4f1eb" className="border-t border-line py-20 sm:py-28">
+    <section ref={root} data-bg="#f4f1eb" className="border-t border-line py-14 sm:py-20">
       <Container>
         <Reveal>
-          <h2 className="display max-w-[18ch] text-step-3 text-ink-950">
+          <h2 className="display max-w-[18ch] text-step-2 text-ink-950">
             The catalogue, in numbers.
           </h2>
         </Reveal>
-        <dl className="mt-12 grid gap-10 sm:grid-cols-3">
+        <dl className="mt-10 grid gap-8 sm:grid-cols-3">
           {STATS.map((s, i) => (
             <Reveal key={s.label} delay={i * 0.08}>
               <div className="border-t border-line pt-6">
-                <dd className="display text-step-5 leading-none tabular text-ink-950">
+                <dd className="display text-step-4 leading-none tabular text-ink-950">
                   <span data-count={s.value}>0</span>
                   {s.suffix}
                 </dd>

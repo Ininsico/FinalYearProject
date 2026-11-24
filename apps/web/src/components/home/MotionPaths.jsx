@@ -151,12 +151,12 @@ export default function MotionPaths() {
     <section
       ref={root}
       data-bg="#f4f1eb"
-      className="relative overflow-hidden border-t border-line py-20 sm:py-28"
-      style={{ color: "var(--color-accent-ink)" }}
+      className="relative overflow-hidden border-t border-line py-14 sm:py-20"
+      style={{ color: "var(--color-ink-800)" }}
     >
       <Container>
         <div className="flex flex-wrap items-end justify-between gap-6">
-          <h2 className="display max-w-[20ch] text-step-4 text-ink-950">
+          <h2 className="display max-w-[20ch] text-step-3 text-ink-950">
             Every course is a path, not a playlist.
           </h2>
           <p className="max-w-[36ch] text-step--1 text-ink-500">
@@ -194,7 +194,6 @@ export default function MotionPaths() {
                 stroke="var(--color-line-2)"
                 strokeWidth="1"
                 vectorEffect="non-scaling-stroke"
-                style={{ filter: "drop-shadow(0 10px 18px rgba(20,18,30,0.16))" }}
               />
               <Icon
                 size={layout.glyph}

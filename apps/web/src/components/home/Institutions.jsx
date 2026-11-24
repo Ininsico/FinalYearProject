@@ -17,10 +17,10 @@ const CAPABILITIES = [
 export default function Institutions() {
   const navigate = useNavigate()
   return (
-    <section data-bg="#ede9e0" className="border-t border-line py-20 sm:py-28">
+    <section data-bg="#ede9e0" className="border-t border-line py-14 sm:py-20">
       <Container>
         <div className="flex flex-wrap items-end justify-between gap-6">
-          <SplitHeading as="h2" className="max-w-[18ch] text-step-4 text-ink-950 display">
+          <SplitHeading as="h2" className="max-w-[18ch] text-step-3 text-ink-950 display">
             Bring the whole academy to your institution.
           </SplitHeading>
           <p className="max-w-[38ch] text-step--1 text-ink-500">
@@ -30,11 +30,11 @@ export default function Institutions() {
         </div>
       </Container>
 
-      <div className="mt-14 border-y border-line py-6">
+      <div className="mt-10 border-y border-line py-5">
         <Marquee
           items={CAPABILITIES}
           speed={70}
-          itemClassName="mx-7 display text-step-2 text-ink-700"
+          itemClassName="mx-8 display text-step-1 text-ink-700"
         />
       </div>
 

@@ -56,20 +56,20 @@ export default function Steps() {
   )
 
   return (
-    <section ref={root} data-bg="#ede9e0" className="relative border-t border-line lg:h-[320vh]">
-      <div className="lg:sticky lg:top-0 lg:flex lg:min-h-screen lg:items-center lg:pt-28 lg:pb-20">
-        <Container className="py-20 sm:py-28 lg:py-0">
-          <div className="grid gap-12 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:gap-20">
+    <section ref={root} data-bg="#ede9e0" className="relative border-t border-line lg:h-[240vh]">
+      <div className="lg:sticky lg:top-0 lg:flex lg:min-h-screen lg:items-center lg:pt-24 lg:pb-16">
+        <Container className="py-14 sm:py-20 lg:py-0">
+          <div className="grid gap-10 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:gap-16">
             <div>
-              <p className="font-mono text-[0.7rem] tabular text-accent-ink">02</p>
+              <p className="font-mono text-[0.7rem] tabular text-ink-400">02</p>
               <SplitHeading
                 as="h2"
-                className="mt-5 max-w-[14ch] text-step-4 text-ink-950 display"
+                className="mt-5 max-w-[14ch] text-step-3 text-ink-950 display"
               >
                 How the academy works.
               </SplitHeading>
 
-              <ol className="mt-12 hidden lg:block">
+              <ol className="mt-10 hidden lg:block">
                 {STEPS.map((s, i) => (
                   <li
                     aria-hidden="true"
@@ -78,7 +78,7 @@ export default function Steps() {
                     }`}
                   >
                     <span className="font-mono text-[0.7rem] tabular">{s.n}</span>
-                    <span className="display text-step-2">{s.title}</span>
+                    <span className="display text-step-1">{s.title}</span>
                   </li>
                 ))}
               </ol>
@@ -86,7 +86,7 @@ export default function Steps() {
 
             {/* Desktop: pinned, cross-fading detail */}
             <div className="hidden lg:block">
-              <div className="relative min-h-[280px]">
+              <div className="relative min-h-[240px]">
                 {STEPS.map((s, i) => (
                   <div
                     key={s.n}
@@ -95,13 +95,13 @@ export default function Steps() {
                     }`}
                     aria-hidden={i !== active}
                   >
-                    <p className="display text-step-5 leading-none text-accent-ink">{s.n}</p>
-                    <h3 className="display mt-6 text-step-3 text-ink-950">{s.title}</h3>
-                    <p className="mt-5 max-w-[44ch] text-step-1 leading-[1.6] text-ink-600">{s.body}</p>
+                    <p className="display text-step-4 leading-none text-ink-400">{s.n}</p>
+                    <h3 className="display mt-5 text-step-2 text-ink-950">{s.title}</h3>
+                    <p className="mt-4 max-w-[46ch] text-step-0 leading-[1.7] text-ink-600">{s.body}</p>
                   </div>
                 ))}
               </div>
-              <div className="mt-10 flex gap-2" aria-hidden="true">
+              <div className="mt-8 flex gap-2" aria-hidden="true">
                 {STEPS.map((s, i) => (
                   <span
                     key={s.n}
@@ -117,9 +117,9 @@ export default function Steps() {
             <ol className="lg:hidden">
               {STEPS.map((s) => (
                 <li key={s.n} className="border-t border-line py-6">
-                  <span className="font-mono text-[0.7rem] tabular text-accent-ink">{s.n}</span>
-                  <h3 className="display mt-3 text-step-3 text-ink-950">{s.title}</h3>
-                  <p className="mt-3 max-w-[52ch] leading-relaxed text-ink-600">{s.body}</p>
+                  <span className="font-mono text-[0.7rem] tabular text-ink-400">{s.n}</span>
+                  <h3 className="display mt-3 text-step-2 text-ink-950">{s.title}</h3>
+                  <p className="mt-2 max-w-[52ch] leading-relaxed text-ink-600">{s.body}</p>
                 </li>
               ))}
             </ol>

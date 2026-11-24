@@ -61,11 +61,11 @@ export default function Hero() {
   )
 
   return (
-    <section ref={root} data-bg="#f9f7f3" className="relative overflow-hidden pt-40 pb-16 sm:pt-52">
+    <section ref={root} data-bg="#f9f7f3" className="relative overflow-hidden pt-36 pb-14 sm:pt-44">
       <span
         data-hero-bg
         aria-hidden="true"
-        className="display pointer-events-none absolute -right-[4vw] top-16 select-none whitespace-nowrap text-[32vw] leading-none text-ink-950/[0.035]"
+        className="display pointer-events-none absolute -right-[4vw] top-24 select-none whitespace-nowrap text-[22vw] leading-none text-ink-950/[0.035]"
       >
         academy
       </span>
@@ -76,14 +76,14 @@ export default function Hero() {
             as="h1"
             immediate
             delay={0.08}
-            className="max-w-[17ch] text-step-5 text-ink-950 display"
+            className="max-w-[20ch] text-step-4 text-ink-950 display"
           >
             An online academy,{" "}
             <br />
             <em className="text-accent-ink">taught with AI.</em>
           </SplitHeading>
 
-          <div className="mt-12 grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-end">
+          <div className="mt-10 grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-end">
             <p data-hero-meta className="max-w-[54ch] text-step-1 leading-[1.5] text-ink-600">
               Fablet runs courses across mathematics, physics, computer science,
               business and design. AI drafts the material, instructors direct it, and
@@ -101,7 +101,7 @@ export default function Hero() {
             </div>
           </div>
 
-          <div data-hero-meta className="mt-16 flex items-center justify-between border-t border-line pt-6">
+          <div data-hero-meta className="mt-12 flex items-center justify-between border-t border-line pt-6">
             <ul className="flex flex-wrap gap-x-8 gap-y-2">
               {META.map((m) => (
                 <li key={m} className="font-mono text-[0.68rem] uppercase tracking-[0.18em] text-ink-500">

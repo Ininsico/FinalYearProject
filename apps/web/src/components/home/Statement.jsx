@@ -4,17 +4,17 @@ import SplitHeading from "../SplitHeading"
 
 export default function Statement() {
   return (
-    <section data-bg="#f9f7f3" className="border-t border-line py-20 sm:py-28">
+    <section data-bg="#f9f7f3" className="border-t border-line py-14 sm:py-20">
       <Container>
-        <div className="grid gap-12 lg:grid-cols-[minmax(0,220px)_minmax(0,1fr)] lg:gap-20">
+        <div className="grid gap-10 lg:grid-cols-[minmax(0,140px)_minmax(0,1fr)] lg:gap-16">
           <Reveal>
-            <p className="font-mono text-[0.7rem] tabular text-accent-ink">01</p>
+            <p className="font-mono text-[0.7rem] tabular text-ink-400">01</p>
           </Reveal>
           <div>
-            <SplitHeading as="h2" className="max-w-[24ch] text-step-4 text-ink-950 display">
+            <SplitHeading as="h2" className="max-w-[24ch] text-step-3 text-ink-950 display">
               Most courses are written once, then left to rot.
             </SplitHeading>
-            <div className="mt-10 grid gap-8 sm:grid-cols-2">
+            <div className="mt-8 grid gap-8 sm:grid-cols-2">
               <Reveal delay={0.05}>
                 <p className="text-step-0 leading-[1.7] text-ink-600">
                   A subject moves, a class differs, and a syllabus recorded last year

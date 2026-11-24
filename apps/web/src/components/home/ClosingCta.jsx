@@ -7,12 +7,12 @@ import SplitHeading from "../SplitHeading"
 export default function ClosingCta() {
   const navigate = useNavigate()
   return (
-    <section className="border-t border-line bg-ink-950 py-24 text-paper sm:py-32">
+    <section className="border-t border-line bg-ink-950 py-20 text-paper sm:py-24">
       <Container>
-        <SplitHeading as="h2" className="max-w-[16ch] text-step-5 text-paper display">
+        <SplitHeading as="h2" className="max-w-[16ch] text-step-4 text-paper display">
           Your first course is free.
         </SplitHeading>
-        <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-4">
+        <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-4">
           <Reveal>
             <button onClick={() => navigate("/signup")} className="btn btn-accent">
               Create your free account

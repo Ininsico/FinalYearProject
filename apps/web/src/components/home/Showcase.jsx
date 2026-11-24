@@ -37,7 +37,7 @@ export default function Showcase() {
           scrollTrigger: {
             trigger: root.current,
             start: "top top",
-            end: () => `+=${window.innerHeight * 2.6}`,
+            end: () => `+=${window.innerHeight * 1.9}`,
             pin: true,
             scrub: 1,
             invalidateOnRefresh: true,
@@ -55,9 +55,9 @@ export default function Showcase() {
   )
 
   return (
-    <section ref={root} data-bg="#f4f1eb" className="border-t border-line lg:h-screen lg:overflow-hidden">
-      <div className="lg:flex lg:h-full lg:flex-col lg:justify-center lg:pt-28 lg:pb-12">
-        <Container className="pt-20 sm:pt-28 lg:pt-0">
+    <section ref={root} data-bg="#f9f7f3" className="border-t border-line lg:h-screen lg:overflow-hidden">
+      <div className="lg:flex lg:h-full lg:flex-col lg:justify-center lg:pt-24 lg:pb-10">
+        <Container className="pt-14 sm:pt-20 lg:pt-0">
           <div className="flex flex-wrap items-end justify-between gap-6">
             <h2 className="display max-w-[20ch] text-step-3 text-ink-950">
               Inside a course, end to end.
@@ -67,25 +67,25 @@ export default function Showcase() {
             </p>
           </div>
 
-          <div className="relative mt-12 lg:h-[440px]">
+          <div className="relative mt-10 lg:h-[360px]">
             {PANELS.map((p) => (
               <article
                 key={p.kicker}
                 data-panel
-                className="border-t border-line pt-10 lg:absolute lg:inset-0"
+                className="border-t border-line pt-8 lg:absolute lg:inset-0"
               >
-                <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-20">
+                <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-16">
                   <div>
-                    <p className="font-mono text-[0.7rem] text-accent-ink">
+                    <p className="font-mono text-[0.7rem] text-ink-400">
                       {p.kicker}
                     </p>
-                    <h3 className="display mt-5 max-w-[16ch] text-step-4 text-ink-950">{p.title}</h3>
+                    <h3 className="display mt-4 max-w-[18ch] text-step-2 text-ink-950">{p.title}</h3>
                   </div>
                   <div>
-                    <p className="max-w-[52ch] text-step-1 leading-[1.6] text-ink-600">{p.body}</p>
-                    <ul className="mt-8 grid gap-px overflow-hidden border border-line bg-line sm:grid-cols-3">
+                    <p className="max-w-[52ch] text-step-0 leading-[1.7] text-ink-600">{p.body}</p>
+                    <ul className="mt-6 grid gap-px overflow-hidden border border-line bg-line sm:grid-cols-3">
                       {p.points.map((pt) => (
-                        <li key={pt} className="bg-paper px-4 py-4 text-step--1 text-ink-700">{pt}</li>
+                        <li key={pt} className="bg-paper px-3 py-3 text-[0.78rem] text-ink-700">{pt}</li>
                       ))}
                     </ul>
                   </div>

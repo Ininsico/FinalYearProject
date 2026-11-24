@@ -22,16 +22,16 @@ export default function ParallaxBand() {
   )
 
   return (
-    <section ref={root} data-bg="#f9f7f3" className="relative overflow-hidden border-t border-line py-32 sm:py-44">
+    <section ref={root} data-bg="#f9f7f3" className="relative overflow-hidden border-t border-line py-20 sm:py-28">
       <span
         data-parallax-word
         aria-hidden="true"
-        className="display pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap text-[22vw] leading-none text-ink-950/[0.04]"
+        className="display pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap text-[14vw] leading-none text-ink-950/[0.04]"
       >
         mastery
       </span>
       <div className="relative mx-auto max-w-[1240px] px-6 sm:px-8">
-        <p data-parallax-line className="display mx-auto max-w-[24ch] text-center text-step-3 text-ink-950">
+        <p data-parallax-line className="display mx-auto max-w-[26ch] text-center text-step-2 text-ink-950">
           Stop collecting recordings. Learn in an academy that keeps up.
         </p>
       </div>

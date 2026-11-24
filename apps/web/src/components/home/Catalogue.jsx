@@ -32,10 +32,10 @@ export default function Catalogue() {
   const subjects = catalogue?.subjects ?? []
 
   return (
-    <section id="catalogue" data-bg="#eef0ff" className="border-t border-line py-20 sm:py-28">
+    <section id="catalogue" data-bg="#f4f1eb" className="border-t border-line py-14 sm:py-20">
       <Container>
-        <div className="grid gap-6 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-end lg:gap-20">
-          <SplitHeading as="h2" className="max-w-[16ch] text-step-4 text-ink-950 display">
+        <div className="grid gap-6 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-end lg:gap-16">
+          <SplitHeading as="h2" className="max-w-[16ch] text-step-3 text-ink-950 display">
             The opening catalogue.
           </SplitHeading>
           <Reveal>
@@ -47,20 +47,20 @@ export default function Catalogue() {
         </div>
 
         {error && (
-          <p role="alert" className="mt-12 max-w-[60ch] border-t border-line pt-6 text-step--1 leading-relaxed text-ink-600">
+          <p role="alert" className="mt-10 max-w-[60ch] border-t border-line pt-6 text-step--1 leading-relaxed text-ink-600">
             {error} Try again in a moment, or create a free account and browse from your
             dashboard.
           </p>
         )}
 
         {!catalogue && !error && (
-          <p aria-live="polite" className="mt-12 border-t border-line pt-6 text-step--1 text-ink-500">
+          <p aria-live="polite" className="mt-10 border-t border-line pt-6 text-step--1 text-ink-500">
             Loading the catalogue
           </p>
         )}
 
         {catalogue && modules.length === 0 && (
-          <p className="mt-12 max-w-[60ch] border-t border-line pt-6 text-step--1 leading-relaxed text-ink-600">
+          <p className="mt-10 max-w-[60ch] border-t border-line pt-6 text-step--1 leading-relaxed text-ink-600">
             The catalogue is being written. Create a free account and the first modules
             will be waiting when they publish.
           </p>
@@ -68,23 +68,23 @@ export default function Catalogue() {
 
         {catalogue && modules.length > 0 && (
           <>
-            <ul className="mt-12">
+            <ul className="mt-10">
               {modules.map((m, i) => (
                 <li
                   key={m.id}
-                  className="grid gap-4 border-t border-line py-7 sm:grid-cols-[64px_minmax(0,1fr)_auto] sm:items-baseline"
+                  className="grid gap-3 border-t border-line py-6 md:grid-cols-[56px_minmax(0,1fr)_auto] md:items-baseline md:gap-4"
                 >
-                  <span className="font-mono text-[0.7rem] tabular text-accent-ink">
+                  <span className="font-mono text-[0.7rem] tabular text-ink-400">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   <div>
-                    <h3 className="display text-step-2 text-ink-950">{m.title}</h3>
-                    <p className="mt-2 max-w-[62ch] text-step--1 leading-relaxed text-ink-600">
+                    <h3 className="display text-step-1 text-ink-950">{m.title}</h3>
+                    <p className="mt-1.5 max-w-[62ch] text-step--1 leading-relaxed text-ink-600">
                       {m.summary}
                     </p>
                   </div>
-                  <div className="flex flex-wrap items-baseline gap-x-5 gap-y-2 text-step--1 text-ink-500 sm:justify-end">
-                    <span className="font-mono text-[0.68rem] uppercase tracking-[0.14em]">
+                  <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1.5 text-step--1 text-ink-500 md:justify-end">
+                    <span className="font-mono text-[0.66rem] uppercase tracking-[0.12em]">
                       {m.subject}
                     </span>
                     <span>{LEVEL[m.level] ?? m.level}</span>
@@ -92,7 +92,7 @@ export default function Catalogue() {
                       {m.lessons} lesson{m.lessons === 1 ? "" : "s"}
                     </span>
                     {m.premium && (
-                      <span className="rounded-[2px] border border-line-2 px-2 py-0.5 font-mono text-[0.6rem] uppercase tracking-[0.12em] text-ink-700">
+                      <span className="rounded-[2px] border border-line-2 px-2 py-0.5 font-mono text-[0.6rem] uppercase tracking-[0.1em] text-ink-700">
                         Premium
                       </span>
                     )}
@@ -101,7 +101,7 @@ export default function Catalogue() {
               ))}
             </ul>
 
-            <div className="flex flex-wrap items-center justify-between gap-x-10 gap-y-6 border-t border-line pt-7">
+            <div className="flex flex-wrap items-center justify-between gap-x-10 gap-y-5 border-t border-line pt-6">
               <p className="max-w-[52ch] text-step--1 text-ink-500">
                 {total} course{total === 1 ? "" : "s"} published across {subjects.join(", ")}.
               </p>
