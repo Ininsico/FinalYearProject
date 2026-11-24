@@ -1,4 +1,3 @@
-import Ticker from "../Ticker"
 import { Container } from "../layout"
 
 const TEACHERS = [
@@ -9,21 +8,10 @@ const TEACHERS = [
   { name: "Xavier", image: "/teachers/Xavier.png" },
 ]
 
-// Doubled so the half-track is wide enough to loop seamlessly on large screens.
-const LOOP = [...TEACHERS, ...TEACHERS]
-
-const ITEMS = LOOP.map((t, i) => (
-  <span key={i} className="flex w-28 flex-col items-center gap-3 sm:w-32">
-    <img
-      src={t.image}
-      alt=""
-      loading="lazy"
-      decoding="async"
-      className="h-24 w-24 rounded-full border border-line object-cover sm:h-28 sm:w-28"
-    />
-    <span className="text-step--1 text-ink-700">{t.name}</span>
-  </span>
-))
+// Each half of the track is exactly one viewport wide and holds the five teachers
+// once, spread across it. The track loops by one full half, so a teacher is never
+// on screen twice at the same time, and the scroll never visibly restarts.
+const HALVES = [0, 1]
 
 export default function Teachers() {
   return (
@@ -42,8 +30,30 @@ export default function Teachers() {
         </ul>
       </Container>
 
-      <div className="mt-10 border-y border-line py-8">
-        <Ticker items={ITEMS} duration={34} separator={null} itemClassName="mx-4 sm:mx-6" />
+      <div className="mt-10 overflow-hidden border-y border-line py-8" aria-hidden="true">
+        <div className="ticker-track flex w-max" style={{ "--ticker-duration": "30s" }}>
+          {HALVES.map((k) => (
+            <div
+              key={k}
+              className="flex w-screen shrink-0 items-start justify-around px-3"
+            >
+              {TEACHERS.map((t) => (
+                <span key={t.name} className="flex flex-col items-center gap-3">
+                  <img
+                    src={t.image}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                    className="h-14 w-14 rounded-full border border-line object-cover sm:h-24 sm:w-24 lg:h-28 lg:w-28"
+                  />
+                  <span className="whitespace-nowrap text-[0.62rem] text-ink-700 sm:text-step--1">
+                    {t.name}
+                  </span>
+                </span>
+              ))}
+            </div>
+          ))}
+        </div>
       </div>
 
       <Container>
