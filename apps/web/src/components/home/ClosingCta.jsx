@@ -1,12 +1,26 @@
 import { useNavigate } from "react-router-dom"
 import { ArrowRight } from "@phosphor-icons/react"
+import Ticker from "../Ticker"
 import { Container } from "../layout"
 
 export default function ClosingCta() {
   const navigate = useNavigate()
   return (
-    <section className="border-t border-line bg-ink-950 py-16 text-paper sm:py-20">
-      <Container className="flex flex-wrap items-end justify-between gap-8">
+    <section className="border-t border-line bg-ink-950 text-paper">
+      <div className="border-b border-paper/15 py-5">
+        <Ticker
+          items={[
+            "Free to start",
+            "Seven courses live",
+            "Taught by AI teachers",
+            "Directed by instructors",
+          ]}
+          duration={36}
+          itemClassName="display text-step-1 text-paper/85"
+        />
+      </div>
+
+      <Container className="flex flex-wrap items-end justify-between gap-8 py-16 sm:py-20">
         <div>
           <h2 className="display max-w-[16ch] text-step-3 text-paper">
             Your first course is free.

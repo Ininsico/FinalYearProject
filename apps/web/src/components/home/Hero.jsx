@@ -5,8 +5,55 @@ import { Container } from "../layout"
 export default function Hero() {
   const navigate = useNavigate()
   return (
-    <section className="border-b border-line bg-paper">
-      <Container className="grid gap-12 pb-16 pt-28 sm:pt-36 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:items-start lg:gap-20">
+    <section className="relative overflow-hidden border-b border-line bg-paper">
+      <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+        <div
+          className="absolute inset-x-0 top-0 h-[420px] opacity-60"
+          style={{
+            backgroundImage: "radial-gradient(var(--color-line-2) 1px, transparent 1px)",
+            backgroundSize: "22px 22px",
+            maskImage: "radial-gradient(60% 80% at 30% 0%, black, transparent)",
+            WebkitMaskImage: "radial-gradient(60% 80% at 30% 0%, black, transparent)",
+          }}
+        />
+        <svg
+          className="art-spin absolute -right-44 -top-44 h-[520px] w-[520px]"
+          viewBox="0 0 520 520"
+          fill="none"
+        >
+          <circle cx="260" cy="260" r="240" stroke="var(--color-line-2)" strokeWidth="1" strokeDasharray="2 9" />
+          <circle cx="260" cy="260" r="180" stroke="var(--color-accent)" strokeOpacity="0.3" strokeWidth="1" />
+        </svg>
+        <div className="absolute -bottom-24 -left-24 h-72 w-72 rounded-full bg-accent-soft" />
+        <svg className="art-float absolute right-[30%] top-28 h-12 w-12" viewBox="0 0 48 48">
+          <rect x="14" y="14" width="20" height="20" transform="rotate(45 24 24)" fill="var(--color-accent)" />
+        </svg>
+        <svg className="art-float-slow absolute bottom-24 right-[12%] h-10 w-10" viewBox="0 0 40 40">
+          <rect
+            x="12"
+            y="12"
+            width="16"
+            height="16"
+            transform="rotate(45 20 20)"
+            fill="none"
+            stroke="var(--color-ink-950)"
+            strokeWidth="1.5"
+          />
+        </svg>
+        <svg className="art-float absolute left-[38%] top-16 h-7 w-7" viewBox="0 0 28 28">
+          <rect
+            x="8"
+            y="8"
+            width="12"
+            height="12"
+            transform="rotate(45 14 14)"
+            fill="var(--color-paper-3)"
+            stroke="var(--color-line-2)"
+          />
+        </svg>
+      </div>
+
+      <Container className="relative grid gap-12 pb-16 pt-28 sm:pt-36 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:items-start lg:gap-20">
         <div>
           <h1 className="display text-[clamp(2.4rem,1.7rem+2.8vw,3.8rem)] text-ink-950">
             An online academy, taught by AI teachers.
