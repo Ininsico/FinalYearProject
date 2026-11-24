@@ -210,11 +210,6 @@ section[id], [id] { scroll-margin-top: 6.5rem; }
 
 /* Height-based compaction for the auth screens: keep everything inside one
    viewport on short displays without inner scrolling. */
-@media (max-height: 800px) {
-  .auth-quote { font-size: var(--text-step-2); }
-  .auth-points { margin-top: 1.5rem; }
-  .auth-points li { padding-top: 0.6rem; padding-bottom: 0.6rem; }
-}
 @media (max-height: 760px) {
   .auth-subtitle { display: none; }
   .auth-plate { padding: 1.25rem; }
