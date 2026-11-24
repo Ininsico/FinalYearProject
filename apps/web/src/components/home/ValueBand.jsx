@@ -60,10 +60,10 @@ export default function ValueBand() {
         <div className="mt-8 flex justify-end">
           <ArrowButton
             onClick={() =>
-              document.getElementById("how-it-works")?.scrollIntoView({ behavior: "smooth" })
+              document.getElementById("assistant")?.scrollIntoView({ behavior: "smooth" })
             }
           >
-            How the academy works
+            Meet the assistant
           </ArrowButton>
         </div>
       </Container>
