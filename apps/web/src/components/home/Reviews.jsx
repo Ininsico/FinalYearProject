@@ -5,36 +5,42 @@ const REVIEWS = [
   {
     quote:
       "The revision plan the assistant built cut my MDCAT prep down to the modules I was actually weak in.",
-    name: "Bilal",
+    name: "Ahmedullah",
     role: "MDCAT candidate",
+    image: "/ahmedullah.jpg",
   },
   {
     quote:
       "The exercises are sized to one sitting. After college, that is the only kind of study time I have.",
-    name: "Ayesha",
+    name: "Ayyan",
     role: "FSc student",
+    image: "/ayyan.jpg",
   },
   {
     quote:
       "I stopped chasing twelve-hour video playlists. A module here is about two hours, start to finish.",
-    name: "Hamza",
+    name: "Arslan",
     role: "CSS aspirant",
+    image: "/arslan.png",
   },
   {
     quote:
       "Every quiz answer points back at the lesson it came from, so re-reading is never a guessing game.",
-    name: "Zainab",
+    name: "Huzafia",
     role: "Board exams",
+    image: "/huzafia.png",
   },
   {
     quote: "The Geology module explains map work better than anything else I found for CSS.",
-    name: "Usman",
+    name: "Mudasri",
     role: "CSS aspirant",
+    image: "/mudasri.png",
   },
   {
     quote: "The instructor sign-off shows. Nothing in the reading wastes a line.",
-    name: "Fatima",
+    name: "Noman",
     role: "University student",
+    image: "/noman.jpg",
   },
 ]
 
@@ -76,11 +82,20 @@ export default function Reviews() {
               <blockquote className="flex-1 text-step-0 leading-[1.6] text-ink-800">
                 {r.quote}
               </blockquote>
-              <figcaption className="flex items-baseline justify-between gap-3 border-t border-line pt-4">
-                <span className="display text-step-1 text-ink-950">{r.name}</span>
-                <span className="font-mono text-[0.62rem] uppercase tracking-[0.08em] text-ink-500">
-                  {r.role}
-                </span>
+              <figcaption className="flex items-center gap-3 border-t border-line pt-4">
+                <img
+                  src={r.image}
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                  className="h-11 w-11 shrink-0 rounded-full border border-line-2 object-cover"
+                />
+                <div className="min-w-0">
+                  <p className="display text-step-1 text-ink-950">{r.name}</p>
+                  <p className="mt-0.5 font-mono text-[0.62rem] uppercase tracking-[0.08em] text-ink-500">
+                    {r.role}
+                  </p>
+                </div>
               </figcaption>
             </figure>
           ))}
