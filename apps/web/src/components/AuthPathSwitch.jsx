@@ -11,8 +11,7 @@ export default function AuthPathSwitch({ active }) {
   ]
 
   return (
-    <div
-      role="tablist"
+    <nav
       aria-label="Account type"
       className="grid grid-cols-2 gap-1 rounded-full border border-line-2 bg-paper p-1"
     >
@@ -22,8 +21,7 @@ export default function AuthPathSwitch({ active }) {
           <button
             key={o.id}
             type="button"
-            role="tab"
-            aria-selected={isActive}
+            aria-current={isActive ? "page" : undefined}
             onClick={() => {
               if (!isActive) navigate(o.to)
             }}
@@ -35,6 +33,6 @@ export default function AuthPathSwitch({ active }) {
           </button>
         )
       })}
-    </div>
+    </nav>
   )
 }
