@@ -16,6 +16,7 @@ export default function TickerBand() {
         items={FACULTY}
         duration={58}
         offset={2}
+        reverse
         className="mt-5 sm:mt-7"
         itemClassName="font-sans text-[clamp(2.4rem,5.6vw,5rem)] font-bold italic leading-none tracking-[-0.03em] text-transparent opacity-70 [-webkit-text-stroke:1.5px_var(--color-paper)]"
       />
