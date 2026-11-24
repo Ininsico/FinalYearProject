@@ -25,14 +25,22 @@ function FacultyCarousel() {
       <Cross className="absolute -left-5 -top-5 hidden text-ink-400 sm:block" />
       <Cross className="absolute -bottom-5 -right-5 hidden text-ink-400 sm:block" />
 
-      <p
-        aria-hidden="true"
-        className="whitespace-nowrap text-center font-sans text-[clamp(1.8rem,3.6vw,2.7rem)] font-bold italic leading-none tracking-[-0.02em] text-transparent [-webkit-text-stroke:1.5px_var(--color-ink-950)]"
-      >
-        {active.name}
-      </p>
+      <div aria-hidden="true" className="flex items-center justify-center gap-4">
+        <span className="hidden h-1.5 w-1.5 rotate-45 bg-accent sm:block" />
 
-      <div className="relative mt-3 h-[220px] sm:h-[250px]" aria-hidden="true">
+        <span className="relative inline-block">
+          <span className="absolute left-[3px] top-[3px] select-none whitespace-nowrap font-sans text-[clamp(2rem,4.6vw,3.6rem)] font-bold italic leading-none tracking-[-0.02em] text-accent-soft">
+            {active.name}
+          </span>
+          <span className="relative whitespace-nowrap font-sans text-[clamp(2rem,4.6vw,3.6rem)] font-bold italic leading-none tracking-[-0.02em] text-transparent [-webkit-text-stroke:2px_var(--color-ink-950)]">
+            {active.name}
+          </span>
+        </span>
+
+        <span className="hidden h-1.5 w-1.5 rotate-45 bg-accent sm:block" />
+      </div>
+
+      <div className="relative mt-3 h-[200px] sm:h-[230px]" aria-hidden="true">
         {FACULTY.map((t, i) => (
           <img
             key={t.name}
