@@ -18,9 +18,9 @@ export default function Teachers() {
     <section id="teachers" className="border-t border-line bg-paper py-14 sm:py-20">
       <Container>
         <div className="flex flex-wrap items-end justify-between gap-4">
-          <h2 className="display text-step-2 text-ink-950">Meet the AI teachers.</h2>
+          <h2 className="display text-step-2 text-ink-950">The AI teachers.</h2>
           <p className="max-w-[44ch] text-step--1 text-ink-500">
-            A trained persona behind every voice, with their own delivery and pacing.
+            Each one is a trained persona with their own voice and pace.
           </p>
         </div>
         <ul className="sr-only">
@@ -46,7 +46,7 @@ export default function Teachers() {
                     decoding="async"
                     className="h-14 w-14 rounded-full border border-line object-cover sm:h-24 sm:w-24 lg:h-28 lg:w-28"
                   />
-                  <span className="whitespace-nowrap text-[0.62rem] text-ink-700 sm:text-step--1">
+                  <span className="whitespace-nowrap text-[0.8rem] text-ink-700">
                     {t.name}
                   </span>
                 </span>
@@ -57,8 +57,8 @@ export default function Teachers() {
       </div>
 
       <Container>
-        <p className="mt-6 text-center font-mono text-[0.7rem] uppercase tracking-[0.2em] text-ink-500">
-          More AI teachers soon
+        <p className="mt-6 text-center text-[0.8rem] text-ink-500">
+          More AI teachers are coming soon.
         </p>
       </Container>
     </section>

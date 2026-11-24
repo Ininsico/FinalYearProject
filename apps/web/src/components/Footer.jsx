@@ -72,7 +72,7 @@ export default function Footer() {
           <div className="grid gap-8 sm:grid-cols-4">
             {COLUMNS.map((col) => (
               <div key={col.title}>
-                <h3 className="eyebrow">{col.title}</h3>
+                <h3 className="text-[0.8rem] font-medium text-ink-950">{col.title}</h3>
                 <ul className="mt-4 space-y-3">
                   {col.links.map(([label, to]) => (
                     <li key={`${col.title}-${label}`}>
@@ -105,7 +105,7 @@ export default function Footer() {
             <p className="text-step--1 text-ink-500">
               &copy; {new Date().getFullYear()} Fablet. All rights reserved.
             </p>
-            <p className="font-mono text-[0.68rem] uppercase tracking-[0.18em] text-ink-500">
+            <p className="text-[0.8rem] text-ink-500">
               Built in Abbottabad
             </p>
           </div>

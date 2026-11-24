@@ -2,22 +2,22 @@ import { Container } from "../layout"
 
 const STEPS = [
   {
-    n: "01",
+    n: "1",
     title: "Choose your course",
     body: "Browse by subject and level. Premium modules are marked before you start.",
   },
   {
-    n: "02",
+    n: "2",
     title: "Learn in short lessons",
     body: "Video, reading and worked examples, each sized to finish in one sitting.",
   },
   {
-    n: "03",
+    n: "3",
     title: "Practise, then prove it",
     body: "Hands-on exercises with sample solutions, closed by a module quiz.",
   },
   {
-    n: "04",
+    n: "4",
     title: "Grow on your plan",
     body: "Start free. Student Pro unlocks premium modules and the AI video agent.",
   },
@@ -37,8 +37,8 @@ export default function HowItWorks() {
         <ol className="mt-10 grid gap-px overflow-hidden border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
           {STEPS.map((s) => (
             <li key={s.n} className="bg-paper p-6">
-              <span className="font-mono text-[0.7rem] tabular text-accent-ink">{s.n}</span>
-              <h3 className="display mt-3 text-step-1 text-ink-950">{s.title}</h3>
+              <span className="display text-step-1 text-accent-ink">{s.n}</span>
+              <h3 className="display mt-2 text-step-1 text-ink-950">{s.title}</h3>
               <p className="mt-2 text-step--1 leading-relaxed text-ink-600">{s.body}</p>
             </li>
           ))}

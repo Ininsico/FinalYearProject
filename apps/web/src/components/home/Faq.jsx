@@ -12,8 +12,7 @@ export default function Faq() {
       <Container>
         <div className="grid gap-12 lg:grid-cols-[minmax(0,0.7fr)_minmax(0,1.6fr)] lg:gap-20">
           <div>
-            <p className="font-mono text-[0.7rem] tabular text-ink-400">03</p>
-            <h2 className="mt-5 max-w-[12ch] text-step-2 text-ink-950 display">
+            <h2 className="max-w-[16ch] text-step-2 text-ink-950 display">
               Questions, answered.
             </h2>
           </div>
