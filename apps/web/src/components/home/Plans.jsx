@@ -1,36 +1,66 @@
 import { useNavigate } from "react-router-dom"
 import { Container } from "../layout"
-import { ArrowIcon, Micro } from "./ui"
+import { ArrowIcon, Micro, Pill } from "./ui"
 
 const PLANS = [
   {
     name: "Student Basic",
     who: "A single learner",
     price: "Free",
+    period: "forever",
+    features: [
+      "The full free catalogue",
+      "Progress tracking module by module",
+      "The AI assistant in every lesson",
+    ],
     cta: "Create an account",
     to: "/signup",
+    tone: "dark",
   },
   {
     name: "Student Pro",
     who: "A single learner, premium",
-    price: "9 USDT a month",
+    price: "9 USDT",
+    period: "a month",
+    features: [
+      "Everything in Basic",
+      "Premium modules",
+      "The AI video agent",
+      "40% off with the OpenUp code",
+    ],
     cta: "Create an account",
     to: "/signup",
-    highlight: true,
+    featured: true,
   },
   {
     name: "Institution Starter",
     who: "A department or small institution",
-    price: "49 USDT a month, 10 seats",
+    price: "49 USDT",
+    period: "a month, 10 seats",
+    features: [
+      "10 member seats",
+      "Shared course library",
+      "The AI course builder",
+      "One institution console",
+    ],
     cta: "Register an institution",
     to: "/institutions/register",
+    tone: "outline",
   },
   {
     name: "Institution Scale",
     who: "A whole institution",
-    price: "149 USDT a month, 50 seats",
+    price: "149 USDT",
+    period: "a month, 50 seats",
+    features: [
+      "50 member seats",
+      "Everything in Starter",
+      "Unlimited modules",
+      "Billing in one console",
+    ],
     cta: "Register an institution",
     to: "/institutions/register",
+    tone: "outline",
   },
 ]
 
@@ -46,31 +76,77 @@ export default function Plans() {
           <Micro className="text-ink-500">Paid in USDT on TRX</Micro>
         </div>
 
-        <div className="mt-10 border-t border-line">
+        <div className="mt-12 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
           {PLANS.map((p) => (
-            <div
+            <article
               key={p.name}
-              className={`grid gap-2 border-b border-line px-4 py-6 transition-colors duration-300 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_240px_auto] md:items-baseline md:gap-8 ${
-                p.highlight ? "bg-accent-soft" : "hover:bg-paper-2"
+              className={`relative flex h-full flex-col rounded-[15px] border p-7 transition-colors duration-300 sm:p-8 ${
+                p.featured
+                  ? "border-ink-950 bg-ink-950 text-paper"
+                  : "border-line bg-paper hover:border-line-2 hover:bg-paper-2"
               }`}
             >
-              <h3 className="display text-step-2 text-ink-950">{p.name}</h3>
-              <span className="font-mono text-[0.68rem] uppercase tracking-[0.08em] text-ink-500">
-                {p.who}
-              </span>
-              <span className="display text-step-1 tabular text-ink-950">{p.price}</span>
-              <button
-                onClick={() => navigate(p.to)}
-                className="group inline-flex items-center gap-2 justify-self-start font-mono text-[0.68rem] uppercase tracking-[0.08em] underline decoration-line-2 underline-offset-[6px] transition-colors duration-300 hover:decoration-ink-950 md:justify-self-end"
+              {p.featured && (
+                <span className="absolute right-7 top-8 font-mono text-[0.62rem] uppercase tracking-[0.08em] text-accent-soft">
+                  Most popular
+                </span>
+              )}
+
+              <div>
+                <Micro dot={false} className={p.featured ? "text-paper/60" : "text-ink-500"}>
+                  {p.who}
+                </Micro>
+                <h3 className="display mt-4 text-step-2">{p.name}</h3>
+                <p className="mt-6 flex items-baseline gap-2">
+                  <span className="display text-[clamp(2rem,3.2vw,2.8rem)] tabular-nums">
+                    {p.price}
+                  </span>
+                  <span
+                    className={`font-mono text-[0.62rem] uppercase tracking-[0.08em] ${
+                      p.featured ? "text-paper/60" : "text-ink-500"
+                    }`}
+                  >
+                    {p.period}
+                  </span>
+                </p>
+              </div>
+
+              <ul
+                className={`mt-6 flex-1 space-y-3 border-t pt-6 ${
+                  p.featured ? "border-paper/15" : "border-line"
+                }`}
               >
-                {p.cta}
-                <ArrowIcon />
-              </button>
-            </div>
+                {p.features.map((f) => (
+                  <li
+                    key={f}
+                    className={`flex items-start gap-3 text-step--1 leading-relaxed ${
+                      p.featured ? "text-paper/80" : "text-ink-700"
+                    }`}
+                  >
+                    <span
+                      className="mt-[0.45rem] h-1.5 w-1.5 shrink-0 rotate-45 bg-accent"
+                      aria-hidden="true"
+                    />
+                    {f}
+                  </li>
+                ))}
+              </ul>
+
+              <div className="mt-8">
+                <Pill
+                  onClick={() => navigate(p.to)}
+                  tone={p.featured ? "light" : p.tone}
+                  className="w-full"
+                >
+                  {p.cta}
+                  <ArrowIcon />
+                </Pill>
+              </div>
+            </article>
           ))}
         </div>
 
-        <p className="mt-4 font-mono text-[0.68rem] uppercase tracking-[0.08em] text-ink-500">
+        <p className="mt-6 font-mono text-[0.68rem] uppercase tracking-[0.08em] text-ink-500">
           Premium modules and the AI video agent are part of Student Pro and every
           institution plan
         </p>

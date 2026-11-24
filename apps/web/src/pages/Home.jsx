@@ -9,7 +9,7 @@ import OfferBand from "../components/home/OfferBand"
 import Assistant from "../components/home/Assistant"
 import WhoDoesWhat from "../components/home/WhoDoesWhat"
 import Plans from "../components/home/Plans"
-import NoticeBoard from "../components/home/NoticeBoard"
+import Reviews from "../components/home/Reviews"
 import Institutions from "../components/home/Institutions"
 import Faq from "../components/home/Faq"
 import ClosingCta from "../components/home/ClosingCta"
@@ -28,7 +28,7 @@ export default function Home() {
       <Assistant />
       <WhoDoesWhat />
       <Plans />
-      <NoticeBoard />
+      <Reviews />
       <Institutions />
       <Faq />
       <ClosingCta />
