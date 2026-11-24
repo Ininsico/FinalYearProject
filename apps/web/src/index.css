@@ -194,21 +194,8 @@ section[id], [id] { scroll-margin-top: 6.5rem; }
 }
 .sweep:hover::before { transform: translateX(0); }
 
-/* Continuous ticker — CSS-driven so the loop is seamless and cheap. The track
-   holds two identical halves; translating one half width loops without a seam. */
-@keyframes ticker-x {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
-}
-
-.ticker-track {
-  animation: ticker-x var(--ticker-duration, 30s) linear infinite;
-  will-change: transform;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .ticker-track { animation: none; }
-}
+/* Marquees are JS-driven (see Ticker.jsx) so they run in every browser and
+   regardless of OS or browser animation settings. */
 
 /* Landing art + diagram motion. CSS-only, transform/background only, and off
    under reduced motion. */
