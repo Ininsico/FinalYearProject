@@ -2,6 +2,7 @@ import Hero from "../components/home/Hero"
 import TickerBand from "../components/home/TickerBand"
 import ValueBand from "../components/home/ValueBand"
 import Subjects from "../components/home/Subjects"
+import Teachers from "../components/home/Teachers"
 import HowItWorks from "../components/home/HowItWorks"
 import Institutions from "../components/home/Institutions"
 import Faq from "../components/home/Faq"
@@ -14,6 +15,7 @@ export default function Home() {
       <TickerBand />
       <ValueBand />
       <Subjects />
+      <Teachers />
       <HowItWorks />
       <Institutions />
       <Faq />

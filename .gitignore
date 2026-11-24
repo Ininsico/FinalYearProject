@@ -4,6 +4,7 @@ jspm_packages/
 web_modules/
 .pnpm-store/
 
+
 # BUILD OUTPUT
 dist/
 dist-ssr/
@@ -13,7 +14,7 @@ bin/
 obj/
 target/
 *.tsbuildinfo
-
+.commandcode/
 # ENVIRONMENT & SECRETS
 .env
 .env.local
