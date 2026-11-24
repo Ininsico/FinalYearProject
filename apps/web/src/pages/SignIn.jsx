@@ -68,7 +68,7 @@ export default function SignIn() {
   const demos = demo?.enabled ? demo.identities : []
 
   return (
-    <AuthSplit>
+    <AuthSplit formSide="right" watermark="fablet">
       <h1 className="display auth-title text-ink-950">Sign in</h1>
       <p className="auth-subtitle mt-2 text-step--1 leading-relaxed text-ink-600">
         Students, institutions and operators all sign in here.

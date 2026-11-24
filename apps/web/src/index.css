@@ -205,21 +205,10 @@ section[id], [id] { scroll-margin-top: 6.5rem; }
   mask-image: radial-gradient(120% 100% at 50% 0%, #000 40%, transparent 100%);
 }
 
-/* The same grid, in ink, for the light auth canvas. */
-.grid-backdrop-light {
-  background-image:
-    linear-gradient(to right, rgba(26, 21, 17, 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(26, 21, 17, 0.05) 1px, transparent 1px);
-  background-size: 56px 56px;
-  -webkit-mask-image: radial-gradient(120% 100% at 50% 0%, #000 45%, transparent 100%);
-  mask-image: radial-gradient(120% 100% at 50% 0%, #000 45%, transparent 100%);
-}
-
 /* Marquees are JS-driven (see Ticker.jsx) so they run in every browser and
    regardless of OS or browser animation settings. */
 
-/* Height-based compaction for the auth screens: keep everything inside one
-   viewport on short displays without inner scrolling. */
+/* Auth typography and field sizing shared by the split auth pages. */
 .auth-title {
   font-size: clamp(1.4rem, 1.2rem + 0.9vw, 2rem);
   line-height: 1.15;
@@ -232,18 +221,6 @@ section[id], [id] { scroll-margin-top: 6.5rem; }
 }
 .auth-plate label {
   margin-bottom: 0.375rem;
-}
-@media (max-height: 760px) {
-  .auth-subtitle { display: none; }
-  .auth-plate { padding: 1.25rem; }
-}
-@media (max-height: 680px) {
-  .auth-demo { margin-top: 0.9rem; padding-top: 0.9rem; }
-  .auth-demo button { height: 2.1rem; }
-}
-@media (max-height: 640px) {
-  .auth-plate { padding: 1rem; }
-  .auth-plate .field { padding-top: 0.5rem; padding-bottom: 0.5rem; }
 }
 
 /* Landing art + diagram motion. CSS-only, transform/background only, and off
