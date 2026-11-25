@@ -16,9 +16,57 @@
       content="Courses drafted with AI, directed by instructors, taught to students. For learners and institutions."
     />
     <meta property="og:type" content="website" />
+    <style>
+      .boot {
+        position: fixed;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        background: #f8f6f1;
+      }
+      .boot-inner {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 18px;
+      }
+      .boot-logo {
+        height: 52px;
+        width: auto;
+      }
+      .boot-bar {
+        width: 140px;
+        height: 3px;
+        border-radius: 999px;
+        background: #e9e3d8;
+        overflow: hidden;
+      }
+      .boot-bar span {
+        display: block;
+        width: 40%;
+        height: 100%;
+        border-radius: 999px;
+        background: #6267ff;
+        animation: boot-sweep 1.3s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      }
+      @keyframes boot-sweep {
+        0% { transform: translateX(-120%); }
+        100% { transform: translateX(320%); }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .boot-bar span { animation: none; width: 100%; }
+      }
+    </style>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <div class="boot" role="status" aria-live="polite">
+        <div class="boot-inner">
+          <img class="boot-logo" src="/fablet-logo.png" alt="Fablet" />
+          <div class="boot-bar"><span></span></div>
+        </div>
+      </div>
+    </div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

@@ -2,7 +2,6 @@ import { useCallback, useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import {
   BookOpen,
-  CircleNotch,
   Lock,
   LockOpen,
   MagnifyingGlass,
@@ -11,6 +10,7 @@ import {
 } from "@phosphor-icons/react"
 import { fetchDictionary } from "../../lib/dictionary"
 import { fetchBilling } from "../../lib/billing"
+import { InlineLoader } from "../../components/LoadingScreen"
 
 const levelLabel = (level) => level.charAt(0).toUpperCase() + level.slice(1)
 
@@ -185,8 +185,8 @@ export default function Courses() {
       )}
 
       {!data && !error && (
-        <p className="mt-4 text-[0.82rem] text-ink-500">
-          <CircleNotch size={14} weight="bold" className="inline animate-spin" aria-hidden="true" /> Loading
+        <p className="mt-4">
+          <InlineLoader />
         </p>
       )}
 

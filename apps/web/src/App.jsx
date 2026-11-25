@@ -6,6 +6,7 @@ import ScrollProgress from "./components/ScrollProgress"
 import PageBackground from "./components/PageBackground"
 import RequireRole from "./components/RequireRole"
 import GuestRoute from "./components/GuestRoute"
+import LoadingScreen from "./components/LoadingScreen"
 import DashboardShell from "./components/dashboard/DashboardShell"
 import InstitutionShell from "./components/institution/InstitutionShell"
 import AdminShell from "./components/admin/AdminShell"
@@ -100,7 +101,7 @@ function ScrollManager() {
 function MarketingLayout() {
   const { user, loading } = useAuth()
 
-  if (loading) return null
+  if (loading) return <LoadingScreen />
   if (user) return <Navigate to={homeForRole(user.role)} replace />
 
   return (

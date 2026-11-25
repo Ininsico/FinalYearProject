@@ -19,6 +19,7 @@ import { fetchCourseDetail } from "../../lib/dictionary"
 import { fetchBilling } from "../../lib/billing"
 import { fetchMyProgress, setLessonComplete, recordQuizAttempt } from "../../lib/progress"
 import Markdown from "../../components/Markdown"
+import { InlineLoader } from "../../components/LoadingScreen"
 
 const TYPE_ICONS = {
   video: PlayCircle,
@@ -211,8 +212,8 @@ export default function CourseDetail() {
             {error}
           </p>
         ) : (
-          <p className="mt-6 text-step--1 text-ink-500">
-            <CircleNotch size={16} weight="bold" className="inline animate-spin" aria-hidden="true" /> Loading
+          <p className="mt-6">
+            <InlineLoader />
           </p>
         )}
       </>

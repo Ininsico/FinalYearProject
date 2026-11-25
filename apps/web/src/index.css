@@ -205,8 +205,35 @@ section[id], [id] { scroll-margin-top: 6.5rem; }
   mask-image: radial-gradient(120% 100% at 50% 0%, #000 40%, transparent 100%);
 }
 
-/* Marquees are JS-driven (see Ticker.jsx) so they run in every browser and
-   regardless of OS or browser animation settings. */
+/* The same grid, in ink, for light canvases such as the boot screen. */
+.grid-backdrop-light {
+  background-image:
+    linear-gradient(to right, rgba(26, 21, 17, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(26, 21, 17, 0.05) 1px, transparent 1px);
+  background-size: 56px 56px;
+  -webkit-mask-image: radial-gradient(120% 100% at 50% 0%, #000 45%, transparent 100%);
+  mask-image: radial-gradient(120% 100% at 50% 0%, #000 45%, transparent 100%);
+}
+
+/* Boot + inline loaders. */
+@keyframes loader-sweep {
+  0% { transform: translateX(-120%); }
+  100% { transform: translateX(320%); }
+}
+.loader-bar {
+  animation: loader-sweep 1.3s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+@keyframes loader-dot {
+  0%, 100% { opacity: 0.25; transform: translateY(0); }
+  50% { opacity: 1; transform: translateY(-1px); }
+}
+.loader-dot {
+  animation: loader-dot 1s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .loader-bar { animation: none; width: 100%; }
+  .loader-dot { animation: none; opacity: 0.6; }
+}
 
 /* Auth typography and field sizing shared by the split auth pages. */
 .auth-title {
