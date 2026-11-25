@@ -56,12 +56,10 @@ export default function Courses() {
 
   return (
     <>
-      <div>
-        <p className="eyebrow">Courses</p>
-        <h1 className="display mt-2 text-step-2 text-ink-950">Course modules</h1>
-        <p className="mt-4 max-w-[72ch] leading-relaxed text-ink-600">
-          Every module offered by Fablet and by partner institutions. Free modules are open to
-          everyone — premium modules unlock in full with an active plan.
+      <div className="flex flex-wrap items-baseline justify-between gap-3">
+        <h1 className="display text-step-1 text-ink-950">Course modules</h1>
+        <p className="font-mono text-[0.6rem] uppercase tracking-[0.08em] text-ink-400">
+          Fablet and partner institutions
         </p>
       </div>
 
