@@ -11,16 +11,16 @@ const levelLabel = (level) => level.charAt(0).toUpperCase() + level.slice(1)
 function Bars({ title, suffix, items }) {
   const max = Math.max(1, ...items.map((i) => i.value))
   return (
-    <section className="rounded-[15px] border border-line bg-paper p-4">
+    <section className="rounded-[15px] border border-line bg-paper p-3.5">
       <h2 className="font-mono text-[0.62rem] uppercase tracking-[0.08em] text-ink-500">{title}</h2>
       {items.length === 0 ? (
         <p className="mt-3 text-[0.8rem] leading-relaxed text-ink-500">
           Nothing here yet — complete a lesson and it shows up.
         </p>
       ) : (
-        <ul className="mt-3.5 space-y-2.5">
+        <ul className="mt-3 space-y-2">
           {items.map((i) => (
-            <li key={i.key ?? i.label} className="grid grid-cols-[110px_minmax(0,1fr)_58px] items-center gap-3">
+            <li key={i.key ?? i.label} className="grid grid-cols-[92px_minmax(0,1fr)_50px] items-center gap-3">
               <span className="truncate text-[0.76rem] text-ink-700" title={i.hint ?? i.label}>
                 {i.label}
               </span>
@@ -162,22 +162,22 @@ export default function Overview() {
 
       <dl className="mt-6 grid gap-px overflow-hidden rounded-[15px] border border-line bg-line sm:grid-cols-2 xl:grid-cols-4">
         {tiles.map(({ label, value, hint }) => (
-          <div key={label} className="bg-paper p-5">
+          <div key={label} className="bg-paper p-4">
             <dt className="font-mono text-[0.62rem] uppercase tracking-[0.08em] text-ink-500">{label}</dt>
-            <dd className="display mt-3 text-step-1 tabular-nums text-ink-950">{value}</dd>
-            <p className="mt-1 text-[0.76rem] text-ink-500">{hint}</p>
+            <dd className="display mt-2.5 text-[1.15rem] tabular-nums text-ink-950">{value}</dd>
+            <p className="mt-0.5 text-[0.72rem] text-ink-500">{hint}</p>
           </div>
         ))}
       </dl>
 
-      <div className="mt-5 grid gap-5 lg:grid-cols-2">
+      <div className="mt-4 grid gap-4 lg:grid-cols-2">
         <Bars title="Progress by module" suffix="%" items={moduleBars} />
         <Bars title="Recent quiz scores" suffix="%" items={scoreBars} />
       </div>
 
       {progress && progress.items.length === 0 && (
-        <div className="mt-5 flex flex-wrap items-center justify-between gap-4 rounded-[15px] border border-dashed border-line-2 bg-paper-2 px-5 py-4">
-          <p className="text-[0.84rem] text-ink-700">
+        <div className="mt-4 flex flex-wrap items-center justify-between gap-4 rounded-[15px] border border-dashed border-line-2 bg-paper-2 px-4 py-3">
+          <p className="text-[0.82rem] text-ink-700">
             No progress yet. Open any module and mark your first lesson complete — the charts fill in
             from there.
           </p>
@@ -187,7 +187,7 @@ export default function Overview() {
         </div>
       )}
 
-      <div className="mt-5 grid gap-5 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
+      <div className="mt-4 grid gap-4 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
         <section className="overflow-hidden rounded-[15px] border border-line bg-paper">
           <header className="flex items-center justify-between border-b border-line px-4 py-2.5">
             <h2 className="display text-[0.95rem] text-ink-950">Fresh courses</h2>
@@ -201,38 +201,48 @@ export default function Overview() {
           )}
 
           <ul className="divide-y divide-line">
-            {latest.map((m) => (
-              <li
-                key={m.id}
-                className="flex flex-wrap items-center justify-between gap-3 px-4 py-3 transition-colors duration-300 hover:bg-paper-2"
-              >
-                <div className="min-w-0">
-                  <p className="text-[0.84rem] text-ink-950">{m.title}</p>
-                  <p className="mt-0.5 text-[0.72rem] text-ink-500">
-                    {m.institution?.name ?? "Fablet official"} · {m.subject} · {levelLabel(m.level)} ·{" "}
-                    {m.curriculumLessons ?? m.lessons} lesson{(m.curriculumLessons ?? m.lessons) === 1 ? "" : "s"}
-                  </p>
-                </div>
-                <div className="flex items-center gap-2">
-                  {m.sponsored && (
-                    <span className="rounded-full border border-amber-600/30 bg-amber-500/10 px-2 py-0.5 font-mono text-[0.58rem] uppercase tracking-[0.08em] text-amber-800">
-                      sponsored
-                    </span>
-                  )}
-                  {m.premium && (
-                    paidPlan ? (
-                      <LockOpen size={14} weight="bold" className="text-emerald-700" aria-label="unlocked" />
-                    ) : (
-                      <Lock size={14} weight="bold" className="text-ink-400" aria-label="locked" />
-                    )
-                  )}
-                </div>
-              </li>
-            ))}
+            {latest.map((m) => {
+              const isFablet = !m.institution
+              return (
+                <li
+                  key={m.id}
+                  className={`flex flex-wrap items-center justify-between gap-3 px-3.5 py-2.5 transition-colors duration-300 ${
+                    isFablet ? "bg-accent-soft hover:bg-accent-soft/70" : "hover:bg-paper-2"
+                  }`}
+                >
+                  <div className="min-w-0">
+                    <p className="text-[0.82rem] text-ink-950">{m.title}</p>
+                    <p className="mt-0.5 text-[0.7rem] text-ink-500">
+                      {m.institution?.name ?? "Fablet official"} · {m.subject} · {levelLabel(m.level)} ·{" "}
+                      {m.curriculumLessons ?? m.lessons} lesson{(m.curriculumLessons ?? m.lessons) === 1 ? "" : "s"}
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    {isFablet && (
+                      <span className="rounded-full bg-paper px-2 py-0.5 font-mono text-[0.56rem] uppercase tracking-[0.08em] text-accent-ink">
+                        Fablet
+                      </span>
+                    )}
+                    {m.sponsored && (
+                      <span className="rounded-full border border-amber-600/30 bg-amber-500/10 px-2 py-0.5 font-mono text-[0.58rem] uppercase tracking-[0.08em] text-amber-800">
+                        sponsored
+                      </span>
+                    )}
+                    {m.premium && (
+                      paidPlan ? (
+                        <LockOpen size={14} weight="bold" className="text-emerald-700" aria-label="unlocked" />
+                      ) : (
+                        <Lock size={14} weight="bold" className="text-ink-400" aria-label="locked" />
+                      )
+                    )}
+                  </div>
+                </li>
+              )
+            })}
           </ul>
         </section>
 
-        <section className="rounded-[15px] border border-line p-5">
+        <section className="rounded-[15px] border border-line p-4">
           <h2 className="font-mono text-[0.62rem] uppercase tracking-[0.08em] text-ink-500">
             Keep going
           </h2>
