@@ -3,49 +3,36 @@ import { Link, useNavigate } from "react-router-dom"
 import { BookOpen, CircleNotch, Lock, LockOpen, Warning } from "@phosphor-icons/react"
 import { fetchDictionary } from "../../lib/dictionary"
 import { fetchBilling } from "../../lib/billing"
+import { fetchMyProgress } from "../../lib/progress"
 import { useAuth } from "../../lib/auth"
 
 const levelLabel = (level) => level.charAt(0).toUpperCase() + level.slice(1)
 
-const TYPE_LABELS = {
-  video: "Video",
-  reading: "Reading",
-  exercise: "Exercise",
-  quiz: "Quiz",
-  assignment: "Assignment",
-  project: "Project",
-  live: "Live",
-}
-
-const ROLE_LABELS = {
-  student: "Student",
-  institution: "Institution owner",
-  admin: "Operator",
-}
-
-function Bars({ title, unit, items }) {
+function Bars({ title, suffix, items }) {
   const max = Math.max(1, ...items.map((i) => i.value))
   return (
     <section className="rounded-[15px] border border-line bg-paper p-4">
       <h2 className="font-mono text-[0.62rem] uppercase tracking-[0.08em] text-ink-500">{title}</h2>
       {items.length === 0 ? (
-        <p className="mt-3 text-[0.78rem] text-ink-500">Nothing published yet.</p>
+        <p className="mt-3 text-[0.8rem] leading-relaxed text-ink-500">
+          Nothing here yet — complete a lesson and it shows up.
+        </p>
       ) : (
         <ul className="mt-3.5 space-y-2.5">
           {items.map((i) => (
-            <li key={i.label} className="grid grid-cols-[88px_minmax(0,1fr)_54px] items-center gap-3">
-              <span className="truncate text-[0.76rem] text-ink-700" title={i.label}>
+            <li key={i.key ?? i.label} className="grid grid-cols-[110px_minmax(0,1fr)_58px] items-center gap-3">
+              <span className="truncate text-[0.76rem] text-ink-700" title={i.hint ?? i.label}>
                 {i.label}
               </span>
               <span className="h-1.5 overflow-hidden rounded-full bg-paper-3">
                 <span
                   className="block h-full rounded-full bg-accent transition-[width] duration-700"
-                  style={{ width: `${(i.value / max) * 100}%` }}
+                  style={{ width: `${Math.min(100, (i.value / max) * 100)}%` }}
                 />
               </span>
               <span className="text-right font-mono text-[0.68rem] tabular-nums text-ink-600">
                 {i.value}
-                {unit ?? ""}
+                {suffix ?? ""}
               </span>
             </li>
           ))}
@@ -55,147 +42,95 @@ function Bars({ title, unit, items }) {
   )
 }
 
-function SourceDonut({ fablet, institution, sponsored }) {
-  const total = fablet + institution || 1
-  const C = 2 * Math.PI * 34
-  const instLen = (institution / total) * C
-  const fabLen = (fablet / total) * C
-
-  return (
-    <section className="rounded-[15px] border border-line bg-paper p-4">
-      <h2 className="font-mono text-[0.62rem] uppercase tracking-[0.08em] text-ink-500">
-        Catalogue source
-      </h2>
-      <div className="mt-3.5 flex items-center gap-5">
-        <svg viewBox="0 0 80 80" className="h-[88px] w-[88px] shrink-0 -rotate-90" aria-hidden="true">
-          <circle cx="40" cy="40" r="34" fill="none" stroke="var(--color-paper-3)" strokeWidth="10" />
-          <circle
-            cx="40"
-            cy="40"
-            r="34"
-            fill="none"
-            stroke="var(--color-ink-950)"
-            strokeWidth="10"
-            strokeDasharray={`${instLen} ${C}`}
-          />
-          <circle
-            cx="40"
-            cy="40"
-            r="34"
-            fill="none"
-            stroke="var(--color-accent)"
-            strokeWidth="10"
-            strokeDasharray={`${fabLen} ${C}`}
-            strokeDashoffset={-instLen}
-          />
-        </svg>
-        <ul className="min-w-0 space-y-2 text-[0.78rem] text-ink-700">
-          <li className="flex items-center gap-2">
-            <span className="h-1.5 w-1.5 shrink-0 rotate-45 bg-accent" aria-hidden="true" />
-            Fablet official — {fablet}
-          </li>
-          <li className="flex items-center gap-2">
-            <span className="h-1.5 w-1.5 shrink-0 rotate-45 bg-ink-950" aria-hidden="true" />
-            Institutions — {institution}
-          </li>
-          <li className="flex items-center gap-2">
-            <span className="h-1.5 w-1.5 shrink-0 rotate-45 border border-line-2 bg-paper-3" aria-hidden="true" />
-            Sponsored — {sponsored}
-          </li>
-        </ul>
-      </div>
-    </section>
-  )
-}
-
 export default function Overview() {
   const { user } = useAuth()
   const navigate = useNavigate()
   const [dictionary, setDictionary] = useState(null)
   const [billing, setBilling] = useState(null)
+  const [progress, setProgress] = useState(null)
   const [error, setError] = useState("")
 
   useEffect(() => {
-    Promise.all([fetchDictionary({ limit: 48 }), fetchBilling()])
-      .then(([dict, bill]) => {
+    Promise.all([
+      fetchDictionary({ limit: 48 }),
+      fetchBilling(),
+      fetchMyProgress().catch(() => null),
+    ])
+      .then(([dict, bill, prog]) => {
         setDictionary(dict)
         setBilling(bill)
+        setProgress(prog)
       })
       .catch((err) => setError(err.message))
   }, [])
 
   const first = user?.name?.split(" ")[0]
   const paidPlan = Boolean(billing?.live && (billing?.subscription?.amountUsdt ?? 0) > 0)
-  const planName = billing?.subscription?.planName ?? user?.planId ?? "Free"
 
-  const stats = useMemo(() => {
-    const modules = dictionary?.modules ?? []
-    const subjectMinutes = new Map()
-    const typeCounts = new Map()
-    let lessons = 0
-    let minutes = 0
-    let questions = 0
+  const summary = progress?.summary ?? {
+    coursesStarted: 0,
+    coursesCompleted: 0,
+    lessonsCompleted: 0,
+    minutesStudied: 0,
+    quizzesTaken: 0,
+    averageScore: null,
+  }
 
-    for (const m of modules) {
-      for (const s of m.curriculum ?? []) {
-        for (const l of s.lessons ?? []) {
-          lessons += 1
-          minutes += l.durationMinutes || 0
-          questions += (l.quiz ?? []).length
-          const type = TYPE_LABELS[l.type] ?? "Reading"
-          typeCounts.set(type, (typeCounts.get(type) ?? 0) + 1)
-          subjectMinutes.set(m.subject, (subjectMinutes.get(m.subject) ?? 0) + (l.durationMinutes || 0))
-        }
-      }
-    }
+  const moduleBars = useMemo(
+    () =>
+      (progress?.items ?? [])
+        .slice()
+        .sort((a, b) => new Date(b.lastActivity) - new Date(a.lastActivity))
+        .slice(0, 6)
+        .map((i) => ({
+          key: i.courseId,
+          label: i.title,
+          value: i.percent,
+          hint: `${i.lessonsComplete} of ${i.lessonsTotal} lessons`,
+        })),
+    [progress]
+  )
 
-    return {
-      lessons,
-      minutes,
-      questions,
-      subjects: subjectMinutes.size,
-      subjectBars: [...subjectMinutes.entries()]
-        .map(([label, value]) => ({ label, value }))
-        .sort((a, b) => b.value - a.value)
-        .slice(0, 6),
-      typeBars: [...typeCounts.entries()]
-        .map(([label, value]) => ({ label, value }))
-        .sort((a, b) => b.value - a.value),
-    }
-  }, [dictionary])
+  const scoreBars = useMemo(
+    () =>
+      (progress?.recentAttempts ?? []).map((a, i) => ({
+        key: `${a.courseId}-${i}`,
+        label: a.courseTitle,
+        value: a.percent,
+        hint: `scored ${a.score} of ${a.total}`,
+      })),
+    [progress]
+  )
 
   const latest = (dictionary?.modules ?? []).slice(0, 5)
 
   const tiles = [
     {
-      label: "Modules in catalogue",
-      value: String(dictionary?.total ?? stats.subjectBars.length),
-      hint: paidPlan ? "premium unlocked" : "free courses included",
+      label: "Lessons completed",
+      value: String(summary.lessonsCompleted),
+      hint: summary.coursesStarted
+        ? `across ${summary.coursesStarted} module${summary.coursesStarted === 1 ? "" : "s"}`
+        : "start with any course",
     },
     {
-      label: "Subjects covered",
-      value: String(stats.subjects),
-      hint: "across the published catalogue",
+      label: "Modules completed",
+      value: String(summary.coursesCompleted),
+      hint: summary.coursesStarted
+        ? `of ${summary.coursesStarted} started`
+        : "no modules started yet",
     },
     {
-      label: "Lessons",
-      value: String(stats.lessons),
-      hint: `${Math.round(stats.minutes / 60)}h of content`,
+      label: "Quizzes taken",
+      value: String(summary.quizzesTaken),
+      hint:
+        summary.averageScore == null ? "no attempts yet" : `average ${summary.averageScore}%`,
     },
     {
-      label: "Test questions",
-      value: String(stats.questions),
-      hint: "across module quizzes",
+      label: "Time studied",
+      value: `${summary.minutesStudied}m`,
+      hint: "time on completed lessons",
     },
   ]
-
-  const detailRows = [
-    ["Name", user?.name],
-    ["Email", user?.email],
-    ["Role", ROLE_LABELS[user?.role] ?? user?.role],
-    ["Plan", planName],
-    ["Plan status", paidPlan ? "Premium active" : "Free access"],
-  ].filter(([, value]) => value)
 
   return (
     <>
@@ -219,9 +154,9 @@ export default function Overview() {
         </p>
       )}
 
-      {!dictionary && !error && (
+      {!progress && !error && (
         <p className="mt-6 text-[0.82rem] text-ink-500">
-          <CircleNotch size={14} weight="bold" className="inline animate-spin" aria-hidden="true" /> Loading your dashboard
+          <CircleNotch size={14} weight="bold" className="inline animate-spin" aria-hidden="true" /> Loading your progress
         </p>
       )}
 
@@ -235,15 +170,22 @@ export default function Overview() {
         ))}
       </dl>
 
-      <div className="mt-5 grid gap-5 lg:grid-cols-3">
-        <Bars title="Content minutes by subject" unit="m" items={stats.subjectBars} />
-        <Bars title="Lesson formats" items={stats.typeBars} />
-        <SourceDonut
-          fablet={dictionary?.counts?.fablet ?? 0}
-          institution={dictionary?.counts?.institution ?? 0}
-          sponsored={dictionary?.counts?.sponsored ?? 0}
-        />
+      <div className="mt-5 grid gap-5 lg:grid-cols-2">
+        <Bars title="Progress by module" suffix="%" items={moduleBars} />
+        <Bars title="Recent quiz scores" suffix="%" items={scoreBars} />
       </div>
+
+      {progress && progress.items.length === 0 && (
+        <div className="mt-5 flex flex-wrap items-center justify-between gap-4 rounded-[15px] border border-dashed border-line-2 bg-paper-2 px-5 py-4">
+          <p className="text-[0.84rem] text-ink-700">
+            No progress yet. Open any module and mark your first lesson complete — the charts fill in
+            from there.
+          </p>
+          <button onClick={() => navigate("/dashboard/courses")} className="btn btn-primary h-8 px-3.5 text-[0.76rem]">
+            Start a module
+          </button>
+        </div>
+      )}
 
       <div className="mt-5 grid gap-5 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
         <section className="overflow-hidden rounded-[15px] border border-line bg-paper">
@@ -292,44 +234,30 @@ export default function Overview() {
 
         <section className="rounded-[15px] border border-line p-5">
           <h2 className="font-mono text-[0.62rem] uppercase tracking-[0.08em] text-ink-500">
-            Account details
+            Keep going
           </h2>
-          <dl className="mt-4">
-            {detailRows.map(([label, value]) => (
-              <div
-                key={label}
-                className="flex items-baseline justify-between gap-4 border-t border-line py-2.5"
-              >
-                <dt className="shrink-0 font-mono text-[0.6rem] uppercase tracking-[0.08em] text-ink-500">
-                  {label}
-                </dt>
-                <dd className="truncate text-[0.82rem] text-ink-900">{value}</dd>
-              </div>
-            ))}
-            <div className="flex items-baseline justify-between gap-4 border-t border-line py-2.5">
-              <dt className="shrink-0 font-mono text-[0.6rem] uppercase tracking-[0.08em] text-ink-500">
-                Premium
-              </dt>
-              <dd className="flex items-center gap-1.5 text-[0.82rem] text-ink-900">
-                {paidPlan ? (
-                  <>
-                    <LockOpen size={13} weight="bold" className="text-emerald-700" aria-hidden="true" />
-                    Unlocked
-                  </>
-                ) : (
-                  <>
-                    <Lock size={13} weight="bold" className="text-ink-400" aria-hidden="true" />
-                    Locked
-                  </>
-                )}
-              </dd>
-            </div>
-          </dl>
-          {!paidPlan && (
-            <Link to="/dashboard/premium" className="btn btn-ghost mt-5 h-9 w-full text-[0.8rem]">
-              Upgrade
-            </Link>
+          {moduleBars.length > 0 ? (
+            <ul className="mt-4">
+              {moduleBars.slice(0, 3).map((m) => (
+                <li key={m.key} className="border-t border-line py-3 first:border-t-0 first:pt-0">
+                  <p className="truncate text-[0.82rem] text-ink-950">{m.label}</p>
+                  <div className="mt-1.5 flex items-center gap-2">
+                    <span className="h-1 flex-1 overflow-hidden rounded-full bg-paper-3">
+                      <span className="block h-full rounded-full bg-accent" style={{ width: `${m.value}%` }} />
+                    </span>
+                    <span className="font-mono text-[0.62rem] tabular-nums text-ink-500">{m.value}%</span>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="mt-3 text-[0.8rem] leading-relaxed text-ink-500">
+              Your started modules will appear here with their progress.
+            </p>
           )}
+          <Link to="/dashboard/courses" className="btn btn-ghost mt-5 h-9 w-full text-[0.8rem]">
+            Continue learning
+          </Link>
         </section>
       </div>
     </>
