@@ -17,7 +17,7 @@ export default function AppShell({ nav, footerNote = null }) {
       </div>
 
       <nav className="flex-1 overflow-y-auto px-2 py-2.5" aria-label="Section">
-        <p className="px-2.5 pb-1.5 font-mono text-[0.58rem] uppercase tracking-[0.08em] text-ink-500">
+        <p className="px-2.5 pb-1.5 font-mono text-[0.58rem] uppercase tracking-[0.08em] text-ink-700">
           Menu
         </p>
         {nav.map(({ to, label, icon: Icon, end }) => (
@@ -53,12 +53,12 @@ export default function AppShell({ nav, footerNote = null }) {
             }}
           />
           <div className="min-w-0">
-            <p className="truncate text-[0.78rem] text-ink-900">{user?.name}</p>
-            <p className="truncate text-[0.68rem] text-ink-500">{user?.email}</p>
+            <p className="truncate text-[0.78rem] text-ink-950">{user?.name}</p>
+            <p className="truncate text-[0.68rem] text-ink-700">{user?.email}</p>
           </div>
         </div>
         {footerNote && (
-          <p className="mt-2 text-[0.66rem] leading-relaxed text-ink-500">{footerNote}</p>
+          <p className="mt-2 text-[0.66rem] leading-relaxed text-ink-700">{footerNote}</p>
         )}
         <button
           onClick={async () => { await signOut(); navigate("/", { replace: true }) }}
