@@ -50,65 +50,68 @@ export default function Overview() {
     <>
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <p className="eyebrow">Overview</p>
-          <h1 className="display mt-3 text-step-3 text-ink-950">
+          <p className="font-mono text-[0.62rem] uppercase tracking-[0.08em] text-ink-500">Overview</p>
+          <h1 className="display mt-2 text-step-2 text-ink-950">
             {first ? `Welcome back, ${first}.` : "Welcome back."}
           </h1>
         </div>
-        <button onClick={() => navigate("/dashboard/courses")} className="btn btn-primary h-10">
-          <BookOpen size={15} weight="bold" aria-hidden="true" />
+        <button onClick={() => navigate("/dashboard/courses")} className="btn btn-primary h-9 px-4 text-[0.8rem]">
+          <BookOpen size={14} weight="bold" aria-hidden="true" />
           Browse courses
         </button>
       </div>
 
       {error && (
-        <p role="alert" className="mt-5 flex items-start gap-2 text-step--1 text-red-700">
+        <p role="alert" className="mt-4 flex items-start gap-2 text-[0.82rem] text-red-700">
           <Warning size={16} weight="bold" className="mt-0.5 shrink-0" aria-hidden="true" />
           {error}
         </p>
       )}
 
-      <dl className="mt-10 grid gap-px overflow-hidden border border-line bg-line sm:grid-cols-3">
+      <dl className="mt-6 grid gap-px overflow-hidden rounded-[15px] border border-line bg-line sm:grid-cols-3">
         {tiles.map(({ label, value, hint }) => (
-          <div key={label} className="bg-paper p-6">
-            <dt className="eyebrow">{label}</dt>
-            <dd className="display mt-4 truncate text-step-2 text-ink-950">{value}</dd>
-            <p className="mt-1 text-step--1 text-ink-500">{hint}</p>
+          <div key={label} className="bg-paper p-5">
+            <dt className="font-mono text-[0.62rem] uppercase tracking-[0.08em] text-ink-500">{label}</dt>
+            <dd className="display mt-3 truncate text-step-1 tabular-nums text-ink-950">{value}</dd>
+            <p className="mt-1 text-[0.76rem] text-ink-500">{hint}</p>
           </div>
         ))}
       </dl>
 
-      <div className="mt-6 grid gap-6 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
-        <section className="border border-line bg-paper">
-          <header className="flex items-center justify-between border-b border-line px-5 py-3">
-            <h2 className="display text-step-1 text-ink-950">Fresh courses</h2>
-            <button onClick={() => navigate("/dashboard/courses")} className="link-underline text-step--1 text-ink-600">
+      <div className="mt-5 grid gap-5 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
+        <section className="overflow-hidden rounded-[15px] border border-line bg-paper">
+          <header className="flex items-center justify-between border-b border-line px-4 py-2.5">
+            <h2 className="display text-[0.95rem] text-ink-950">Fresh courses</h2>
+            <button onClick={() => navigate("/dashboard/courses")} className="link-underline text-[0.78rem] text-ink-600">
               View all
             </button>
           </header>
 
           {!dictionary && !error && (
-            <p className="px-5 py-8 text-step--1 text-ink-500">
-              <CircleNotch size={15} weight="bold" className="inline animate-spin" aria-hidden="true" /> Loading
+            <p className="px-4 py-6 text-[0.82rem] text-ink-500">
+              <CircleNotch size={14} weight="bold" className="inline animate-spin" aria-hidden="true" /> Loading
             </p>
           )}
 
           {dictionary?.modules?.length === 0 && (
-            <p className="px-5 py-8 text-step--1 text-ink-500">No modules published yet.</p>
+            <p className="px-4 py-6 text-[0.82rem] text-ink-500">No modules published yet.</p>
           )}
 
           <ul className="divide-y divide-line">
             {latest.map((m) => (
-              <li key={m.id} className="flex flex-wrap items-center justify-between gap-3 px-5 py-4">
+              <li
+                key={m.id}
+                className="flex flex-wrap items-center justify-between gap-3 px-4 py-3 transition-colors duration-300 hover:bg-paper-2"
+              >
                 <div className="min-w-0">
-                  <p className="text-step--1 text-ink-950">{m.title}</p>
-                  <p className="mt-0.5 text-[0.74rem] text-ink-500">
+                  <p className="text-[0.84rem] text-ink-950">{m.title}</p>
+                  <p className="mt-0.5 text-[0.72rem] text-ink-500">
                     {m.institution?.name ?? "Fablet official"} · {levelLabel(m.level)} · {m.lessons} lesson{m.lessons === 1 ? "" : "s"}
                   </p>
                 </div>
                 <div className="flex items-center gap-2">
                   {m.sponsored && (
-                    <span className="border border-amber-600/30 bg-amber-500/10 px-2 py-0.5 font-mono text-[0.6rem] uppercase tracking-[0.1em] text-amber-800">
+                    <span className="rounded-full border border-amber-600/30 bg-amber-500/10 px-2 py-0.5 font-mono text-[0.58rem] uppercase tracking-[0.08em] text-amber-800">
                       sponsored
                     </span>
                   )}
@@ -125,30 +128,30 @@ export default function Overview() {
           </ul>
         </section>
 
-        <section className="border border-line p-6">
-          <h2 className="eyebrow">Your access</h2>
-          <ul className="mt-5 space-y-4">
-            <li className="flex items-start gap-3 border-t border-line pt-4 text-step--1 leading-relaxed text-ink-700">
-              <BookOpen size={16} className="mt-0.5 shrink-0 text-accent-ink" aria-hidden="true" />
+        <section className="rounded-[15px] border border-line p-5">
+          <h2 className="font-mono text-[0.62rem] uppercase tracking-[0.08em] text-ink-500">Your access</h2>
+          <ul className="mt-4 space-y-3">
+            <li className="flex items-start gap-3 border-t border-line pt-3 text-[0.82rem] leading-relaxed text-ink-700">
+              <BookOpen size={15} className="mt-0.5 shrink-0 text-accent-ink" aria-hidden="true" />
               Full access to every free course module in the catalogue.
             </li>
-            <li className="flex items-start gap-3 border-t border-line pt-4 text-step--1 leading-relaxed text-ink-700">
+            <li className="flex items-start gap-3 border-t border-line pt-3 text-[0.82rem] leading-relaxed text-ink-700">
               {paidPlan ? (
-                <LockOpen size={16} className="mt-0.5 shrink-0 text-emerald-700" aria-hidden="true" />
+                <LockOpen size={15} className="mt-0.5 shrink-0 text-emerald-700" aria-hidden="true" />
               ) : (
-                <Lock size={16} className="mt-0.5 shrink-0 text-ink-400" aria-hidden="true" />
+                <Lock size={15} className="mt-0.5 shrink-0 text-ink-400" aria-hidden="true" />
               )}
               {paidPlan
                 ? "Premium modules are unlocked by your plan."
                 : "Premium modules unlock with a paid plan."}
             </li>
-            <li className="flex items-start gap-3 border-t border-line pt-4 text-step--1 leading-relaxed text-ink-700">
-              <Sparkle size={16} className="mt-0.5 shrink-0 text-accent-ink" aria-hidden="true" />
+            <li className="flex items-start gap-3 border-t border-line pt-3 text-[0.82rem] leading-relaxed text-ink-700">
+              <Sparkle size={15} className="mt-0.5 shrink-0 text-accent-ink" aria-hidden="true" />
               Content generation runs on the institution and platform sides — your account consumes.
             </li>
           </ul>
           {!paidPlan && (
-            <Link to="/dashboard/premium" className="btn btn-ghost mt-6 h-10 w-full">
+            <Link to="/dashboard/premium" className="btn btn-ghost mt-5 h-9 w-full text-[0.8rem]">
               Upgrade
             </Link>
           )}
