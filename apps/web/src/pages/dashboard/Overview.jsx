@@ -1,18 +1,112 @@
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
-import {
-  BookOpen,
-  CircleNotch,
-  Lock,
-  LockOpen,
-  Sparkle,
-  Warning,
-} from "@phosphor-icons/react"
+import { BookOpen, CircleNotch, Lock, LockOpen, Warning } from "@phosphor-icons/react"
 import { fetchDictionary } from "../../lib/dictionary"
 import { fetchBilling } from "../../lib/billing"
 import { useAuth } from "../../lib/auth"
 
 const levelLabel = (level) => level.charAt(0).toUpperCase() + level.slice(1)
+
+const TYPE_LABELS = {
+  video: "Video",
+  reading: "Reading",
+  exercise: "Exercise",
+  quiz: "Quiz",
+  assignment: "Assignment",
+  project: "Project",
+  live: "Live",
+}
+
+const ROLE_LABELS = {
+  student: "Student",
+  institution: "Institution owner",
+  admin: "Operator",
+}
+
+function Bars({ title, unit, items }) {
+  const max = Math.max(1, ...items.map((i) => i.value))
+  return (
+    <section className="rounded-[15px] border border-line bg-paper p-4">
+      <h2 className="font-mono text-[0.62rem] uppercase tracking-[0.08em] text-ink-500">{title}</h2>
+      {items.length === 0 ? (
+        <p className="mt-3 text-[0.78rem] text-ink-500">Nothing published yet.</p>
+      ) : (
+        <ul className="mt-3.5 space-y-2.5">
+          {items.map((i) => (
+            <li key={i.label} className="grid grid-cols-[88px_minmax(0,1fr)_54px] items-center gap-3">
+              <span className="truncate text-[0.76rem] text-ink-700" title={i.label}>
+                {i.label}
+              </span>
+              <span className="h-1.5 overflow-hidden rounded-full bg-paper-3">
+                <span
+                  className="block h-full rounded-full bg-accent transition-[width] duration-700"
+                  style={{ width: `${(i.value / max) * 100}%` }}
+                />
+              </span>
+              <span className="text-right font-mono text-[0.68rem] tabular-nums text-ink-600">
+                {i.value}
+                {unit ?? ""}
+              </span>
+            </li>
+          ))}
+        </ul>
+      )}
+    </section>
+  )
+}
+
+function SourceDonut({ fablet, institution, sponsored }) {
+  const total = fablet + institution || 1
+  const C = 2 * Math.PI * 34
+  const instLen = (institution / total) * C
+  const fabLen = (fablet / total) * C
+
+  return (
+    <section className="rounded-[15px] border border-line bg-paper p-4">
+      <h2 className="font-mono text-[0.62rem] uppercase tracking-[0.08em] text-ink-500">
+        Catalogue source
+      </h2>
+      <div className="mt-3.5 flex items-center gap-5">
+        <svg viewBox="0 0 80 80" className="h-[88px] w-[88px] shrink-0 -rotate-90" aria-hidden="true">
+          <circle cx="40" cy="40" r="34" fill="none" stroke="var(--color-paper-3)" strokeWidth="10" />
+          <circle
+            cx="40"
+            cy="40"
+            r="34"
+            fill="none"
+            stroke="var(--color-ink-950)"
+            strokeWidth="10"
+            strokeDasharray={`${instLen} ${C}`}
+          />
+          <circle
+            cx="40"
+            cy="40"
+            r="34"
+            fill="none"
+            stroke="var(--color-accent)"
+            strokeWidth="10"
+            strokeDasharray={`${fabLen} ${C}`}
+            strokeDashoffset={-instLen}
+          />
+        </svg>
+        <ul className="min-w-0 space-y-2 text-[0.78rem] text-ink-700">
+          <li className="flex items-center gap-2">
+            <span className="h-1.5 w-1.5 shrink-0 rotate-45 bg-accent" aria-hidden="true" />
+            Fablet official — {fablet}
+          </li>
+          <li className="flex items-center gap-2">
+            <span className="h-1.5 w-1.5 shrink-0 rotate-45 bg-ink-950" aria-hidden="true" />
+            Institutions — {institution}
+          </li>
+          <li className="flex items-center gap-2">
+            <span className="h-1.5 w-1.5 shrink-0 rotate-45 border border-line-2 bg-paper-3" aria-hidden="true" />
+            Sponsored — {sponsored}
+          </li>
+        </ul>
+      </div>
+    </section>
+  )
+}
 
 export default function Overview() {
   const { user } = useAuth()
@@ -22,7 +116,7 @@ export default function Overview() {
   const [error, setError] = useState("")
 
   useEffect(() => {
-    Promise.all([fetchDictionary({}), fetchBilling()])
+    Promise.all([fetchDictionary({ limit: 48 }), fetchBilling()])
       .then(([dict, bill]) => {
         setDictionary(dict)
         setBilling(bill)
@@ -32,19 +126,76 @@ export default function Overview() {
 
   const first = user?.name?.split(" ")[0]
   const paidPlan = Boolean(billing?.live && (billing?.subscription?.amountUsdt ?? 0) > 0)
-  const totalModules = (dictionary?.counts?.institution ?? 0) + (dictionary?.counts?.fablet ?? 0)
-  const planName = billing?.subscription?.planName ?? user?.planId ?? "—"
-  const latest = (dictionary?.modules ?? []).slice(0, 4)
+  const planName = billing?.subscription?.planName ?? user?.planId ?? "Free"
+
+  const stats = useMemo(() => {
+    const modules = dictionary?.modules ?? []
+    const subjectMinutes = new Map()
+    const typeCounts = new Map()
+    let lessons = 0
+    let minutes = 0
+    let questions = 0
+
+    for (const m of modules) {
+      for (const s of m.curriculum ?? []) {
+        for (const l of s.lessons ?? []) {
+          lessons += 1
+          minutes += l.durationMinutes || 0
+          questions += (l.quiz ?? []).length
+          const type = TYPE_LABELS[l.type] ?? "Reading"
+          typeCounts.set(type, (typeCounts.get(type) ?? 0) + 1)
+          subjectMinutes.set(m.subject, (subjectMinutes.get(m.subject) ?? 0) + (l.durationMinutes || 0))
+        }
+      }
+    }
+
+    return {
+      lessons,
+      minutes,
+      questions,
+      subjects: subjectMinutes.size,
+      subjectBars: [...subjectMinutes.entries()]
+        .map(([label, value]) => ({ label, value }))
+        .sort((a, b) => b.value - a.value)
+        .slice(0, 6),
+      typeBars: [...typeCounts.entries()]
+        .map(([label, value]) => ({ label, value }))
+        .sort((a, b) => b.value - a.value),
+    }
+  }, [dictionary])
+
+  const latest = (dictionary?.modules ?? []).slice(0, 5)
 
   const tiles = [
-    { label: "Your plan", value: planName, hint: paidPlan ? "premium access active" : "free access" },
-    { label: "Course modules", value: String(totalModules), hint: "in the courses catalogue" },
     {
-      label: "Premium modules",
-      value: paidPlan ? "Unlocked" : "Locked",
-      hint: paidPlan ? "included in your plan" : "upgrade to unlock",
+      label: "Modules in catalogue",
+      value: String(dictionary?.total ?? stats.subjectBars.length),
+      hint: paidPlan ? "premium unlocked" : "free courses included",
+    },
+    {
+      label: "Subjects covered",
+      value: String(stats.subjects),
+      hint: "across the published catalogue",
+    },
+    {
+      label: "Lessons",
+      value: String(stats.lessons),
+      hint: `${Math.round(stats.minutes / 60)}h of content`,
+    },
+    {
+      label: "Test questions",
+      value: String(stats.questions),
+      hint: "across module quizzes",
     },
   ]
+
+  const detailRows = [
+    ["Name", user?.name],
+    ["Email", user?.email],
+    ["Role", ROLE_LABELS[user?.role] ?? user?.role],
+    ["Plan", planName],
+    ["Plan status", paidPlan ? "Premium active" : "Free access"],
+  ].filter(([, value]) => value)
 
   return (
     <>
@@ -68,15 +219,31 @@ export default function Overview() {
         </p>
       )}
 
-      <dl className="mt-6 grid gap-px overflow-hidden rounded-[15px] border border-line bg-line sm:grid-cols-3">
+      {!dictionary && !error && (
+        <p className="mt-6 text-[0.82rem] text-ink-500">
+          <CircleNotch size={14} weight="bold" className="inline animate-spin" aria-hidden="true" /> Loading your dashboard
+        </p>
+      )}
+
+      <dl className="mt-6 grid gap-px overflow-hidden rounded-[15px] border border-line bg-line sm:grid-cols-2 xl:grid-cols-4">
         {tiles.map(({ label, value, hint }) => (
           <div key={label} className="bg-paper p-5">
             <dt className="font-mono text-[0.62rem] uppercase tracking-[0.08em] text-ink-500">{label}</dt>
-            <dd className="display mt-3 truncate text-step-1 tabular-nums text-ink-950">{value}</dd>
+            <dd className="display mt-3 text-step-1 tabular-nums text-ink-950">{value}</dd>
             <p className="mt-1 text-[0.76rem] text-ink-500">{hint}</p>
           </div>
         ))}
       </dl>
+
+      <div className="mt-5 grid gap-5 lg:grid-cols-3">
+        <Bars title="Content minutes by subject" unit="m" items={stats.subjectBars} />
+        <Bars title="Lesson formats" items={stats.typeBars} />
+        <SourceDonut
+          fablet={dictionary?.counts?.fablet ?? 0}
+          institution={dictionary?.counts?.institution ?? 0}
+          sponsored={dictionary?.counts?.sponsored ?? 0}
+        />
+      </div>
 
       <div className="mt-5 grid gap-5 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
         <section className="overflow-hidden rounded-[15px] border border-line bg-paper">
@@ -86,12 +253,6 @@ export default function Overview() {
               View all
             </button>
           </header>
-
-          {!dictionary && !error && (
-            <p className="px-4 py-6 text-[0.82rem] text-ink-500">
-              <CircleNotch size={14} weight="bold" className="inline animate-spin" aria-hidden="true" /> Loading
-            </p>
-          )}
 
           {dictionary?.modules?.length === 0 && (
             <p className="px-4 py-6 text-[0.82rem] text-ink-500">No modules published yet.</p>
@@ -106,7 +267,8 @@ export default function Overview() {
                 <div className="min-w-0">
                   <p className="text-[0.84rem] text-ink-950">{m.title}</p>
                   <p className="mt-0.5 text-[0.72rem] text-ink-500">
-                    {m.institution?.name ?? "Fablet official"} · {levelLabel(m.level)} · {m.lessons} lesson{m.lessons === 1 ? "" : "s"}
+                    {m.institution?.name ?? "Fablet official"} · {m.subject} · {levelLabel(m.level)} ·{" "}
+                    {m.curriculumLessons ?? m.lessons} lesson{(m.curriculumLessons ?? m.lessons) === 1 ? "" : "s"}
                   </p>
                 </div>
                 <div className="flex items-center gap-2">
@@ -129,27 +291,40 @@ export default function Overview() {
         </section>
 
         <section className="rounded-[15px] border border-line p-5">
-          <h2 className="font-mono text-[0.62rem] uppercase tracking-[0.08em] text-ink-500">Your access</h2>
-          <ul className="mt-4 space-y-3">
-            <li className="flex items-start gap-3 border-t border-line pt-3 text-[0.82rem] leading-relaxed text-ink-700">
-              <BookOpen size={15} className="mt-0.5 shrink-0 text-accent-ink" aria-hidden="true" />
-              Full access to every free course module in the catalogue.
-            </li>
-            <li className="flex items-start gap-3 border-t border-line pt-3 text-[0.82rem] leading-relaxed text-ink-700">
-              {paidPlan ? (
-                <LockOpen size={15} className="mt-0.5 shrink-0 text-emerald-700" aria-hidden="true" />
-              ) : (
-                <Lock size={15} className="mt-0.5 shrink-0 text-ink-400" aria-hidden="true" />
-              )}
-              {paidPlan
-                ? "Premium modules are unlocked by your plan."
-                : "Premium modules unlock with a paid plan."}
-            </li>
-            <li className="flex items-start gap-3 border-t border-line pt-3 text-[0.82rem] leading-relaxed text-ink-700">
-              <Sparkle size={15} className="mt-0.5 shrink-0 text-accent-ink" aria-hidden="true" />
-              Content generation runs on the institution and platform sides — your account consumes.
-            </li>
-          </ul>
+          <h2 className="font-mono text-[0.62rem] uppercase tracking-[0.08em] text-ink-500">
+            Account details
+          </h2>
+          <dl className="mt-4">
+            {detailRows.map(([label, value]) => (
+              <div
+                key={label}
+                className="flex items-baseline justify-between gap-4 border-t border-line py-2.5"
+              >
+                <dt className="shrink-0 font-mono text-[0.6rem] uppercase tracking-[0.08em] text-ink-500">
+                  {label}
+                </dt>
+                <dd className="truncate text-[0.82rem] text-ink-900">{value}</dd>
+              </div>
+            ))}
+            <div className="flex items-baseline justify-between gap-4 border-t border-line py-2.5">
+              <dt className="shrink-0 font-mono text-[0.6rem] uppercase tracking-[0.08em] text-ink-500">
+                Premium
+              </dt>
+              <dd className="flex items-center gap-1.5 text-[0.82rem] text-ink-900">
+                {paidPlan ? (
+                  <>
+                    <LockOpen size={13} weight="bold" className="text-emerald-700" aria-hidden="true" />
+                    Unlocked
+                  </>
+                ) : (
+                  <>
+                    <Lock size={13} weight="bold" className="text-ink-400" aria-hidden="true" />
+                    Locked
+                  </>
+                )}
+              </dd>
+            </div>
+          </dl>
           {!paidPlan && (
             <Link to="/dashboard/premium" className="btn btn-ghost mt-5 h-9 w-full text-[0.8rem]">
               Upgrade
