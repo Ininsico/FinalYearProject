@@ -77,7 +77,7 @@ export default function Courses() {
               setQuery(e.target.value)
               setPage(1)
             }}
-            placeholder="Search modules"
+            placeholder="Search title, subject or topic"
             className="h-9 w-full rounded-full border border-line-2 bg-paper pl-8 pr-3 text-[0.82rem] text-ink-950 placeholder:text-ink-400 focus:border-accent-ink"
           />
         </label>

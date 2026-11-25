@@ -75,14 +75,15 @@ if [ -n "$MISSING" ]; then
   exit 1
 fi
 
-echo "--- Publishing dist -> $WEB_ROOT (staged) ---"
+echo "--- Publishing dist -> $WEB_ROOT (assets first, index last) ---"
 STAGE=/var/www/fablet-stage
 rm -rf "$STAGE"
 mkdir -p "$STAGE"
 rsync -a --exclude .well-known "$WEB/dist/" "$STAGE/"
 SYNCED=0
 for attempt in 1 2 3; do
-  if rsync -a --delete --exclude .well-known "$STAGE/" "$WEB_ROOT/"; then
+  if rsync -a --delete --exclude .well-known --exclude index.html --exclude 'assets/' "$STAGE/" "$WEB_ROOT/" \
+    && rsync -a --delete "$STAGE/assets/" "$WEB_ROOT/assets/"; then
     SYNCED=1
     break
   fi
@@ -90,12 +91,16 @@ for attempt in 1 2 3; do
   df -h / || true
   sleep 3
 done
-rm -rf "$STAGE"
 if [ "$SYNCED" != "1" ]; then
   echo "PUBLISH FAILED - web root not updated"
   df -h / || true
   exit 1
 fi
+# index.html flips only once its assets are already in place, so a partial
+# publish can never expose a page whose bundle is missing.
+install -m 644 "$STAGE/index.html" "$WEB_ROOT/index.html.new"
+mv -f "$WEB_ROOT/index.html.new" "$WEB_ROOT/index.html"
+rm -rf "$STAGE"
 echo "publish ok"
 
 changed() { [ "$BEFORE" != "$AFTER" ] && git -C "$REPO" diff --name-only "$BEFORE" "$AFTER" -- "$1" | grep -q .; }
