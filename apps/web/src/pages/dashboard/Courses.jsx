@@ -56,131 +56,142 @@ export default function Courses() {
 
   return (
     <>
-      <div className="flex flex-wrap items-baseline justify-between gap-3">
-        <h1 className="display text-step-1 text-ink-950">Course modules</h1>
-        <p className="font-mono text-[0.6rem] uppercase tracking-[0.08em] text-ink-400">
-          Fablet and partner institutions
-        </p>
-      </div>
-
-      {billing && (
-        <div
-          className={`mt-4 flex flex-wrap items-center gap-3 rounded-[12px] border px-4 py-3 text-[0.82rem] ${
-            premiumUnlocked
-              ? "border-emerald-700/25 bg-emerald-700/10 text-emerald-800"
-              : "border-line-2 bg-paper-2 text-ink-700"
-          }`}
-        >
-          {premiumUnlocked ? (
-            <CheckCircle size={16} weight="bold" aria-hidden="true" />
-          ) : (
-            <Lock size={16} weight="bold" aria-hidden="true" />
-          )}
-          <span>
-            {premiumUnlocked
-              ? "Your plan is active — every premium module is unlocked."
-              : `${lockedCount} premium module${lockedCount === 1 ? " is" : "s are"} locked on the free plan.`}
+      <div className="flex flex-wrap items-center gap-3">
+        <div className="flex min-w-0 items-baseline gap-3">
+          <h1 className="display text-step-1 text-ink-950">Course modules</h1>
+          <span className="font-mono text-[0.6rem] uppercase tracking-[0.08em] text-ink-400">
+            {data?.total ?? 0} modules
           </span>
-          {!premiumUnlocked && (
-            <Link to="/dashboard/premium" className="link-underline font-medium">
-              Unlock with a plan
-            </Link>
-          )}
         </div>
-      )}
 
-      <div className="mt-6 flex flex-wrap gap-1 border-b border-line">
-        {[
-          { key: "institution", label: "Institution-led courses", count: data?.counts?.institution },
-          { key: "fablet", label: "Fablet courses", count: data?.counts?.fablet },
-        ].map((tab) => (
-          <button
-            key={tab.key}
-            type="button"
-            onClick={() => {
-              setSource(tab.key)
-              setPage(1)
-            }}
-            aria-pressed={source === tab.key}
-            className={`-mb-px border-b-2 px-4 py-2.5 text-step--1 transition-colors ${
-              source === tab.key
-                ? "border-accent-ink text-ink-950"
-                : "border-transparent text-ink-600 hover:text-ink-950"
-            }`}
-          >
-            {tab.label}
-            {typeof tab.count === "number" && (
-              <span className="ml-2 font-mono text-[0.68rem] text-ink-500">{tab.count}</span>
-            )}
-          </button>
-        ))}
-      </div>
-
-      <div className="mt-6 flex flex-wrap items-center gap-4">
-        <label className="relative min-w-[240px] flex-1">
+        <label className="relative order-last w-full min-w-[200px] flex-1 sm:order-none sm:ml-auto sm:w-auto sm:max-w-[300px]">
           <span className="sr-only">Search modules</span>
-          <MagnifyingGlass size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-ink-400" aria-hidden="true" />
+          <MagnifyingGlass
+            size={15}
+            className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-ink-400"
+            aria-hidden="true"
+          />
           <input
             value={query}
             onChange={(e) => {
               setQuery(e.target.value)
               setPage(1)
             }}
-            placeholder="Search title, subject or topic"
-            className="field pl-9"
+            placeholder="Search modules"
+            className="h-9 w-full rounded-full border border-line-2 bg-paper pl-8 pr-3 text-[0.82rem] text-ink-950 placeholder:text-ink-400 focus:border-accent-ink"
           />
         </label>
-        <label className="flex items-center gap-2 text-step--1 text-ink-600">
-          Subject
+      </div>
+
+      <div className="mt-3 flex flex-wrap items-center gap-2">
+        <div
+          role="group"
+          aria-label="Course source"
+          className="inline-flex rounded-full border border-line-2 bg-paper p-0.5"
+        >
+          {[
+            { key: "institution", label: "Institutions", count: data?.counts?.institution },
+            { key: "fablet", label: "Fablet", count: data?.counts?.fablet },
+          ].map((tab) => (
+            <button
+              key={tab.key}
+              type="button"
+              onClick={() => {
+                setSource(tab.key)
+                setPage(1)
+              }}
+              aria-pressed={source === tab.key}
+              className={`inline-flex h-7 items-center gap-1.5 rounded-full px-3 font-mono text-[0.58rem] uppercase tracking-[0.08em] transition-colors duration-300 ${
+                source === tab.key ? "bg-ink-950 text-paper" : "text-ink-600 hover:text-ink-950"
+              }`}
+            >
+              {tab.label}
+              {typeof tab.count === "number" && (
+                <span className={source === tab.key ? "text-paper/60" : "text-ink-400"}>
+                  {tab.count}
+                </span>
+              )}
+            </button>
+          ))}
+        </div>
+
+        <label className="inline-flex">
+          <span className="sr-only">Subject</span>
           <select
             value={subject}
             onChange={(e) => {
               setSubject(e.target.value)
               setPage(1)
             }}
-            className="field w-[180px] py-2"
+            className="h-8 rounded-full border border-line-2 bg-paper pl-3 pr-7 text-[0.76rem] text-ink-700"
           >
-            <option value="">All</option>
+            <option value="">All subjects</option>
             {(data?.subjects ?? []).map((s) => (
               <option key={s} value={s}>{s}</option>
             ))}
           </select>
         </label>
+
         {source === "institution" && (
-          <label className="flex items-center gap-2 text-step--1 text-ink-600">
-            Institution
+          <label className="inline-flex">
+            <span className="sr-only">Institution</span>
             <select
               value={institutionId}
               onChange={(e) => {
                 setInstitutionId(e.target.value)
                 setPage(1)
               }}
-              className="field w-[200px] py-2"
+              className="h-8 max-w-[220px] rounded-full border border-line-2 bg-paper pl-3 pr-7 text-[0.76rem] text-ink-700"
             >
-              <option value="">All</option>
+              <option value="">All institutions</option>
               {(data?.institutions ?? []).map((i) => (
                 <option key={i.id} value={i.id}>{i.name}</option>
               ))}
             </select>
           </label>
         )}
+
+        {billing && (
+          <span
+            className={`ml-auto inline-flex h-8 items-center gap-1.5 rounded-full border px-3 text-[0.72rem] ${
+              premiumUnlocked
+                ? "border-emerald-700/25 bg-emerald-700/10 text-emerald-800"
+                : "border-line-2 bg-paper text-ink-600"
+            }`}
+          >
+            {premiumUnlocked ? (
+              <CheckCircle size={13} weight="bold" aria-hidden="true" />
+            ) : (
+              <Lock size={13} weight="bold" aria-hidden="true" />
+            )}
+            {premiumUnlocked ? "Premium active" : `${lockedCount} locked`}
+            {!premiumUnlocked && (
+              <Link
+                to="/dashboard/premium"
+                className="font-medium text-accent-ink underline decoration-accent-ink/30 underline-offset-2 hover:decoration-accent-ink"
+              >
+                Unlock
+              </Link>
+            )}
+          </span>
+        )}
       </div>
 
       {error && (
-        <p role="alert" className="mt-5 flex items-start gap-2 text-step--1 text-red-700">
+        <p role="alert" className="mt-4 flex items-start gap-2 text-[0.82rem] text-red-700">
           <Warning size={16} weight="bold" className="mt-0.5 shrink-0" aria-hidden="true" />
           {error}
         </p>
       )}
 
       {!data && !error && (
-        <p className="mt-6 text-step--1 text-ink-500">
-          <CircleNotch size={16} weight="bold" className="inline animate-spin" aria-hidden="true" /> Loading
+        <p className="mt-4 text-[0.82rem] text-ink-500">
+          <CircleNotch size={14} weight="bold" className="inline animate-spin" aria-hidden="true" /> Loading
         </p>
       )}
 
       {data?.modules?.length === 0 && (
-        <p className="mt-10 border border-dashed border-line-2 px-6 py-12 text-center text-step--1 text-ink-500">
+        <p className="mt-5 rounded-[15px] border border-dashed border-line-2 px-6 py-10 text-center text-[0.82rem] text-ink-500">
           No modules match that search.
         </p>
       )}
