@@ -185,7 +185,7 @@ export default function Courses() {
         </p>
       )}
 
-      <div className="mt-5 grid gap-3.5 sm:grid-cols-2 xl:grid-cols-3">
+      <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {data?.modules?.map((m) => {
           const locked = m.premium && !premiumUnlocked
           const isFablet = !m.institution
@@ -193,60 +193,62 @@ export default function Courses() {
             <Link
               key={m.id}
               to={`/dashboard/courses/${m.id}`}
-              className={`flex flex-col rounded-[15px] border p-4 transition-colors duration-300 ${
+              className={`flex flex-col rounded-[15px] border p-3.5 transition-colors duration-300 ${
                 isFablet
                   ? "border-accent/30 bg-accent-soft hover:border-accent"
                   : "border-line bg-paper hover:border-accent/60"
               }`}
             >
-              <div className="flex items-center justify-between gap-3">
-                <p className="eyebrow">{m.subject}</p>
-                <span className="flex items-center gap-2">
+              <div className="flex items-center justify-between gap-2">
+                <p className="truncate font-mono text-[0.56rem] uppercase tracking-[0.08em] text-ink-500">
+                  {m.subject}
+                </p>
+                <span className="flex shrink-0 items-center gap-1.5">
                   {m.sponsored && (
-                    <span className="rounded-full border border-amber-600/30 bg-amber-500/10 px-2 py-0.5 font-mono text-[0.58rem] uppercase tracking-[0.08em] text-amber-800">
+                    <span className="rounded-full border border-amber-600/30 bg-amber-500/10 px-1.5 py-0.5 font-mono text-[0.52rem] uppercase tracking-[0.08em] text-amber-800">
                       sponsored
                     </span>
                   )}
                   {m.premium ? (
                     locked ? (
-                      <span className="flex items-center gap-1 rounded-full border border-line-2 bg-paper-3 px-2 py-0.5 font-mono text-[0.58rem] uppercase tracking-[0.08em] text-ink-600">
-                        <Lock size={10} weight="bold" aria-hidden="true" /> locked
+                      <span className="flex items-center gap-1 rounded-full border border-line-2 bg-paper-3 px-1.5 py-0.5 font-mono text-[0.52rem] uppercase tracking-[0.08em] text-ink-600">
+                        <Lock size={9} weight="bold" aria-hidden="true" /> locked
                       </span>
                     ) : (
-                      <span className="flex items-center gap-1 rounded-full border border-emerald-700/25 bg-emerald-700/10 px-2 py-0.5 font-mono text-[0.58rem] uppercase tracking-[0.08em] text-emerald-800">
-                        <LockOpen size={10} weight="bold" aria-hidden="true" /> unlocked
+                      <span className="flex items-center gap-1 rounded-full border border-emerald-700/25 bg-emerald-700/10 px-1.5 py-0.5 font-mono text-[0.52rem] uppercase tracking-[0.08em] text-emerald-800">
+                        <LockOpen size={9} weight="bold" aria-hidden="true" /> unlocked
                       </span>
                     )
                   ) : (
-                    <span className="rounded-full border border-accent-ink/25 bg-paper px-2 py-0.5 font-mono text-[0.58rem] uppercase tracking-[0.08em] text-accent-ink">
+                    <span className="rounded-full border border-accent-ink/25 bg-paper px-1.5 py-0.5 font-mono text-[0.52rem] uppercase tracking-[0.08em] text-accent-ink">
                       free
                     </span>
                   )}
                 </span>
               </div>
 
-              <h2 className="display mt-2.5 text-step-1 text-ink-950">{m.title}</h2>
-              <p className="mt-1.5 text-[0.8rem] leading-relaxed text-ink-600">{m.summary}</p>
+              <h2 className="display mt-2 text-[1.02rem] leading-snug text-ink-950">{m.title}</h2>
+              <p className="mt-1 line-clamp-2 text-[0.76rem] leading-relaxed text-ink-600">{m.summary}</p>
 
               {m.topics?.length > 0 && (
-                <div className="mt-2.5 flex flex-wrap gap-1.5">
-                  {m.topics.map((topic) => (
-                    <span key={topic} className="rounded-full border border-line px-2 py-0.5 font-mono text-[0.58rem] uppercase tracking-[0.08em] text-ink-500">
+                <div className="mt-2 flex flex-wrap gap-1">
+                  {m.topics.slice(0, 3).map((topic) => (
+                    <span key={topic} className="rounded-full border border-line px-1.5 py-0.5 font-mono text-[0.54rem] uppercase tracking-[0.08em] text-ink-500">
                       {topic}
                     </span>
                   ))}
                 </div>
               )}
 
-              <div className="mt-auto flex flex-wrap items-center justify-between gap-2 border-t border-line pt-2.5 text-[0.7rem] text-ink-500">
-                <span>{m.institution?.name ?? "Fablet official"}</span>
-                <span>{levelLabel(m.level)} · {m.lessons} lesson{m.lessons === 1 ? "" : "s"}</span>
+              <div className="mt-auto flex flex-wrap items-center justify-between gap-2 border-t border-line pt-2 text-[0.66rem] text-ink-500">
+                <span className="truncate">{m.institution?.name ?? "Fablet official"}</span>
+                <span className="shrink-0">{levelLabel(m.level)} · {m.lessons} lesson{m.lessons === 1 ? "" : "s"}</span>
               </div>
 
               {locked && (
-                <span className="mt-2.5 flex items-center gap-1.5 text-[0.8rem] font-medium text-accent-ink">
-                  Preview the curriculum — unlock with a plan{" "}
-                  <BookOpen size={13} weight="bold" aria-hidden="true" />
+                <span className="mt-2 flex items-center gap-1.5 text-[0.74rem] font-medium text-accent-ink">
+                  Preview the curriculum{" "}
+                  <BookOpen size={12} weight="bold" aria-hidden="true" />
                 </span>
               )}
             </Link>

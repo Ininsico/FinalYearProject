@@ -46,14 +46,57 @@ if [ "$LAYOUT" = "new" ]; then
   done
 fi
 
+echo "--- Disk before installs ---"
+df -h / || true
+AVAIL=$(df --output=avail -m / | tail -1 | tr -d ' ')
+echo "disk available: ${AVAIL}MB"
+if [ "${AVAIL:-9999}" -lt 500 ]; then
+  echo "low disk - clearing npm cache and build caches"
+  npm cache clean --force || true
+  rm -rf "$API/node_modules/.cache" "$WEB/node_modules/.vite" 2>/dev/null || true
+fi
+
 echo "--- Installing backend dependencies ---"
 ( cd "$API" && npm install --include=dev --no-audit --no-fund --prefer-offline )
 echo "--- Installing frontend dependencies ---"
 ( cd "$WEB" && npm install --include=dev --no-audit --no-fund --prefer-offline )
 echo "--- Building frontend ---"
+rm -rf "$WEB/dist"
 ( cd "$WEB" && npm run build )
-echo "--- Syncing dist -> $WEB_ROOT (nginx root) ---"
-rsync -a --delete --exclude .well-known "$WEB/dist/" "$WEB_ROOT/"
+
+echo "--- Verifying build output ---"
+test -f "$WEB/dist/index.html"
+MISSING=""
+for ref in $(grep -oE '/assets/[A-Za-z0-9._-]+' "$WEB/dist/index.html" | sort -u || true); do
+  [ -f "$WEB/dist${ref}" ] || MISSING="$MISSING $ref"
+done
+if [ -n "$MISSING" ]; then
+  echo "build is missing referenced assets:$MISSING"
+  exit 1
+fi
+
+echo "--- Publishing dist -> $WEB_ROOT (staged) ---"
+STAGE=/var/www/fablet-stage
+rm -rf "$STAGE"
+mkdir -p "$STAGE"
+rsync -a --exclude .well-known "$WEB/dist/" "$STAGE/"
+SYNCED=0
+for attempt in 1 2 3; do
+  if rsync -a --delete --exclude .well-known "$STAGE/" "$WEB_ROOT/"; then
+    SYNCED=1
+    break
+  fi
+  echo "publish attempt $attempt failed"
+  df -h / || true
+  sleep 3
+done
+rm -rf "$STAGE"
+if [ "$SYNCED" != "1" ]; then
+  echo "PUBLISH FAILED - web root not updated"
+  df -h / || true
+  exit 1
+fi
+echo "publish ok"
 
 changed() { [ "$BEFORE" != "$AFTER" ] && git -C "$REPO" diff --name-only "$BEFORE" "$AFTER" -- "$1" | grep -q .; }
 
