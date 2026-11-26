@@ -13,6 +13,7 @@ import institutionsRouter from './routes/institutions.js'
 import premiumRouter from './routes/premium.js'
 import dictionaryRouter from './routes/dictionary.js'
 import studentsRouter from './routes/students.js'
+import newsRouter from './routes/news.js'
 import { resolveSession } from './lib/session.js'
 import { requireAdmin } from './middleware/admin.js'
 import { startPaymentWatcher } from './lib/paymentWatcher.js'
@@ -94,6 +95,7 @@ app.use('/api/institutions', institutionsRouter)
 app.use('/api/premium', premiumRouter)
 app.use('/api/dictionary', dictionaryRouter)
 app.use('/api/students', studentsRouter)
+app.use('/api/news', newsRouter)
 
 // Public contact form: emails the enquiry to the Fablet inbox.
 const contactLimiter = rateLimit({

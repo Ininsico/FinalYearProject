@@ -42,6 +42,7 @@ import StudentPremium from "./pages/dashboard/Premium"
 import StudentSettings from "./pages/dashboard/Settings"
 import StudentDictionary from "./pages/dashboard/Courses"
 import StudentCourseDetail from "./pages/dashboard/CourseDetail"
+import StudentNewsletter from "./pages/dashboard/Newsletter"
 
 // Institution
 import InstOverview from "./pages/institution/Overview"
@@ -58,6 +59,7 @@ import InstSettings from "./pages/institution/Settings"
 // Admin
 import AdminOverview from "./pages/admin/Overview"
 import AdminUsers from "./pages/admin/Users"
+import AdminNewsletter from "./pages/admin/Newsletter"
 import AdminInstitutions from "./pages/admin/Institutions"
 import AdminSubscriptions from "./pages/admin/Subscriptions"
 import AdminSubscriptionDetail from "./pages/admin/SubscriptionDetail"
@@ -177,6 +179,7 @@ export default function App() {
           <Route index element={<StudentOverview />} />
           <Route path="courses" element={<StudentDictionary />} />
           <Route path="courses/:courseId" element={<StudentCourseDetail />} />
+          <Route path="newsletter" element={<StudentNewsletter />} />
           <Route path="premium" element={<StudentPremium />} />
           <Route path="settings" element={<StudentSettings />} />
           {/* Generation belongs to the institution and platform sides. */}
@@ -240,6 +243,7 @@ export default function App() {
             element={<AdminCourseLesson />}
           />
           <Route path="payments" element={<Navigate to="/admin/subscriptions/payments" replace />} />
+          <Route path="news" element={<AdminNewsletter />} />
           <Route path="audit" element={<AdminAudit />} />
         </Route>
       </Routes>

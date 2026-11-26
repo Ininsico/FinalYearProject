@@ -1,11 +1,12 @@
 import {
-  SquaresFour, GearSix, Sparkle, BookOpen,
+  SquaresFour, GearSix, Sparkle, BookOpen, Newspaper,
 } from "@phosphor-icons/react"
 import AppShell from "../shell/AppShell"
 
 const NAV = [
   { to: "/dashboard", label: "Overview", icon: SquaresFour, end: true },
   { to: "/dashboard/courses", label: "Courses", icon: BookOpen },
+  { to: "/dashboard/newsletter", label: "Newsletter", icon: Newspaper },
   { to: "/dashboard/premium", label: "Premium", icon: Sparkle },
   { to: "/dashboard/settings", label: "Settings", icon: GearSix },
 ]

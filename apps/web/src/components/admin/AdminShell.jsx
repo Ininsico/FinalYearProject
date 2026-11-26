@@ -1,5 +1,5 @@
 import {
-  SquaresFour, Student, Buildings, Repeat, ClockCounterClockwise, Books,
+  SquaresFour, Student, Buildings, Repeat, ClockCounterClockwise, Books, Newspaper,
 } from "@phosphor-icons/react"
 import AppShell from "../shell/AppShell"
 
@@ -9,6 +9,7 @@ const NAV = [
   { to: "/admin/institutions", label: "Institutions", icon: Buildings },
   { to: "/admin/subscriptions", label: "Subscriptions", icon: Repeat },
   { to: "/admin/courses", label: "Courses", icon: Books },
+  { to: "/admin/news", label: "Newsletter", icon: Newspaper },
   { to: "/admin/audit", label: "Audit", icon: ClockCounterClockwise },
 ]
 
